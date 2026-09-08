@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 
 /// <summary>
@@ -26,7 +27,8 @@ using UnityEngine;
 /// references from the original prefab.
 /// </summary>
 [CreateAssetMenu(fileName = "AssetReferencesSO", menuName = "Game/Asset References")]
-public class AssetReferencesSO : ScriptableObject {
+[AutoStaticsCleanup]
+public partial class AssetReferencesSO : ScriptableObject {
     private static AssetReferencesSO instance;
     public static AssetReferencesSO Instance {
         get {

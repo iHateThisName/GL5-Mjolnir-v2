@@ -1,28 +1,29 @@
 ﻿using UnityEngine;
-    /// <summary>
-    /// Generic singleton base class for Unity components.
-    ///
-    /// Creation priority:
-    /// 1. Existing scene instance.
-    /// 2. Registered prefab from AssetReferencesSO.
-    /// 3. Auto-generated GameObject.
-    ///
-    /// Example:
-    /// <code>
-    /// public class AudioManager : Singleton&lt;AudioManager&gt;
-    /// {
-    ///     protected override bool IsPersistent => true;
-    /// }
-    /// </code>
-    ///
-    /// To support automatic prefab creation, register the prefab in
-    /// AssetReferencesSO. If no reference is found, an empty GameObject
-    /// containing the component will be created automatically.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The component type to be used as a singleton.
-    /// </typeparam>
-    public class Singleton<T> : MonoBehaviour where T : Component {
+/// <summary>
+/// Generic singleton base class for Unity components.
+///
+/// Creation priority:
+/// 1. Existing scene instance.
+/// 2. Registered prefab from AssetReferencesSO.
+/// 3. Auto-generated GameObject.
+///
+/// Example:
+/// <code>
+/// public class AudioManager : Singleton&lt;AudioManager&gt;
+/// {
+///     protected override bool IsPersistent => true;
+/// }
+/// </code>
+///
+/// To support automatic prefab creation, register the prefab in
+/// AssetReferencesSO. If no reference is found, an empty GameObject
+/// containing the component will be created automatically.
+/// </summary>
+/// <typeparam name="T">
+/// The component type to be used as a singleton.
+/// </typeparam>
+[Unity.Scripting.LifecycleManagement.AutoStaticsCleanup]
+public abstract partial class Singleton<T> : MonoBehaviour where T : Component {
         [HideInInspector] public bool AutoUnparentOnAwake = true;
         protected virtual bool IsPersistent => false;
         protected static T instance;
