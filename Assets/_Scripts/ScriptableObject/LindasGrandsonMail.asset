@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4dafc54c6f21eb4398a230eb374fdb7, type: 3}
+  m_Name: LindasGrandsonMail
+  m_EditorClassIdentifier: Assembly-CSharp::Mail
+  EmailAddress: LindasGrandson@bmail.com
+  EmailSubject: Your insurance is expiring
+  EmailBody: Hey grandma\n\nI got an email from your doctor and you need to update
+    your transaction info.\nI can fix that for you, but you need to send me your
+    bank id and password.\n\nGrandson
+  EmailType: 4

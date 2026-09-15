@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 203a7e1c49470da4e9948bf9a135d753, type: 3}
+  m_Script: {fileID: 11500000, guid: d73165d4b158fb94691ecf375afce9ac, type: 3}
   m_Name: AssetReferencesSO
   m_EditorClassIdentifier: Assembly-CSharp::AssetReferencesSO
-  scriptReferences: []
+  scriptReferences:
+  - {fileID: 5520378109520922003, guid: d0cb02c112ba2c147a64c1ebb3fa1968, type: 3}

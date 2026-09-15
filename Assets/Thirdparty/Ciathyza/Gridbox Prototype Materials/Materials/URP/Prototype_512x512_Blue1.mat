@@ -289,8 +289,6 @@ Material:
     - _RefractionModel: 0
     - _SSRefractionProjectionModel: 0
     - _SampleGI: 0
-    - _ScreenSpaceReflections: 1
-    - _ScreenSpaceReflectionsContributeTransparent: 1
     - _Shininess: 0
     - _Smoothness: 0
     - _SmoothnessRemapMax: 1
