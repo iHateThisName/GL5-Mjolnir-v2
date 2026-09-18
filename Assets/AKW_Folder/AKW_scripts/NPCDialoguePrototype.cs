@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NPCDialoguePrototype : MonoBehaviour
 {
 
     [SerializeField] WorldInteractable NpcCollider;
     public GameObject DialogueBox;
+
+    public UnityEvent onDialogueFinished = new UnityEvent();
 
     public void OnEnable()
     {
@@ -28,6 +31,7 @@ public class NPCDialoguePrototype : MonoBehaviour
         {
             DialogueBox.SetActive(false);
             Debug.Log("NPC Interaction is going on");
+            onDialogueFinished?.Invoke();
         }
     }   
 }

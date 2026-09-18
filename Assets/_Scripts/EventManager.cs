@@ -32,6 +32,9 @@ public class EventManager : MonoBehaviour
     [Header("Phone Interactions")]
     [SerializeField] private PhoneController phoneController;
 
+    [Header("NPC Interactions")]
+    [SerializeField] private NPCDialoguePrototype npcDialogue;
+
     [Header("ScriptableObjects")]
     [SerializeField] private Mail firstMail;
     [SerializeField] private Mail secondMail;
@@ -70,6 +73,11 @@ public class EventManager : MonoBehaviour
             phoneController.onPhoneHungUp.AddListener(HandlePhoneHungUp);
         }
 
+        if (npcDialogue != null)
+        {
+            npcDialogue.onDialogueFinished.AddListener(HandleNPCInteractionFinished);
+        }
+
     }
 
     private void OnDisable()
@@ -94,6 +102,11 @@ public class EventManager : MonoBehaviour
             phoneController.onPhonePickedUp.RemoveListener(HandlePhonePickedUp);
             phoneController.onPhoneApproved.RemoveListener(HandlePhoneApproved);
             phoneController.onPhoneHungUp.RemoveListener(HandlePhoneHungUp);
+        }
+
+        if (npcDialogue != null)
+        {
+            npcDialogue.onDialogueFinished.RemoveListener(HandleNPCInteractionFinished);
         }
     }
 
@@ -191,6 +204,15 @@ public class EventManager : MonoBehaviour
         if (currentState == Day1States.PhoneActiveCall)
         {
             // Hanging up on a scam call is the correct move
+            AdvanceState();
+        }
+    }
+
+    private void HandleNPCInteractionFinished()
+    {
+        // Only advance if this is our current task
+        if (currentState == Day1States.NPCInteraction)
+        {
             AdvanceState();
         }
     }
