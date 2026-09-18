@@ -9,7 +9,6 @@ public class PhoneController : MonoBehaviour
     [SerializeField] WorldInteractable RedButton;
     [SerializeField] WorldInteractable PhoneInteractable;
     [SerializeField] WorldInteractable PhoneBaseInteractable;
-
     [SerializeField] private GameObject phoneModel;
     private Transform phoneVisualTransform;
     [SerializeField] private Transform phoneDownPosition;
