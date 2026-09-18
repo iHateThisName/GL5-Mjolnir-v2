@@ -194,7 +194,6 @@ public class EventManager : MonoBehaviour
     {
         if (currentState == Day1States.PhoneActiveCall)
         {
-            // The call is a scam. Approving it = Game Over
             ChangeState(Day1States.GameOver);
         }
     }
@@ -203,14 +202,12 @@ public class EventManager : MonoBehaviour
     {
         if (currentState == Day1States.PhoneActiveCall)
         {
-            // Hanging up on a scam call is the correct move
             AdvanceState();
         }
     }
 
     private void HandleNPCInteractionFinished()
     {
-        // Only advance if this is our current task
         if (currentState == Day1States.NPCInteraction)
         {
             AdvanceState();
