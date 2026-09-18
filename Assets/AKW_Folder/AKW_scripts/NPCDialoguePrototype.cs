@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NPC_Dialogue_test : MonoBehaviour
+public class NPCDialoguePrototype : MonoBehaviour
 {
 
     [SerializeField] WorldInteractable NpcCollider;
