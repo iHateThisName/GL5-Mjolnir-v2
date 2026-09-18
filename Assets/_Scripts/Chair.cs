@@ -1,5 +1,6 @@
 ﻿using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets._Scripts {
     public class Chair : MonoBehaviour, IInteractable {
@@ -8,6 +9,8 @@ namespace Assets._Scripts {
         [SerializeField] private CinemachineCamera WalkCamera;
         public Vector3 playerStandPosition;
         public Quaternion playerRotation;
+
+        public UnityEvent onPlayerSatDown;
         public void Interact(GameObject interactor) {
             Debug.Log($"{interactor.name} interacted with {gameObject.name}");
             if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.UsingComputer) {
@@ -25,6 +28,8 @@ namespace Assets._Scripts {
             this.WalkCamera.gameObject.SetActive(false);
             PlayerRefrenceProvider.Instance.PlayerHeadTransform.localRotation = Quaternion.identity;
 
+            //Fire event
+            onPlayerSatDown?.Invoke();
         }
 
         public void StandUp() {

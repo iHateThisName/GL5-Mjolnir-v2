@@ -27,8 +27,13 @@ public class MailSelectedController : MonoBehaviour {
         replaySelectedMail.onClick.AddListener(OnReplaySelectedMail);
     }
 
-    private void OnReplaySelectedMail() {
+    private void OnReplaySelectedMail()
+    {
         Debug.Log("Replaying selected mail");
+        if (currentSelectedMail != null)
+        {
+            selectedMailReplay?.Invoke(currentSelectedMail);
+        }
     }
 
     private void OnDeleteSelectedMail() {

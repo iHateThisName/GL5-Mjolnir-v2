@@ -22,6 +22,34 @@ public class MailBoxManager : MonoBehaviour {
             this.mailGameObjects.Add(mail, mailController.gameObject);
         }
     }
+    
+    /// <summary>
+    /// Called by EventManager to deliver a new email to the player.
+    /// </summary>
+    public void AddMail(Mail newMail)
+    {
+        if (!mails.Contains(newMail))
+        {
+            mails.Add(newMail);
+        }
+
+        MailController mailPrefab = assetReferencesSO.GetReference<MailController>();
+        InstantiateMailUI(newMail, mailPrefab);
+    }
+
+    private void InstantiateMailUI(Mail mail, MailController prefab)
+    {
+        MailController mailController = Instantiate(prefab);
+        mailController.gameObject.transform.SetParent(transform, false);
+
+        // Force scale to 1 in case the Canvas scaler messes with instantiated prefab scale
+        mailController.transform.localScale = Vector3.one;
+
+        mailController.Initilize(mail);
+        mailController.mailButton.onClick.AddListener(() => OnMailSelected(mail));
+
+        this.mailGameObjects.Add(mail, mailController.gameObject);
+    }
 
     private void OnMailSelected(Mail mail) {
         this.onMailSelected.Invoke(mail);
