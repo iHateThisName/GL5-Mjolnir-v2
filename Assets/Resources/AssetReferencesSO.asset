@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssetReferencesSO
   scriptReferences:
   - {fileID: 5520378109520922003, guid: d0cb02c112ba2c147a64c1ebb3fa1968, type: 3}
+  - {fileID: 5758748977325288511, guid: c2550e3896cb7e448a0a031d5e47ed78, type: 3}

@@ -945,6 +945,8 @@ Transform:
   - {fileID: 6200689122743706452}
   - {fileID: 5880674338661587566}
   - {fileID: 5254151115104842220}
+  - {fileID: 4531294508050653974}
+  - {fileID: 2290512614631854149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3440297814559398865
@@ -966,6 +968,8 @@ MonoBehaviour:
   phoneModel: {fileID: 2717375905483325506}
   phoneDownPosition: {fileID: 5880674338661587566}
   phoneUpPosition: {fileID: 5254151115104842220}
+  ringtoneSound: {fileID: 6328107729762946352}
+  scamCallSound: {fileID: 8573192592270556771}
 --- !u!1 &8744302702104538245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,3 +1127,161 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065b6cd52beabb44e9e88a9469437f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldInteractable
+--- !u!1001 &1071515549440465366
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7610345134387402479}
+    m_Modifications:
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: sfxClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 81f0594e6be7696458f270db73f80adf, type: 3}
+    - target: {fileID: 6871819616506349348, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_Name
+      value: RingTone, SFXControllerPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+--- !u!4 &4531294508050653974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+  m_PrefabInstance: {fileID: 1071515549440465366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6328107729762946352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+  m_PrefabInstance: {fileID: 1071515549440465366}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef35771475a57d44eada26823c834241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXController
+--- !u!1001 &3455708943996922501
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7610345134387402479}
+    m_Modifications:
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.041816268
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05323243
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.13104022
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: sfxClip
+      value: 
+      objectReference: {fileID: 8300000, guid: dbbc602e02074c342a741b6aaee48182, type: 3}
+    - target: {fileID: 6871819616506349348, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+      propertyPath: m_Name
+      value: Scam, SFXControllerPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+--- !u!4 &2290512614631854149 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+  m_PrefabInstance: {fileID: 3455708943996922501}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8573192592270556771 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
+  m_PrefabInstance: {fileID: 3455708943996922501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef35771475a57d44eada26823c834241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXController

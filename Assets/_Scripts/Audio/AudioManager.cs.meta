@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 45cc66e5fba2a7c4c883551236f2d938
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - soundTrackSource1: {instanceID: 0}
+  - soundTrackSource2: {instanceID: 0}
+  - sfxAudioPrefab: {fileID: 8640690962669986426, guid: 23961970b46a1ff439ca42691f45f219, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
