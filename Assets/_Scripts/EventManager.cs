@@ -3,15 +3,16 @@ using UnityEngine;
 using Assets._Scripts;
 using UnityEngine.SceneManagement;
 
-public enum Day1States
+public enum Day1States: int
 {
     SitAtDesk,
     CheckMail1,
     CheckMail2,
     SitAtLindasDesk,
     CheckMail3,
+    PhoneRinging,   
+    PhoneActiveCall, 
     NPCInteraction,
-    PhoneInteraction,
     CompleteDay,
     GameOver
 }
@@ -24,9 +25,12 @@ public class EventManager : MonoBehaviour
     [SerializeField] private MailBoxManager mailBoxManager;
 
     [Header("Linda's Desk")]
-    [SerializeField] private Chair lindasChair; // Assign Linda's chair here
-    [SerializeField] private MailSelectedController lindasMailController; // Linda's email UI
-    [SerializeField] private MailBoxManager lindasMailBoxManager; 
+    [SerializeField] private Chair lindasChair;
+    [SerializeField] private MailSelectedController lindasMailController; 
+    [SerializeField] private MailBoxManager lindasMailBoxManager;
+
+    [Header("Phone Interactions")]
+    [SerializeField] private PhoneController phoneController;
 
     [Header("ScriptableObjects")]
     [SerializeField] private Mail firstMail;
@@ -45,6 +49,7 @@ public class EventManager : MonoBehaviour
         {
             mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
             mailController.selectedMailReplay.AddListener(HandleMailReplied);
+
         }
 
         // Subscribe to Linda's PC events
@@ -57,6 +62,14 @@ public class EventManager : MonoBehaviour
         // Listen for the player sitting down at specific chairs
         if (officeChair != null) officeChair.onPlayerSatDown.AddListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.AddListener(HandlePlayerSatAtLindasDesk);
+
+        if (phoneController != null)
+        {
+            phoneController.onPhonePickedUp.AddListener(HandlePhonePickedUp);
+            phoneController.onPhoneApproved.AddListener(HandlePhoneApproved);
+            phoneController.onPhoneHungUp.AddListener(HandlePhoneHungUp);
+        }
+
     }
 
     private void OnDisable()
@@ -75,6 +88,13 @@ public class EventManager : MonoBehaviour
 
         if (officeChair != null) officeChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtLindasDesk);
+
+        if (phoneController != null)
+        {
+            phoneController.onPhonePickedUp.RemoveListener(HandlePhonePickedUp);
+            phoneController.onPhoneApproved.RemoveListener(HandlePhoneApproved);
+            phoneController.onPhoneHungUp.RemoveListener(HandlePhoneHungUp);
+        }
     }
 
     private void Start()
@@ -149,6 +169,32 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    private void HandlePhonePickedUp()
+    {
+        if (currentState == Day1States.PhoneRinging)
+        {
+            AdvanceState();
+        }
+    }
+
+    private void HandlePhoneApproved()
+    {
+        if (currentState == Day1States.PhoneActiveCall)
+        {
+            // The call is a scam. Approving it = Game Over
+            ChangeState(Day1States.GameOver);
+        }
+    }
+
+    private void HandlePhoneHungUp()
+    {
+        if (currentState == Day1States.PhoneActiveCall)
+        {
+            // Hanging up on a scam call is the correct move
+            AdvanceState();
+        }
+    }
+
     public void AdvanceState()
     {
         switch (currentState)
@@ -166,9 +212,12 @@ public class EventManager : MonoBehaviour
                 ChangeState(Day1States.CheckMail3);
                 break;
             case Day1States.CheckMail3:
-                ChangeState(Day1States.PhoneInteraction);
+                ChangeState(Day1States.PhoneRinging);
                 break;
-            case Day1States.PhoneInteraction:
+            case Day1States.PhoneRinging:
+                ChangeState(Day1States.PhoneActiveCall);
+                break;
+            case Day1States.PhoneActiveCall:
                 ChangeState(Day1States.NPCInteraction);
                 break;
             case Day1States.NPCInteraction:
@@ -206,9 +255,17 @@ public class EventManager : MonoBehaviour
                 lindasMailBoxManager.AddMail(thirdMail);
                 break;
 
-            case Day1States.PhoneInteraction:
-                stepText.text = $"Your phone is calling!";
-                //blabla;
+            case Day1States.PhoneRinging:
+                stepText.text = "Task: Your phone is ringing. Pick it up.";
+                phoneController.OnPhoneCall();
+                break;
+
+            case Day1States.PhoneActiveCall:
+                stepText.text = "Task: Listen to the caller. Should you approve their request?";
+                break;
+
+            case Day1States.NPCInteraction:
+                stepText.text = "Task: Go and talk to Greeb!";
                 break;
 
             case Day1States.CompleteDay:

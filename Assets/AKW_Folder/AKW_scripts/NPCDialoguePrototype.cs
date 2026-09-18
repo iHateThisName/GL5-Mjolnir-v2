@@ -11,6 +11,10 @@ public class NPCDialoguePrototype : MonoBehaviour
         NpcCollider.OnInteract += OnNpcInteraction;
     }
 
+    public void OnDisable()
+    {
+        NpcCollider.OnInteract -= OnNpcInteraction;
+    }
     public async void OnNpcInteraction()
     {
         Debug.Log("NPC Interaction");

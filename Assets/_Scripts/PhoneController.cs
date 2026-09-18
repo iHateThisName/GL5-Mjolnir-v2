@@ -1,11 +1,9 @@
 using DG.Tweening;
-using Newtonsoft.Json.Bson;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events; // Needed for UnityEvent
 
-public class PhoneController : MonoBehaviour {
+public class PhoneController : MonoBehaviour
+{
 
     [SerializeField] WorldInteractable GreenButton;
     [SerializeField] WorldInteractable RedButton;
@@ -25,16 +23,32 @@ public class PhoneController : MonoBehaviour {
 
     public bool IsPhoneInHand { get; private set; } = false;
 
-    private void OnEnable() {
+    // Events for the EventManager
+    public UnityEvent onPhonePickedUp = new UnityEvent();
+    public UnityEvent onPhoneApproved = new UnityEvent();
+    public UnityEvent onPhoneHungUp = new UnityEvent();
+
+    private void OnEnable()
+    {
         PhoneInteractable.OnInteract += OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract += EndPhoneCall;
-    }
-    private void OnDisable() {
-        PhoneInteractable.OnInteract -= OnPhoneInteract;
-        this.PhoneBaseInteractable.OnInteract -= EndPhoneCall;
+
+        // Link the buttons
+        GreenButton.OnInteract += ApproveCall;
+        RedButton.OnInteract += EndPhoneCall;
     }
 
-    private void Start() {
+    private void OnDisable()
+    {
+        PhoneInteractable.OnInteract -= OnPhoneInteract;
+        this.PhoneBaseInteractable.OnInteract -= EndPhoneCall;
+
+        GreenButton.OnInteract -= ApproveCall;
+        RedButton.OnInteract -= EndPhoneCall;
+    }
+
+    private void Start()
+    {
         this.phoneVisualTransform = this.transform.GetChild(0);
 
         this.phoneRiningSequence = DOTween.Sequence().SetId(this.phoneModel.transform).Pause();
@@ -43,51 +57,71 @@ public class PhoneController : MonoBehaviour {
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchRotation(punch: new Vector3(0, 0, 10), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
     }
 
-    private void OnPhoneInteract() {
-        if (!IsPhoneInHand) {
+    private void OnPhoneInteract()
+    {
+        if (!IsPhoneInHand)
+        {
             this.IsPhoneInHand = true;
             this.phoneModel.transform.SetParent(this.phoneUpPosition);
             this.phoneModel.transform.localPosition = Vector3.zero;
             this.phoneModel.transform.localRotation = Quaternion.identity;
 
             if (this.isPhoneRinging) OnPhoneCallAccepted();
+
+            // Notify the EventManager
+            onPhonePickedUp?.Invoke();
         }
     }
 
-    public void EndPhoneCall() {
-        if (IsPhoneInHand) {
+    private void ApproveCall()
+    {
+        if (IsPhoneInHand)
+        {
+            // Player pressed green button while holding phone
+            onPhoneApproved?.Invoke();
+        }
+    }
+
+    public void EndPhoneCall()
+    {
+        if (IsPhoneInHand)
+        {
             this.IsPhoneInHand = false;
             this.phoneModel.transform.SetParent(this.phoneVisualTransform);
             this.phoneModel.transform.localPosition = this.phoneDownPosition.localPosition;
             this.phoneModel.transform.localRotation = this.phoneDownPosition.localRotation;
+
+            // Stop the talking sound if they hang up early
+            this.scamCallSound.StopSFX();
+
+            // Notify the EventManager
+            onPhoneHungUp?.Invoke();
         }
     }
 
     [ContextMenu("Call Phone")]
-    public void OnPhoneCall() { // Parameter should contain a scritable object. containe phone data.
-        // Check if the phone is already in hand, if not play sound and animate the phone vibrating using DOTween.
-
-        if (!IsPhoneInHand) {
+    public void OnPhoneCall()
+    {
+        if (!IsPhoneInHand)
+        {
             this.isPhoneRinging = true;
-            // Play phone ringing sound
             this.ringtoneSound.PlaySFX();
-
-            // Play the animation.
             this.phoneRiningSequence.Restart();
-        } else {
-            // The phone is already in hand, so we can accept the call directly.
+        }
+        else
+        {
             OnPhoneCallAccepted();
         }
-
     }
 
     [ContextMenu("Accept Phone Call")]
-    public void OnPhoneCallAccepted() {
+    public void OnPhoneCallAccepted()
+    {
         this.isPhoneRinging = false;
-        // Make sure the animation is not playing or the rinigning
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
+        // Reset scale/rotation just in case the tween leaves it offset
+        this.phoneModel.transform.localScale = Vector3.one;
         this.scamCallSound.PlaySFX();
     }
-
 }
