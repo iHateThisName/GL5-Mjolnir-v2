@@ -24,7 +24,8 @@ public class NPCDialoguePrototype2 : MonoBehaviour
     }
     public void OnNpcInteraction()
     {
-        Debug.Log("NPC Interaction 2, electric boogaloo");
+        //Debug.Log("NPC Interaction 2, electric boogaloo");
+        Debug.Log($"Dialogue with {gameObject}, have started");
         currentDialogueBox += 1;
 
         DialogueBoxes[currentDialogueBox - 1].gameObject.SetActive(false);
@@ -34,6 +35,7 @@ public class NPCDialoguePrototype2 : MonoBehaviour
         {
             DialogueBoxes[currentDialogueBox].gameObject.SetActive(false);
             currentDialogueBox = -1;
+            Debug.Log($"Dialogue with {gameObject.name} ended");
         }
     }
 }
