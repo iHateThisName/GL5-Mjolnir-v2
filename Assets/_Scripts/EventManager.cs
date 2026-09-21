@@ -289,6 +289,7 @@ public class EventManager : MonoBehaviour
 
             case Day1States.CompleteDay:
                 stepText.text = "Day 1 Complete! Time to go home.";
+                SceneManager.LoadScene("WinScene");
                 break;
 
             case Day1States.GameOver:
