@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/HowToPlayScene.unity
+    guid: 0c5fed9d95caa4146aa60dfedb5a3039
+  - enabled: 1
     path: Assets/Scenes/Einar/Demo_StateMachine.unity
     guid: 06508e7a60b16194fb62ca5bfdec4435
   - enabled: 1
