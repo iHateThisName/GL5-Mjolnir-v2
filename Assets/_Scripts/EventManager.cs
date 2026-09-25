@@ -198,12 +198,17 @@ public class EventManager : MonoBehaviour
 
     private void TriggerScamWarning()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
         totalErrors++;
         if (scamWarningPanel != null) scamWarningPanel.SetActive(true);
     }
 
     private void TriggerDeleteWarning()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         totalErrors++;
         if (deleteWarningPanel != null) deleteWarningPanel.SetActive(true);
     }
@@ -212,6 +217,9 @@ public class EventManager : MonoBehaviour
     {
         if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
         if (deleteWarningPanel != null) deleteWarningPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
 
         AdvanceState();
     }
@@ -288,7 +296,8 @@ public class EventManager : MonoBehaviour
 
             case Day1States.CompleteDay:
                 stepText.text = "Task: Shift over.";
-
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
                 // Show the Win Panel and update the text inside it
                 if (winPanel != null) winPanel.SetActive(true);
 

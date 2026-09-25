@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager> {
 
     private void Start() {
         // lock the cursor to the center of the screen and make it invisible
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
 
