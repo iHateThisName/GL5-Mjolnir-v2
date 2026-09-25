@@ -25,9 +25,6 @@ public class MovementController : MonoBehaviour {
         this.moveActionReference.action.performed += OnMove;
         this.moveActionReference.action.canceled += OnMove;
 
-        this.interactActionReference.action.Enable();
-        this.interactActionReference.action.performed += OnInteract;
-
         this.attackActionReference.action.Enable();
         this.attackActionReference.action.performed += OnInteract;
     }
@@ -35,7 +32,6 @@ public class MovementController : MonoBehaviour {
     private void OnDisable() {
         this.moveActionReference.action.performed -= OnMove;
         this.moveActionReference.action.canceled -= OnMove;
-        this.interactActionReference.action.performed -= OnInteract;
         this.attackActionReference.action.performed -= OnInteract;
     }
 
