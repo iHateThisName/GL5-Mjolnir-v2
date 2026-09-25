@@ -5,14 +5,12 @@ using UnityEngine.Events;
 public class MailBoxManager : MonoBehaviour {
     [SerializeField] private List<Mail> mails = new List<Mail>();
     public Dictionary<Mail, GameObject> mailGameObjects { get; } = new Dictionary<Mail, GameObject>();
-    private AssetReferencesSO assetReferencesSO;
 
     public UnityEvent<Mail> onMailSelected = new UnityEvent<Mail>();
 
     private void Start() {
-        this.assetReferencesSO = AssetReferencesSO.Instance;
+        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
 
-        MailController mailPrefab = assetReferencesSO.GetReference<MailController>();
         foreach (Mail mail in mails) {
             MailController mailController = Instantiate(mailPrefab);
             mailController.gameObject.transform.SetParent(transform, false);
@@ -33,7 +31,7 @@ public class MailBoxManager : MonoBehaviour {
             mails.Add(newMail);
         }
 
-        MailController mailPrefab = assetReferencesSO.GetReference<MailController>();
+        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
         InstantiateMailUI(newMail, mailPrefab);
     }
 
