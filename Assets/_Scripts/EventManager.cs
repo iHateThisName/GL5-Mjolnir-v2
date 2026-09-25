@@ -3,18 +3,17 @@ using UnityEngine;
 using Assets._Scripts;
 using UnityEngine.SceneManagement;
 
-public enum Day1States: int
+public enum Day1States : int
 {
     SitAtDesk,
     CheckMail1,
     CheckMail2,
     SitAtLindasDesk,
     CheckMail3,
-    PhoneRinging,   
-    PhoneActiveCall, 
+    PhoneRinging,
+    PhoneActiveCall,
     NPCInteraction,
-    CompleteDay,
-    GameOver
+    CompleteDay
 }
 
 public class EventManager : MonoBehaviour
@@ -26,7 +25,7 @@ public class EventManager : MonoBehaviour
 
     [Header("Linda's Desk")]
     [SerializeField] private Chair lindasChair;
-    [SerializeField] private MailSelectedController lindasMailController; 
+    [SerializeField] private MailSelectedController lindasMailController;
     [SerializeField] private MailBoxManager lindasMailBoxManager;
 
     [Header("Phone Interactions")]
@@ -40,29 +39,28 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Mail secondMail;
     [SerializeField] private Mail thirdMail;
 
-    [Header("Tutorial UI Panel")]
+    [Header("UI & Panels")]
     [SerializeField] private TMP_Text stepText;
+    [SerializeField] private GameObject scamWarningPanel;
+    [SerializeField] private GameObject deleteWarningPanel;
 
     private Day1States currentState;
+    private int totalErrors = 0; // Tracks player mistakes
 
     private void OnEnable()
     {
-        // Subscribe to Player's PC events
         if (mailController != null)
         {
             mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
             mailController.selectedMailReplay.AddListener(HandleMailReplied);
-
         }
 
-        // Subscribe to Linda's PC events
         if (lindasMailController != null)
         {
             lindasMailController.selectedMailDeleted.AddListener(HandleMailDeleted);
             lindasMailController.selectedMailReplay.AddListener(HandleMailReplied);
         }
 
-        // Listen for the player sitting down at specific chairs
         if (officeChair != null) officeChair.onPlayerSatDown.AddListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.AddListener(HandlePlayerSatAtLindasDesk);
 
@@ -77,7 +75,6 @@ public class EventManager : MonoBehaviour
         {
             npcDialogue.onDialogueFinished.AddListener(HandleNPCInteractionFinished);
         }
-
     }
 
     private void OnDisable()
@@ -112,29 +109,23 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
+        // Ensure panels are hidden at the start
+        if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
+        if (deleteWarningPanel != null) deleteWarningPanel.SetActive(false);
+
         ChangeState(Day1States.SitAtDesk);
     }
 
     private void HandlePlayerSatAtOwnDesk()
     {
-        if (currentState == Day1States.SitAtDesk)
-        {
-            AdvanceState();
-        }
+        if (currentState == Day1States.SitAtDesk) AdvanceState();
     }
 
     private void HandlePlayerSatAtLindasDesk()
     {
-        if (currentState == Day1States.SitAtLindasDesk)
-        {
-            AdvanceState();
-        }
+        if (currentState == Day1States.SitAtLindasDesk) AdvanceState();
     }
 
-    /// <summary>
-    /// Returns the specific email the player is supposed to be interacting with right now.
-    /// Returns null if the current task doesn't involve checking an email.
-    /// </summary>
     private Mail GetExpectedMailForCurrentState()
     {
         switch (currentState)
@@ -148,58 +139,51 @@ public class EventManager : MonoBehaviour
 
     private void HandleMailDeleted(Mail mail)
     {
-        // GUARD: Ignore this click if it's not the email we are currently waiting for
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        // Deleting legitimate emails results in a Game Over
-        if (mail.EmailType == Mail.EnumMailType.Company ||
-            mail.EmailType == Mail.EnumMailType.Personal)
+        // Mistake: Deleting legitimate emails
+        if (mail.EmailType == Mail.EnumMailType.Company || mail.EmailType == Mail.EnumMailType.Personal)
         {
-            ChangeState(Day1States.GameOver);
+            TriggerDeleteWarning();
         }
         else
         {
-            // Deleting Scam or Spam is correct, move to the next stage
             AdvanceState();
         }
     }
 
     private void HandleMailReplied(Mail mail)
     {
-        // GUARD: Ignore this click if it's not the email we are currently waiting for
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        // Replying to malicious or junk emails results in a Game Over
-        if (mail.EmailType == Mail.EnumMailType.Scam ||
-            mail.EmailType == Mail.EnumMailType.Spam)
+        // Mistake: Replying to malicious emails
+        if (mail.EmailType == Mail.EnumMailType.Scam || mail.EmailType == Mail.EnumMailType.Spam)
         {
-            ChangeState(Day1States.GameOver);
+            TriggerScamWarning();
         }
         else
         {
-            // Replying to legitimate emails is correct, move to the next stage
             AdvanceState();
         }
     }
 
     private void HandlePhonePickedUp()
     {
-        if (currentState == Day1States.PhoneRinging)
-        {
-            AdvanceState();
-        }
+        if (currentState == Day1States.PhoneRinging) AdvanceState();
     }
 
     private void HandlePhoneApproved()
     {
+        // Mistake: Approving a scam caller
         if (currentState == Day1States.PhoneActiveCall)
         {
-            ChangeState(Day1States.GameOver);
+            TriggerScamWarning();
         }
     }
 
     private void HandlePhoneHungUp()
     {
+        // Correctly hanging up on a bad call (assuming the call is a scam in this scenario)
         if (currentState == Day1States.PhoneActiveCall)
         {
             AdvanceState();
@@ -208,40 +192,49 @@ public class EventManager : MonoBehaviour
 
     private void HandleNPCInteractionFinished()
     {
-        if (currentState == Day1States.NPCInteraction)
-        {
-            AdvanceState();
-        }
+        if (currentState == Day1States.NPCInteraction) AdvanceState();
     }
+
+    // --- NEW WARNING LOGIC ---
+
+    private void TriggerScamWarning()
+    {
+        totalErrors++;
+        if (scamWarningPanel != null) scamWarningPanel.SetActive(true);
+    }
+
+    private void TriggerDeleteWarning()
+    {
+        totalErrors++;
+        if (deleteWarningPanel != null) deleteWarningPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// Link this method to the OnClick event of the "OK" buttons on BOTH of your UI panels.
+    /// It hides the panels and moves the player to the next task.
+    /// </summary>
+    public void AcknowledgeWarning()
+    {
+        if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
+        if (deleteWarningPanel != null) deleteWarningPanel.SetActive(false);
+
+        AdvanceState();
+    }
+
+    // -------------------------
 
     public void AdvanceState()
     {
         switch (currentState)
         {
-            case Day1States.SitAtDesk:
-                ChangeState(Day1States.CheckMail1);
-                break;
-            case Day1States.CheckMail1:
-                ChangeState(Day1States.CheckMail2);
-                break;
-            case Day1States.CheckMail2:
-                ChangeState(Day1States.SitAtLindasDesk);
-                break;
-            case Day1States.SitAtLindasDesk:
-                ChangeState(Day1States.CheckMail3);
-                break;
-            case Day1States.CheckMail3:
-                ChangeState(Day1States.PhoneRinging);
-                break;
-            case Day1States.PhoneRinging:
-                ChangeState(Day1States.PhoneActiveCall);
-                break;
-            case Day1States.PhoneActiveCall:
-                ChangeState(Day1States.NPCInteraction);
-                break;
-            case Day1States.NPCInteraction:
-                ChangeState(Day1States.CompleteDay);
-                break;
+            case Day1States.SitAtDesk: ChangeState(Day1States.CheckMail1); break;
+            case Day1States.CheckMail1: ChangeState(Day1States.CheckMail2); break;
+            case Day1States.CheckMail2: ChangeState(Day1States.SitAtLindasDesk); break;
+            case Day1States.SitAtLindasDesk: ChangeState(Day1States.CheckMail3); break;
+            case Day1States.CheckMail3: ChangeState(Day1States.PhoneRinging); break;
+            case Day1States.PhoneRinging: ChangeState(Day1States.PhoneActiveCall); break;
+            case Day1States.PhoneActiveCall: ChangeState(Day1States.NPCInteraction); break;
+            case Day1States.NPCInteraction: ChangeState(Day1States.CompleteDay); break;
         }
     }
 
@@ -288,13 +281,9 @@ public class EventManager : MonoBehaviour
                 break;
 
             case Day1States.CompleteDay:
-                stepText.text = "Day 1 Complete! Time to go home.";
-                SceneManager.LoadScene("WinScene");
-                break;
-
-            case Day1States.GameOver:
-                stepText.text = "GAME OVER: You made the wrong choice!";
-                SceneManager.LoadScene("LoseScene");
+                stepText.text = $"Day 1 Complete! You made {totalErrors} error(s) today. Time to go home.";
+                // Optional: Wait a few seconds here or require a final click before loading the WinScene.
+                // SceneManager.LoadScene("WinScene"); 
                 break;
         }
     }
