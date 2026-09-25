@@ -11914,7 +11914,7 @@ PrefabInstance:
       objectReference: {fileID: 643570509}
     - target: {fileID: 632522899011188264, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2071
+      value: 2074
       objectReference: {fileID: 0}
     - target: {fileID: 750717081301785018, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_Mesh
@@ -11935,7 +11935,7 @@ PrefabInstance:
     - target: {fileID: 1093333433681162435, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: phoneController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1073183557}
     - target: {fileID: 2586504674704842386, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_Mesh
       value: 
