@@ -44,6 +44,10 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject scamWarningPanel;
     [SerializeField] private GameObject deleteWarningPanel;
 
+    [Header("End of Day UI")]
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private TMP_Text winSummaryText;
+
     private Day1States currentState;
     private int totalErrors = 0; // Tracks player mistakes
 
@@ -112,6 +116,7 @@ public class EventManager : MonoBehaviour
         // Ensure panels are hidden at the start
         if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
         if (deleteWarningPanel != null) deleteWarningPanel.SetActive(false);
+        if (winPanel != null) winPanel.SetActive(false);
 
         ChangeState(Day1States.SitAtDesk);
     }
@@ -141,7 +146,6 @@ public class EventManager : MonoBehaviour
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        // Mistake: Deleting legitimate emails
         if (mail.EmailType == Mail.EnumMailType.Company || mail.EmailType == Mail.EnumMailType.Personal)
         {
             TriggerDeleteWarning();
@@ -156,7 +160,6 @@ public class EventManager : MonoBehaviour
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        // Mistake: Replying to malicious emails
         if (mail.EmailType == Mail.EnumMailType.Scam || mail.EmailType == Mail.EnumMailType.Spam)
         {
             TriggerScamWarning();
@@ -174,7 +177,6 @@ public class EventManager : MonoBehaviour
 
     private void HandlePhoneApproved()
     {
-        // Mistake: Approving a scam caller
         if (currentState == Day1States.PhoneActiveCall)
         {
             TriggerScamWarning();
@@ -183,7 +185,6 @@ public class EventManager : MonoBehaviour
 
     private void HandlePhoneHungUp()
     {
-        // Correctly hanging up on a bad call (assuming the call is a scam in this scenario)
         if (currentState == Day1States.PhoneActiveCall)
         {
             AdvanceState();
@@ -194,8 +195,6 @@ public class EventManager : MonoBehaviour
     {
         if (currentState == Day1States.NPCInteraction) AdvanceState();
     }
-
-    // --- NEW WARNING LOGIC ---
 
     private void TriggerScamWarning()
     {
@@ -209,10 +208,6 @@ public class EventManager : MonoBehaviour
         if (deleteWarningPanel != null) deleteWarningPanel.SetActive(true);
     }
 
-    /// <summary>
-    /// Link this method to the OnClick event of the "OK" buttons on BOTH of your UI panels.
-    /// It hides the panels and moves the player to the next task.
-    /// </summary>
     public void AcknowledgeWarning()
     {
         if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
@@ -221,7 +216,18 @@ public class EventManager : MonoBehaviour
         AdvanceState();
     }
 
-    // -------------------------
+    /// <summary>
+    /// Call this from a Quit button on your Win Panel
+    /// </summary>
+    public void QuitGame()
+    {
+        Debug.Log("Quitting Game...");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 
     public void AdvanceState()
     {
@@ -281,9 +287,15 @@ public class EventManager : MonoBehaviour
                 break;
 
             case Day1States.CompleteDay:
-                stepText.text = $"Day 1 Complete! You made {totalErrors} error(s) today. Time to go home.";
-                // Optional: Wait a few seconds here or require a final click before loading the WinScene.
-                // SceneManager.LoadScene("WinScene"); 
+                stepText.text = "Task: Shift over.";
+
+                // Show the Win Panel and update the text inside it
+                if (winPanel != null) winPanel.SetActive(true);
+
+                if (winSummaryText != null)
+                {
+                    winSummaryText.text = $"End of day: Day 1 Complete!\n\nYou made {totalErrors} error(s) today.";
+                }
                 break;
         }
     }
