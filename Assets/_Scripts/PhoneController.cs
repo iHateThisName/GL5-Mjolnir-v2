@@ -1,10 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events; // Needed for UnityEvent
+using UnityEngine.Events;
 
 public class PhoneController : MonoBehaviour
 {
-
     [SerializeField] WorldInteractable GreenButton;
     [SerializeField] WorldInteractable RedButton;
     [SerializeField] WorldInteractable PhoneInteractable;
@@ -15,14 +14,16 @@ public class PhoneController : MonoBehaviour
     [SerializeField] private Transform phoneUpPosition;
 
     [SerializeField] private SFXController ringtoneSound;
-    [SerializeField] private SFXController scamCallSound;
-    private bool isPhoneRinging = false;
 
+    [SerializeField] private AudioSource activeCallAudio;
+
+    private bool isPhoneRinging = false;
     private Sequence phoneRiningSequence = null;
+
+    private Call currentCallData;
 
     public bool IsPhoneInHand { get; private set; } = false;
 
-    // Events for the EventManager
     public UnityEvent onPhonePickedUp = new UnityEvent();
     public UnityEvent onPhoneApproved = new UnityEvent();
     public UnityEvent onPhoneHungUp = new UnityEvent();
@@ -32,7 +33,6 @@ public class PhoneController : MonoBehaviour
         PhoneInteractable.OnInteract += OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract += EndPhoneCall;
 
-        // Link the buttons
         GreenButton.OnInteract += ApproveCall;
         RedButton.OnInteract += EndPhoneCall;
     }
@@ -67,7 +67,6 @@ public class PhoneController : MonoBehaviour
 
             if (this.isPhoneRinging) OnPhoneCallAccepted();
 
-            // Notify the EventManager
             onPhonePickedUp?.Invoke();
         }
     }
@@ -76,7 +75,6 @@ public class PhoneController : MonoBehaviour
     {
         if (IsPhoneInHand)
         {
-            // Player pressed green button while holding phone
             onPhoneApproved?.Invoke();
         }
     }
@@ -91,16 +89,16 @@ public class PhoneController : MonoBehaviour
             this.phoneModel.transform.localRotation = this.phoneDownPosition.localRotation;
 
             // Stop the talking sound if they hang up early
-            this.scamCallSound.StopSFX();
+            if (activeCallAudio != null) activeCallAudio.Stop();
 
-            // Notify the EventManager
             onPhoneHungUp?.Invoke();
         }
     }
 
-    [ContextMenu("Call Phone")]
-    public void OnPhoneCall()
+    public void OnPhoneCall(Call callData)
     {
+        currentCallData = callData;
+
         if (!IsPhoneInHand)
         {
             this.isPhoneRinging = true;
@@ -113,14 +111,18 @@ public class PhoneController : MonoBehaviour
         }
     }
 
-    [ContextMenu("Accept Phone Call")]
     public void OnPhoneCallAccepted()
     {
         this.isPhoneRinging = false;
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
-        // Reset scale/rotation just in case the tween leaves it offset
         this.phoneModel.transform.localScale = Vector3.one;
-        this.scamCallSound.PlaySFX();
+
+        // Play the specific audio from the ScriptableObject
+        if (currentCallData != null && currentCallData.CallAudio != null && activeCallAudio != null)
+        {
+            activeCallAudio.clip = currentCallData.CallAudio;
+            activeCallAudio.Play();
+        }
     }
 }

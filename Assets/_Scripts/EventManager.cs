@@ -6,16 +6,18 @@ using UnityEngine.SceneManagement;
 public enum Day1States : int
 {
     SitAtDesk,
-    CheckMail1,         // Original 1st Mail
-    CheckMail2,         // NEW: Company Mail
-    CheckMail3,         // NEW: Scam Mail 1
-    CheckMail4,         // NEW: Personal Mail
-    CheckMail5,         // NEW: Scam Mail 2
-    CheckMail6,         // Original 2nd Mail (was CheckMail2)
+    CheckMail1,
+    CheckMail2,
+    CheckMail3,
+    CheckMail4,
+    CheckMail5,
+    CheckMail6,
     SitAtLindasDesk,
-    CheckMail7,         // Original 3rd Mail (was CheckMail3)
-    PhoneRinging,
-    PhoneActiveCall,
+    CheckMail7,
+    PhoneRinging1,      // Scam Call
+    PhoneActiveCall1,
+    PhoneRinging2,      // NEW: Legit Call
+    PhoneActiveCall2,
     NPCInteraction,
     CompleteDay
 }
@@ -35,21 +37,21 @@ public class EventManager : MonoBehaviour
     [Header("Phone Interactions")]
     [SerializeField] private PhoneController phoneController;
 
+    // NEW: Call Scriptable Objects
+    [SerializeField] private Call scamCall;
+    [SerializeField] private Call legitCall;
+
     [Header("NPC Interactions")]
     [SerializeField] private NPCDialoguePrototype npcDialogue;
 
-    [Header("ScriptableObjects")]
+    [Header("Mail ScriptableObjects")]
     [SerializeField] private Mail firstMail;
-
-    // --- NEW MAILS ---
     [SerializeField] private Mail newCompanyMail;
     [SerializeField] private Mail newScamMail1;
     [SerializeField] private Mail newPersonalMail;
     [SerializeField] private Mail newScamMail2;
-    // -----------------
-
-    [SerializeField] private Mail secondMail; // Now happens 6th
-    [SerializeField] private Mail thirdMail;  // Now happens 7th on Linda's PC
+    [SerializeField] private Mail secondMail;
+    [SerializeField] private Mail thirdMail;
 
     [Header("UI & Panels")]
     [SerializeField] private TMP_Text stepText;
@@ -61,7 +63,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private TMP_Text winSummaryText;
 
     private Day1States currentState;
-    private int totalErrors = 0; // Tracks player mistakes
+    private int totalErrors = 0;
 
     private void OnEnable()
     {
@@ -70,13 +72,11 @@ public class EventManager : MonoBehaviour
             mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
             mailController.selectedMailReplay.AddListener(HandleMailReplied);
         }
-
         if (lindasMailController != null)
         {
             lindasMailController.selectedMailDeleted.AddListener(HandleMailDeleted);
             lindasMailController.selectedMailReplay.AddListener(HandleMailReplied);
         }
-
         if (officeChair != null) officeChair.onPlayerSatDown.AddListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.AddListener(HandlePlayerSatAtLindasDesk);
 
@@ -86,27 +86,22 @@ public class EventManager : MonoBehaviour
             phoneController.onPhoneApproved.AddListener(HandlePhoneApproved);
             phoneController.onPhoneHungUp.AddListener(HandlePhoneHungUp);
         }
-
-        if (npcDialogue != null)
-        {
-            npcDialogue.onDialogueFinished.AddListener(HandleNPCInteractionFinished);
-        }
+        if (npcDialogue != null) npcDialogue.onDialogueFinished.AddListener(HandleNPCInteractionFinished);
     }
 
     private void OnDisable()
     {
+        // (Same cleanup as before)
         if (mailController != null)
         {
             mailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
             mailController.selectedMailReplay.RemoveListener(HandleMailReplied);
         }
-
         if (lindasMailController != null)
         {
             lindasMailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
             lindasMailController.selectedMailReplay.RemoveListener(HandleMailReplied);
         }
-
         if (officeChair != null) officeChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtLindasDesk);
 
@@ -116,16 +111,11 @@ public class EventManager : MonoBehaviour
             phoneController.onPhoneApproved.RemoveListener(HandlePhoneApproved);
             phoneController.onPhoneHungUp.RemoveListener(HandlePhoneHungUp);
         }
-
-        if (npcDialogue != null)
-        {
-            npcDialogue.onDialogueFinished.RemoveListener(HandleNPCInteractionFinished);
-        }
+        if (npcDialogue != null) npcDialogue.onDialogueFinished.RemoveListener(HandleNPCInteractionFinished);
     }
 
     private void Start()
     {
-        // Ensure panels are hidden at the start
         if (scamWarningPanel != null) scamWarningPanel.SetActive(false);
         if (deleteWarningPanel != null) deleteWarningPanel.SetActive(false);
         if (winPanel != null) winPanel.SetActive(false);
@@ -163,13 +153,9 @@ public class EventManager : MonoBehaviour
         if (mail != GetExpectedMailForCurrentState()) return;
 
         if (mail.EmailType == Mail.EnumMailType.Company || mail.EmailType == Mail.EnumMailType.Personal)
-        {
             TriggerDeleteWarning();
-        }
         else
-        {
             AdvanceState();
-        }
     }
 
     private void HandleMailReplied(Mail mail)
@@ -177,33 +163,38 @@ public class EventManager : MonoBehaviour
         if (mail != GetExpectedMailForCurrentState()) return;
 
         if (mail.EmailType == Mail.EnumMailType.Scam || mail.EmailType == Mail.EnumMailType.Spam)
-        {
             TriggerScamWarning();
-        }
         else
-        {
             AdvanceState();
-        }
     }
 
     private void HandlePhonePickedUp()
     {
-        if (currentState == Day1States.PhoneRinging) AdvanceState();
+        if (currentState == Day1States.PhoneRinging1 || currentState == Day1States.PhoneRinging2)
+            AdvanceState();
     }
 
     private void HandlePhoneApproved()
     {
-        if (currentState == Day1States.PhoneActiveCall)
+        if (currentState == Day1States.PhoneActiveCall1)
         {
-            TriggerScamWarning();
+            TriggerScamWarning(); // Approved the scam call!
+        }
+        else if (currentState == Day1States.PhoneActiveCall2)
+        {
+            AdvanceState(); // Approved the legit call! Good job.
         }
     }
 
     private void HandlePhoneHungUp()
     {
-        if (currentState == Day1States.PhoneActiveCall)
+        if (currentState == Day1States.PhoneActiveCall1)
         {
-            AdvanceState();
+            AdvanceState(); // Hung up on scam call! Good job.
+        }
+        else if (currentState == Day1States.PhoneActiveCall2)
+        {
+            TriggerDeleteWarning(); // Hung up on legit call! (Error)
         }
     }
 
@@ -216,7 +207,6 @@ public class EventManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-
         totalErrors++;
         if (scamWarningPanel != null) scamWarningPanel.SetActive(true);
     }
@@ -261,9 +251,14 @@ public class EventManager : MonoBehaviour
             case Day1States.CheckMail5: ChangeState(Day1States.CheckMail6); break;
             case Day1States.CheckMail6: ChangeState(Day1States.SitAtLindasDesk); break;
             case Day1States.SitAtLindasDesk: ChangeState(Day1States.CheckMail7); break;
-            case Day1States.CheckMail7: ChangeState(Day1States.PhoneRinging); break;
-            case Day1States.PhoneRinging: ChangeState(Day1States.PhoneActiveCall); break;
-            case Day1States.PhoneActiveCall: ChangeState(Day1States.NPCInteraction); break;
+            case Day1States.CheckMail7: ChangeState(Day1States.PhoneRinging1); break;
+            case Day1States.PhoneRinging1: ChangeState(Day1States.PhoneActiveCall1); break;
+
+            // NEW TRANSITIONS:
+            case Day1States.PhoneActiveCall1: ChangeState(Day1States.PhoneRinging2); break;
+            case Day1States.PhoneRinging2: ChangeState(Day1States.PhoneActiveCall2); break;
+            case Day1States.PhoneActiveCall2: ChangeState(Day1States.NPCInteraction); break;
+
             case Day1States.NPCInteraction: ChangeState(Day1States.CompleteDay); break;
         }
     }
@@ -277,52 +272,51 @@ public class EventManager : MonoBehaviour
             case Day1States.SitAtDesk:
                 stepText.text = "Task: Go sit at your desk and turn on the computer.";
                 break;
-
             case Day1States.CheckMail1:
                 stepText.text = $"Task: Read the email from {firstMail.EmailAddress}.";
                 mailBoxManager.AddMail(firstMail);
                 break;
-
-            case Day1States.CheckMail2: // Company
+            case Day1States.CheckMail2:
                 stepText.text = $"Task: You have a new message from {newCompanyMail.EmailAddress}.";
                 mailBoxManager.AddMail(newCompanyMail);
                 break;
-
-            case Day1States.CheckMail3: // Scam 1
+            case Day1States.CheckMail3:
                 stepText.text = $"Task: You have a new message from {newScamMail1.EmailAddress}.";
                 mailBoxManager.AddMail(newScamMail1);
                 break;
-
-            case Day1States.CheckMail4: // Personal
+            case Day1States.CheckMail4:
                 stepText.text = $"Task: You have a new message from {newPersonalMail.EmailAddress}.";
                 mailBoxManager.AddMail(newPersonalMail);
                 break;
-
-            case Day1States.CheckMail5: // Scam 2
+            case Day1States.CheckMail5:
                 stepText.text = $"Task: You have a new message from {newScamMail2.EmailAddress}.";
                 mailBoxManager.AddMail(newScamMail2);
                 break;
-
             case Day1States.CheckMail6:
                 stepText.text = $"Task: You have a new message from {secondMail.EmailAddress}.";
                 mailBoxManager.AddMail(secondMail);
                 break;
-
             case Day1States.SitAtLindasDesk:
                 stepText.text = "Task: Go sit at Linda's desk and help her out.";
                 break;
-
             case Day1States.CheckMail7:
                 stepText.text = $"Task: You have a new message from {thirdMail.EmailAddress} on Linda's computer.";
                 lindasMailBoxManager.AddMail(thirdMail);
                 break;
 
-            case Day1States.PhoneRinging:
+            case Day1States.PhoneRinging1:
                 stepText.text = "Task: Your phone is ringing. Pick it up.";
-                phoneController.OnPhoneCall();
+                phoneController.OnPhoneCall(scamCall); // Pass Scam Call
+                break;
+            case Day1States.PhoneActiveCall1:
+                stepText.text = "Task: Listen to the caller. Should you approve their request?";
                 break;
 
-            case Day1States.PhoneActiveCall:
+            case Day1States.PhoneRinging2:
+                stepText.text = "Task: Your phone is ringing again. Pick it up.";
+                phoneController.OnPhoneCall(legitCall); // Pass Legit Call
+                break;
+            case Day1States.PhoneActiveCall2:
                 stepText.text = "Task: Listen to the caller. Should you approve their request?";
                 break;
 
@@ -335,7 +329,6 @@ public class EventManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
                 if (winPanel != null) winPanel.SetActive(true);
-
                 if (winSummaryText != null)
                 {
                     winSummaryText.text = $"End of day: Day 1 Complete!\n\nYou made {totalErrors} error(s) today.";
