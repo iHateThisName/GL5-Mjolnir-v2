@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 public enum Day1States : int
 {
     SitAtDesk,
-    CheckMail1,
-    CheckMail2,
+    CheckMail1,         // Original 1st Mail
+    CheckMail2,         // NEW: Company Mail
+    CheckMail3,         // NEW: Scam Mail 1
+    CheckMail4,         // NEW: Personal Mail
+    CheckMail5,         // NEW: Scam Mail 2
+    CheckMail6,         // Original 2nd Mail (was CheckMail2)
     SitAtLindasDesk,
-    CheckMail3,
+    CheckMail7,         // Original 3rd Mail (was CheckMail3)
     PhoneRinging,
     PhoneActiveCall,
     NPCInteraction,
@@ -36,8 +40,16 @@ public class EventManager : MonoBehaviour
 
     [Header("ScriptableObjects")]
     [SerializeField] private Mail firstMail;
-    [SerializeField] private Mail secondMail;
-    [SerializeField] private Mail thirdMail;
+
+    // --- NEW MAILS ---
+    [SerializeField] private Mail newCompanyMail;
+    [SerializeField] private Mail newScamMail1;
+    [SerializeField] private Mail newPersonalMail;
+    [SerializeField] private Mail newScamMail2;
+    // -----------------
+
+    [SerializeField] private Mail secondMail; // Now happens 6th
+    [SerializeField] private Mail thirdMail;  // Now happens 7th on Linda's PC
 
     [Header("UI & Panels")]
     [SerializeField] private TMP_Text stepText;
@@ -136,8 +148,12 @@ public class EventManager : MonoBehaviour
         switch (currentState)
         {
             case Day1States.CheckMail1: return firstMail;
-            case Day1States.CheckMail2: return secondMail;
-            case Day1States.CheckMail3: return thirdMail;
+            case Day1States.CheckMail2: return newCompanyMail;
+            case Day1States.CheckMail3: return newScamMail1;
+            case Day1States.CheckMail4: return newPersonalMail;
+            case Day1States.CheckMail5: return newScamMail2;
+            case Day1States.CheckMail6: return secondMail;
+            case Day1States.CheckMail7: return thirdMail;
             default: return null;
         }
     }
@@ -220,13 +236,9 @@ public class EventManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
 
-
         AdvanceState();
     }
 
-    /// <summary>
-    /// Call this from a Quit button on your Win Panel
-    /// </summary>
     public void QuitGame()
     {
         Debug.Log("Quitting Game...");
@@ -243,9 +255,13 @@ public class EventManager : MonoBehaviour
         {
             case Day1States.SitAtDesk: ChangeState(Day1States.CheckMail1); break;
             case Day1States.CheckMail1: ChangeState(Day1States.CheckMail2); break;
-            case Day1States.CheckMail2: ChangeState(Day1States.SitAtLindasDesk); break;
-            case Day1States.SitAtLindasDesk: ChangeState(Day1States.CheckMail3); break;
-            case Day1States.CheckMail3: ChangeState(Day1States.PhoneRinging); break;
+            case Day1States.CheckMail2: ChangeState(Day1States.CheckMail3); break;
+            case Day1States.CheckMail3: ChangeState(Day1States.CheckMail4); break;
+            case Day1States.CheckMail4: ChangeState(Day1States.CheckMail5); break;
+            case Day1States.CheckMail5: ChangeState(Day1States.CheckMail6); break;
+            case Day1States.CheckMail6: ChangeState(Day1States.SitAtLindasDesk); break;
+            case Day1States.SitAtLindasDesk: ChangeState(Day1States.CheckMail7); break;
+            case Day1States.CheckMail7: ChangeState(Day1States.PhoneRinging); break;
             case Day1States.PhoneRinging: ChangeState(Day1States.PhoneActiveCall); break;
             case Day1States.PhoneActiveCall: ChangeState(Day1States.NPCInteraction); break;
             case Day1States.NPCInteraction: ChangeState(Day1States.CompleteDay); break;
@@ -267,7 +283,27 @@ public class EventManager : MonoBehaviour
                 mailBoxManager.AddMail(firstMail);
                 break;
 
-            case Day1States.CheckMail2:
+            case Day1States.CheckMail2: // Company
+                stepText.text = $"Task: You have a new message from {newCompanyMail.EmailAddress}.";
+                mailBoxManager.AddMail(newCompanyMail);
+                break;
+
+            case Day1States.CheckMail3: // Scam 1
+                stepText.text = $"Task: You have a new message from {newScamMail1.EmailAddress}.";
+                mailBoxManager.AddMail(newScamMail1);
+                break;
+
+            case Day1States.CheckMail4: // Personal
+                stepText.text = $"Task: You have a new message from {newPersonalMail.EmailAddress}.";
+                mailBoxManager.AddMail(newPersonalMail);
+                break;
+
+            case Day1States.CheckMail5: // Scam 2
+                stepText.text = $"Task: You have a new message from {newScamMail2.EmailAddress}.";
+                mailBoxManager.AddMail(newScamMail2);
+                break;
+
+            case Day1States.CheckMail6:
                 stepText.text = $"Task: You have a new message from {secondMail.EmailAddress}.";
                 mailBoxManager.AddMail(secondMail);
                 break;
@@ -276,7 +312,7 @@ public class EventManager : MonoBehaviour
                 stepText.text = "Task: Go sit at Linda's desk and help her out.";
                 break;
 
-            case Day1States.CheckMail3:
+            case Day1States.CheckMail7:
                 stepText.text = $"Task: You have a new message from {thirdMail.EmailAddress} on Linda's computer.";
                 lindasMailBoxManager.AddMail(thirdMail);
                 break;
@@ -298,7 +334,6 @@ public class EventManager : MonoBehaviour
                 stepText.text = "Task: Shift over.";
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
-                // Show the Win Panel and update the text inside it
                 if (winPanel != null) winPanel.SetActive(true);
 
                 if (winSummaryText != null)

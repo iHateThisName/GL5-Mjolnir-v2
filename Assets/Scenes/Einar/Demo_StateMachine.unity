@@ -19454,7 +19454,11 @@ MonoBehaviour:
   lindasMailBoxManager: {fileID: 8208337237310169378}
   phoneController: {fileID: 1073183557}
   npcDialogue: {fileID: 788673265}
-  firstMail: {fileID: 11400000, guid: c9e2ab19020cacb4a990c5aa82a73c6a, type: 2}
+  firstMail: {fileID: 11400000, guid: e0afc5c09ff0ed54f9f35a2e600d434a, type: 2}
+  newCompanyMail: {fileID: 11400000, guid: df83602eef3e30c4d80a29f22d7db273, type: 2}
+  newScamMail1: {fileID: 11400000, guid: 909118d18df15ed4d80afe951b2151da, type: 2}
+  newPersonalMail: {fileID: 11400000, guid: 57484d25f83f7254a95241a7b986980f, type: 2}
+  newScamMail2: {fileID: 11400000, guid: 04711120139a34c45847613840ba7cd3, type: 2}
   secondMail: {fileID: 11400000, guid: f9d3213daeb0fbf47ac6b8c0aecdfd3b, type: 2}
   thirdMail: {fileID: 11400000, guid: b9a7348ed09754141815217f01222947, type: 2}
   stepText: {fileID: 1421464514}
