@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
   m_Name: MailData
   m_EditorClassIdentifier: Assembly-CSharp::MailData
-  <SituationName>k__BackingField: 
-  <RequiredTasks>k__BackingField: []
-  <ParentTask>k__BackingField: {fileID: 0}
-  <RequiredConditions>k__BackingField: []
-  <ResultingConditions>k__BackingField: []
-  <TaskType>k__BackingField: 0
+  situationName: 
+  parentSituation: {fileID: 0}
+  requiredSituations: []
+  requiredConditions: []
+  resultingConditions: []
+  taskType: 0
+  emailAddress: 
+  emailHeader: 
+  emailBody: []
+  difficulty: 0
+  mailType: 0

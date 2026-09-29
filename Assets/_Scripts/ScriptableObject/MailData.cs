@@ -4,7 +4,7 @@ public class MailData : TaskData {
     [Header("Mail Data")]
     [SerializeField] private string emailAddress = string.Empty;
     [SerializeField] private string emailHeader = string.Empty;
-    [SerializeField] private string emailBody = string.Empty;
+    [SerializeField] private string[] emailBody = new string[0];
     [SerializeField] private EnumDifficulty difficulty = EnumDifficulty.None;
     [SerializeField] private MailTypeEnum mailType = MailTypeEnum.None;
     public MailTypeEnum MailType => mailType;

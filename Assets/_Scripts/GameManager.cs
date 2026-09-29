@@ -1,17 +1,39 @@
 using Assets._Scripts;
+using Eflatun.SceneReference;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : Singleton<GameManager> {
     protected override bool IsPersistent => true;
     public CharacterController playerCharacterController => PlayerRefrenceProvider.Instance.PlayerCharacterController;
     public EnumPlayerState CurrentPlayerState = EnumPlayerState.Walking;
 
-    [SerializeField] private Chair playerComputerChair;
+    [SerializeField] private Chair playerComputerChair; //TODO remove
+
+    [SerializeField] private Dictionary<string, LevelData> levelDataLookup = new Dictionary<string, LevelData>();
 
     private void Start() {
         // lock the cursor to the center of the screen and make it invisible
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
+    }
+
+    public void OnLoadeLevel() {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if(this.levelDataLookup.TryGetValue(sceneName, out LevelData levelData)) {
+
+            foreach (ConditionTracker.ConditionState conditionState in levelData.InitialConditions) {
+                ConditionTracker.Instance.SetCondition(conditionState);
+            }
+
+            foreach (SituationData situationData in levelData.Situations) {
+                // Give the situation data to the SituationManager to handle
+            }
+        }
+
     }
 
     public void TeleportPlayer(Vector3 position, Quaternion rotation) {

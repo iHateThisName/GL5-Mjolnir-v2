@@ -16,6 +16,12 @@ using UnityEngine;
 /// </summary>
 
 public class ConditionTracker : Singleton<ConditionTracker> {
+    /// <summary>
+    /// Event fired whenever a condition is updated via SetCondition.
+    /// Subscribers receive the ConditionState that was applied.
+    /// </summary>
+    public event System.Action<ConditionState> OnConditionStateChanged;
+
 
     // HashSet to store the current conditions. Using a HashSet allows for less expensive lookups and ensures that each condition is unique(Not allwing duplicates).
     private readonly HashSet<ConditionEnum> conditions = new HashSet<ConditionEnum>();
@@ -45,11 +51,20 @@ public class ConditionTracker : Singleton<ConditionTracker> {
             Debug.LogWarning("ConditionEnum.None should never be used.");
             return;
         }
-        if (conditionState.ExpectedState) {
+
+
+        if (conditionState.ExpectedState && !this.conditions.Contains(conditionState.Condition)) {
+            // Raise the condition
             this.conditions.Add(conditionState.Condition);
-        } else {
+            OnConditionStateChanged?.Invoke(conditionState);
+
+
+        } else if (!conditionState.ExpectedState && this.conditions.Contains(conditionState.Condition)) {
+            // Un-Raise the condition
             this.conditions.Remove(conditionState.Condition);
+            OnConditionStateChanged?.Invoke(conditionState);
         }
+
     }
 
     /// <summary>
@@ -83,6 +98,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     public struct ConditionState {
         public ConditionEnum Condition; // The condition that this state is about
         public bool ExpectedState; // The expected state of the condition (true for active, false for inactive)
+        public readonly bool IsMet() => ConditionTracker.Instance.HasCondition(this.Condition) == this.ExpectedState;
         public ConditionState(ConditionEnum condition, bool expectedState) {
             this.Condition = condition;
             this.ExpectedState = expectedState;
