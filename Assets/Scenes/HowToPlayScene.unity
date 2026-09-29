@@ -149,6 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PrototypeSceneManager
   MainGameButton: {fileID: 0}
+  DemoStateMachine:
+    asset: {fileID: 102900000, guid: 06508e7a60b16194fb62ca5bfdec4435, type: 3}
+    guid: 06508e7a60b16194fb62ca5bfdec4435
 --- !u!4 &212879402
 Transform:
   m_ObjectHideFlags: 0

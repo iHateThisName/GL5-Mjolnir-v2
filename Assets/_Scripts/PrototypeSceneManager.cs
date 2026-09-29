@@ -1,3 +1,4 @@
+using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -5,9 +6,10 @@ using UnityEngine.UI;
 public class PrototypeSceneManager : MonoBehaviour
 {
     [SerializeField] private Button MainGameButton;
+    [SerializeField] private SceneReference DemoStateMachine;
 
     public void LoadMainGame()
     {
-        SceneManager.LoadScene("Demo_StateMachine");
+        SceneManager.LoadScene(DemoStateMachine.Name);
     }
 }
