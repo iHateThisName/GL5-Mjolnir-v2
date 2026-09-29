@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -18,9 +16,11 @@ public class DialogueSystemV0 : MonoBehaviour
     [SerializeField] GameObject dialoguePanel;
     [SerializeField] GameObject characterPortrait;
 
+
     private void OnEnable()
     {
         NpcCollider.OnInteract += ShowDialogue;
+        //ShowDialogue();
         //dialogueCanvas.SetActive(true);
         nameText.text = name;
         dialogueText.text = dialogue.Lines[dialogIndex];
@@ -38,21 +38,39 @@ public class DialogueSystemV0 : MonoBehaviour
 
     private void ShowDialogue()
     {
-        Debug.Log(dialogue.Lines[dialogIndex]);
-        dialogIndex++;
+
+        // Check if the dialog is finished
+        if (dialogIndex >= dialogue.Lines.Length)
+        {
+            EndDialogue();
+            dialogIndex = 0;
+            dialogueCanvas.SetActive(false);
+        }
+        else
+        {
+            // Show the dialog line
+            string line = dialogue.Lines[dialogIndex];
+            ShowDialogue(dialogue: line, name: "Me");
+            dialogueCanvas.SetActive(true);
+
+            dialogIndex++; // tell it to go to next line 
+        }
+
+
+
     }
 
-    //public void ShowDialogue(string dialogue, string name)
-    //{
-    //    nameText.text = name + "...";
-    //    dialogueText.text = dialogue;
-    //    dialoguePanel.SetActive(true);
-    //}
+    public void ShowDialogue(string dialogue, string name)
+    {
+        nameText.text = name + "...";
+        dialogueText.text = dialogue;
+        dialoguePanel.SetActive(true);
+    }
 
-    //public void EndDialogue()
-    //{
-    //    nameText.text = null;
-    //    dialogueText.text = null; ;
-    //    dialoguePanel.SetActive(false);
-    //}
+    public void EndDialogue()
+    {
+        nameText.text = null;
+        dialogueText.text = null; ;
+        dialoguePanel.SetActive(false);
+    }
 }

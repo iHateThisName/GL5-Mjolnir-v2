@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812a06c0293c5a3488cae37e5ce047d0, type: 3}
   m_Name: GreebTestDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAsset
+  situationName: GreebTestDialogue
+  parentSituation: {fileID: 0}
+  requiredTasks: []
+  requiredConditions: []
+  resultingConditions: []
   Lines:
   - Greeble
   - Greeb needs your help
   - Greeb wants you to avoid sketchy links
-  RequiredConditions: []
