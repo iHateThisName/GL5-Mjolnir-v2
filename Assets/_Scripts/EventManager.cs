@@ -152,7 +152,7 @@ public class EventManager : MonoBehaviour
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        if (mail.EmailType == Mail.EnumMailType.Company || mail.EmailType == Mail.EnumMailType.Personal)
+        if (mail.EmailType == MailData.MailTypeEnum.Company || mail.EmailType == MailData.MailTypeEnum.Personal)
             TriggerDeleteWarning();
         else
             AdvanceState();
@@ -162,7 +162,7 @@ public class EventManager : MonoBehaviour
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        if (mail.EmailType == Mail.EnumMailType.Scam || mail.EmailType == Mail.EnumMailType.Spam)
+        if (mail.EmailType == MailData.MailTypeEnum.Scam || mail.EmailType == MailData.MailTypeEnum.Spam)
             TriggerScamWarning();
         else
             AdvanceState();

@@ -69,6 +69,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     /// Each value represents a boolean world state that may influence
     /// gameplay, task availability, event triggering, or progression.
     /// </summary>
+    [System.Serializable]
     public enum ConditionEnum : int {
         None = 0, // Should never be used.
         HasCompletedTutorial = 1,
@@ -78,9 +79,10 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     /// Represents a condition together with its expected state.
     /// This can be build upon to define complex condition requirements or how it interacts with tasks, events, or interactions.
     /// </summary>
-    public readonly struct ConditionState {
-        public readonly ConditionEnum Condition; // The condition that this state is about
-        public readonly bool ExpectedState; // The expected state of the condition (true for active, false for inactive)
+    [System.Serializable]
+    public struct ConditionState {
+        public ConditionEnum Condition; // The condition that this state is about
+        public bool ExpectedState; // The expected state of the condition (true for active, false for inactive)
         public ConditionState(ConditionEnum condition, bool expectedState) {
             this.Condition = condition;
             this.ExpectedState = expectedState;

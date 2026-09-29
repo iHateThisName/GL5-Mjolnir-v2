@@ -36,3 +36,5 @@ public enum EnumPlayerState {
     Walking = 1,
     UsingComputer = 2,
 }
+
+public enum EnumDifficulty { None = 0, Easy = 1, Medium = 2, Hard = 3, }
