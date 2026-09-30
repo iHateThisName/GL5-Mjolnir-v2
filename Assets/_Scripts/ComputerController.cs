@@ -1,5 +1,6 @@
 using Assets._Scripts;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ComputerController : MonoBehaviour {
@@ -11,10 +12,18 @@ public class ComputerController : MonoBehaviour {
     // Screen buttons
     [SerializeField] private Button powerButton;
     [SerializeField] private Button mailButton;
+    [SerializeField] private EventSystem computerEventSystem;
 
     [Header("Windows")]
     [SerializeField] private GameObject WindowMailGameobject;
     public void OnTestDebug() => Debug.Log("Test button pressed!");
+
+    private void Start() {
+        // Checking if the scene have a event system.
+        if (EventSystem.current == null) {
+            this.computerEventSystem.gameObject.SetActive(true);
+        }
+    }
     public void OnPowerButton() {
         if (!this.isActive) return;
 

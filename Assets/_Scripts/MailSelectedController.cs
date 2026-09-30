@@ -17,14 +17,14 @@ public class MailSelectedController : MonoBehaviour {
     public UnityEvent<Mail> selectedMailReplay;
 
     private void Start() {
-        if (currentSelectedMail == null) {
+        if (this.currentSelectedMail == null) {
             this.selectedMailBody.text = string.Empty;
         } else {
             SelectMail(currentSelectedMail);
         }
 
-        deleteSelectedMail.onClick.AddListener(OnDeleteSelectedMail);
-        replaySelectedMail.onClick.AddListener(OnReplaySelectedMail);
+        this.deleteSelectedMail.onClick.AddListener(OnDeleteSelectedMail);
+        this.replaySelectedMail.onClick.AddListener(OnReplaySelectedMail);
     }
 
     private void OnReplaySelectedMail()
@@ -32,22 +32,22 @@ public class MailSelectedController : MonoBehaviour {
         Debug.Log("Replaying selected mail");
         if (currentSelectedMail != null)
         {
-            selectedMailReplay?.Invoke(currentSelectedMail);
+            this.selectedMailReplay?.Invoke(currentSelectedMail);
         }
     }
 
     private void OnDeleteSelectedMail() {
-        if (currentSelectedMail != null) {
-            selectedMailDeleted?.Invoke(currentSelectedMail);
-            currentSelectedMail = null;
-            selectedMailBody.text = string.Empty;
+        if (this.currentSelectedMail != null) {
+            this.selectedMailDeleted?.Invoke(currentSelectedMail);
+            this.currentSelectedMail = null;
+            this.selectedMailBody.text = string.Empty;
         }
     }
 
     public void SelectMail(Mail mail) {
         this.currentSelectedMail = mail;
-        selectedMailBody.text = mail.EmailBody;
-        selectedMailOpened?.Invoke(mail);
+        this.selectedMailBody.text = mail.EmailBody;
+        this.selectedMailOpened?.Invoke(mail);
 
         Debug.Log($"Selected mail: {mail.EmailSubject}");
     }

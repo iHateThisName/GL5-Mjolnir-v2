@@ -5,23 +5,24 @@ using UnityEngine.Events;
 public class MailBoxManager : MonoBehaviour {
     [SerializeField] private List<Mail> mails = new List<Mail>();
     [field:SerializeField] private Dictionary<Mail, GameObject> mailGameObjects { get; } = new Dictionary<Mail, GameObject>();
-
+    [SerializeField] private Transform mailContainer;
     public UnityEvent<Mail> onMailSelected = new UnityEvent<Mail>();
 
+
     private void Start() {
-        //MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
-        //if (this.mails.Count == 0) return;
+        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
+        if (this.mails.Count == 0) return;
 
-        //foreach (Mail mail in mails) {
-        //    MailController mailController = Instantiate(mailPrefab);
-        //    mailController.gameObject.transform.SetParent(transform, false);
-        //    mailController.Initilize(mail);
-        //    mailController.mailButton.onClick.AddListener(() => OnMailSelected(mail));
+        foreach (Mail mail in mails) {
+            MailController mailController = Instantiate(mailPrefab);
+            mailController.gameObject.transform.SetParent(this.mailContainer, false);
+            mailController.Initilize(mail);
+            mailController.mailButton.onClick.AddListener(() => OnMailSelected(mail));
 
-        //    this.mailGameObjects.Add(mail, mailController.gameObject);
-        //}
+            this.mailGameObjects.Add(mail, mailController.gameObject);
+        }
 
-        //Debug.Log($"MailBoxManager initialized with {mails.Count} mails.");
+        Debug.Log($"MailBoxManager initialized with {mails.Count} mails.");
     }
     
     /// <summary>
@@ -44,7 +45,7 @@ public class MailBoxManager : MonoBehaviour {
     private void InstantiateMailUI(Mail mail, MailController prefab)
     {
         MailController mailController = Instantiate(prefab);
-        mailController.gameObject.transform.SetParent(transform, false);
+        mailController.gameObject.transform.SetParent(this.mailContainer, false);
 
         mailController.transform.localScale = Vector3.one;
 
