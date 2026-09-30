@@ -6,27 +6,36 @@ namespace Assets._Scripts {
     public class Chair : MonoBehaviour, IInteractable {
         [SerializeField] private Transform sitPosition;
         [SerializeField] private CinemachineCamera lockedCamera;
-        [SerializeField] private CinemachineCamera WalkCamera;
         public Vector3 playerStandPosition;
         public Quaternion playerRotation;
 
         public UnityEvent onPlayerSatDown;
-        public void Interact(GameObject interactor) {
-            Debug.Log($"{interactor.name} interacted with {gameObject.name}");
+        public async void Interact(GameObject interactor) {
             if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
-                Debug.Log("Already using a computer. Cannot sit down.");
+                Debug.Log("Already sitting. Cannot sit down.");
                 return;
             }
-            MovementController controller = interactor.GetComponent<MovementController>();
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Sitting;
+
+            // refrence to be used later.
+            CinemachineBrain cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
+
+            // Store the stand position.
             this.playerStandPosition = interactor.transform.root.position;
             this.playerRotation = interactor.transform.root.rotation;
 
+            // Starting the camera blend
+            lockedCamera.gameObject.SetActive(true); // enable the locked sitting camera
+            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Sitting; // disables the walking camera
 
-            GameManager.Instance.TeleportPlayer(sitPosition.position, sitPosition.rotation);
-            lockedCamera.gameObject.SetActive(true);
-            this.WalkCamera.gameObject.SetActive(false);
-            PlayerRefrenceProvider.Instance.PlayerHeadTransform.localRotation = Quaternion.identity;
+            // Wait for the blend to happen
+            await Awaitable.NextFrameAsync();
+
+            while (cameraBrain.IsBlending) {
+                await Awaitable.NextFrameAsync();
+            }
+
+            // Telporting the player
+            GameManager.Instance.TeleportPlayer(this.sitPosition.position, this.sitPosition.rotation);
 
             //Fire event
             onPlayerSatDown?.Invoke();
@@ -35,10 +44,7 @@ namespace Assets._Scripts {
         public void StandUp() {
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
             lockedCamera.gameObject.SetActive(false);
-            this.WalkCamera.gameObject.SetActive(true);
-
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
-
         }
     }
 }
