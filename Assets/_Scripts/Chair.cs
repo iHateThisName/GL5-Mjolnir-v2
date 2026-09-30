@@ -13,12 +13,12 @@ namespace Assets._Scripts {
         public UnityEvent onPlayerSatDown;
         public void Interact(GameObject interactor) {
             Debug.Log($"{interactor.name} interacted with {gameObject.name}");
-            if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.UsingComputer) {
+            if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
                 Debug.Log("Already using a computer. Cannot sit down.");
                 return;
             }
             MovementController controller = interactor.GetComponent<MovementController>();
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.UsingComputer;
+            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Sitting;
             this.playerStandPosition = interactor.transform.root.position;
             this.playerRotation = interactor.transform.root.rotation;
 
@@ -36,8 +36,7 @@ namespace Assets._Scripts {
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
             lockedCamera.gameObject.SetActive(false);
             this.WalkCamera.gameObject.SetActive(true);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
 
         }

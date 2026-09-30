@@ -80,7 +80,7 @@ MonoBehaviour:
   characterController: {fileID: 2983253976451522625}
   playerVisualTransform: {fileID: 3880098410596202016}
   playerHeadVisualTransform: {fileID: 8436407638946175352}
-  playerCamera: {fileID: 0}
+  <PlayerCamera>k__BackingField: {fileID: 0}
   moveActionReference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   interactActionReference: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   attackActionReference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4400999431691672399}
   - component: {fileID: 2983253976451522625}
   m_Layer: 0
-  m_Name: PlayerPrefab 1
+  m_Name: PlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8851,7 +8851,7 @@ MonoBehaviour:
   AutoUnparentOnAwake: 1
   <PlayerCharacterController>k__BackingField: {fileID: 2983253976451522625}
   <PlayerHeadTransform>k__BackingField: {fileID: 8436407638946175352}
-  <PlayerPhoneToEarPosition>k__BackingField: {fileID: 0}
+  playerMovementController: {fileID: 75500357627686742}
 --- !u!1 &7322685903932364876
 GameObject:
   m_ObjectHideFlags: 0

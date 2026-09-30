@@ -24,6 +24,10 @@ public abstract class SituationData : ScriptableObject {
     public ConditionTracker.ConditionState[] RequiredConditions => requiredConditions; // Optional, Array of conditions that must be met for this situation to be activated.
     public ConditionTracker.ConditionState[] ResultingConditions => resultingConditions; // Optional, Array of conditions that will be set when this situation is completed.
 
+    //// Situation state enum to represent the current state of the situation
+    //public SituationStateEnum SituationState { get; set; } = SituationStateEnum.Inactive;
+    //[System.Serializable] public enum SituationStateEnum : int { Inactive = 0, Active = 1, Completed = 2, Failed = 3 }
+
     public bool IsRequiredSituationsCompleted() {
         int numberOfSituationsCompleted = 0;
 

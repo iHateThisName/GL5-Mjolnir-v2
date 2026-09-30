@@ -7,7 +7,7 @@ public class MovementController : MonoBehaviour {
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Transform playerVisualTransform;
     [SerializeField] private Transform playerHeadVisualTransform;
-    [SerializeField] private CinemachineCamera playerCamera;
+    [field: SerializeField] public CinemachineCamera PlayerCamera { get; private set; }
     [SerializeField] private InputActionReference moveActionReference;
     [SerializeField] private InputActionReference interactActionReference;
     [SerializeField] private InputActionReference attackActionReference;
@@ -40,12 +40,12 @@ public class MovementController : MonoBehaviour {
         // rotate the charater controller y-axis based on the camera's y rotation
         this.characterController.transform.rotation = Quaternion.Euler(
             0f,
-            this.playerCamera.transform.rotation.eulerAngles.y,
+            this.PlayerCamera.transform.rotation.eulerAngles.y,
             0f
         );
 
         this.playerHeadVisualTransform.rotation = Quaternion.Euler(
-            this.playerCamera.transform.rotation.eulerAngles.x,
+            this.PlayerCamera.transform.rotation.eulerAngles.x,
             this.playerHeadVisualTransform.rotation.eulerAngles.y,
             this.playerHeadVisualTransform.rotation.eulerAngles.z
         );

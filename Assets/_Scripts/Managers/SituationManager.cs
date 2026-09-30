@@ -13,8 +13,6 @@ using UnityEngine;
 public class SituationManager : Singleton<SituationManager> {
 
     public List<SituationData> situationDatas = new List<SituationData>();
-    public List<ConditionTracker.ConditionState> conditionStates = new List<ConditionTracker.ConditionState>();
-
     public event System.Action<SituationData> OnSituationCompleted; // Can be both successful or failed
 
     private void OnEnable() {
