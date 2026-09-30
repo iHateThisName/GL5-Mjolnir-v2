@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +10,8 @@ using UnityEngine;
 /// </summary>
 
 public class SituationManager : Singleton<SituationManager> {
-
-    public List<SituationData> situationDatas = new List<SituationData>();
-    public event System.Action<SituationData> OnSituationCompleted; // Can be both successful or failed
+    [field: SerializeField] public List<SituationData> Situations { get; private set; } = new List<SituationData>();
+    public event System.Action<SituationData> OnSituationStateChange; // When the situation state has changed based on SituationStateEnum
 
     private void OnEnable() {
         ConditionTracker.Instance.OnConditionStateChanged += OnCoditionChanged;
@@ -23,14 +21,19 @@ public class SituationManager : Singleton<SituationManager> {
         ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
     }
     public void AddSituation(SituationData situationData) {
-        if (!situationDatas.Contains(situationData)) {
-            situationDatas.Add(situationData);
+        if (!Situations.Contains(situationData)) {
+            Situations.Add(situationData);
+
+            // If a situation gets added that does not start inactive then notify any listner.
+            if (situationData.SituationStateEnum != SituationStateEnum.Inactive) {
+                OnSituationStateChange?.Invoke(situationData);
+            }
         }
     }
 
     public void OnCoditionChanged(ConditionTracker.ConditionState changed) {
-        List<SituationData> situationsRelated = this.situationDatas.FindAll(s => s.RequiredConditions.Contains(changed));
-        
+        List<SituationData> situationsRelated = this.Situations.FindAll(s => s.RequiredConditions.Contains(changed));
+
         situationsRelated.ForEach(situation => {
             if (situation.IsRequiredConditionsMet()) {
 
@@ -38,10 +41,53 @@ public class SituationManager : Singleton<SituationManager> {
                 foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingConditions) {
                     ConditionTracker.Instance.SetCondition(raisedCondition);
                 }
+                
+                // Update the situation state.
+                if (situation.SituationStateEnum == SituationStateEnum.Inactive && situation.IsRequiredSituationsCompleted()) {
+                    situation.SituationStateEnum = SituationStateEnum.Active;
 
-                // Trigger the event to notify that the situation's required conditions are met, allowing it to be activated.
-                OnSituationCompleted?.Invoke(situation);
+                    // Notify that the state has been changed.
+                    OnSituationStateChange?.Invoke(situation);
+                }
             }
         });
     }
+
+    public void CheckAllSituationState() {
+        // Find all situations that are not completed (NOT successful/failed).
+        List<SituationData> NotCompletedSituations = Situations.FindAll(x => x.SituationStateEnum != SituationStateEnum.Success || x.SituationStateEnum != SituationStateEnum.Failed);
+
+        foreach (SituationData situation in NotCompletedSituations) {
+            if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
+                situation.SituationStateEnum = SituationStateEnum.Active;
+                OnSituationStateChange?.Invoke(situation);
+            }
+        }
+    }
+
+    public void CheckSituationState(SituationData situation) {
+        if (situation.SituationStateEnum != SituationStateEnum.Success || situation.SituationStateEnum != SituationStateEnum.Failed) {
+            if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
+                situation.SituationStateEnum = SituationStateEnum.Active;
+                OnSituationStateChange?.Invoke(situation);
+            }
+        }
+    }
+
+    public void SetSituationState(SituationManager.SituationStateEnum newState, SituationData situation) {
+        if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Inactive) return;
+        
+        // State has to be active to change state to success or failed
+
+        if (newState == SituationManager.SituationStateEnum.Success || newState == SituationManager.SituationStateEnum.Failed) {
+            situation.SituationStateEnum = newState;
+
+            // Set the resulting conditions when the situation is completed
+            foreach (ConditionTracker.ConditionState condition in situation.ResultingConditions) {
+                ConditionTracker.Instance.SetCondition(condition);
+            }
+        }
+
+    }
+    [System.Serializable] public enum SituationStateEnum : int { Inactive = 0, Active = 1, Success = 2, Failed = 3 }
 }
