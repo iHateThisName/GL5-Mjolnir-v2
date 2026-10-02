@@ -32,7 +32,7 @@ public class DialogueSystemV0 : MonoBehaviour
         NpcCollider.OnInteract -= ShowDialogue;
         //dialogueCanvas.SetActive(false);
         nameText.text = null;
-        dialogueText.text = null; ;
+        dialogueText.text = null;
         dialoguePanel.SetActive(false);
     }
 
@@ -50,19 +50,16 @@ public class DialogueSystemV0 : MonoBehaviour
         {
             // Show the dialog line
             string line = dialogue.Lines[dialogIndex];
-            ShowDialogue(dialogue: line, name: "Me");
+            ShowDialogue(dialogue: line, name: dialogue.Name);
             dialogueCanvas.SetActive(true);
 
             dialogIndex++; // tell it to go to next line 
         }
-
-
-
     }
 
     public void ShowDialogue(string dialogue, string name)
     {
-        nameText.text = name + "...";
+        nameText.text = name;
         dialogueText.text = dialogue;
         dialoguePanel.SetActive(true);
     }
