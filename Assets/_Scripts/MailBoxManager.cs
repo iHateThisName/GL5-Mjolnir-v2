@@ -7,14 +7,27 @@ public class MailBoxManager : MonoBehaviour {
     [SerializeField] private Transform mailContainer;
     [SerializeField] private MailSelectedController mailSelectedController;
 
-    private void OnEnable() {
-        this.mailSelectedController.selectedMailDeleted.AddListener(OnDeleteMail);
-        SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
+    private void OnEnable()
+    {
+        if (this.mailSelectedController != null)
+        {
+            this.mailSelectedController.selectedMailDeleted.AddListener(OnDeleteMail);
+        }
+
+        if (SituationManager.Instance != null)
+        {
+            SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
+        }
     }
 
-    private void OnDisable() {
-        this.mailSelectedController.selectedMailDeleted.RemoveListener(OnDeleteMail);
-        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
+    private void OnDisable()
+    {
+        this.mailSelectedController?.selectedMailDeleted?.RemoveListener(OnDeleteMail);
+
+        if (SituationManager.Instance != null)
+        {
+            SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
+        }
     }
 
     private void Awake() {

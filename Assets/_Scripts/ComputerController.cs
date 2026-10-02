@@ -25,16 +25,18 @@ public class ComputerController : MonoBehaviour {
         }
     }
 
-    private void OnEnable() {
-        this.powerButton.onClick.AddListener(OnPowerButton);
-        this.oldMailButton.onClick.AddListener(OnOldMailButton);
-        this.mailButton.onClick.AddListener(OnMailButton);
+    private void OnEnable()
+    {
+        powerButton?.onClick.AddListener(OnPowerButton);
+        oldMailButton?.onClick.AddListener(OnOldMailButton);
+        mailButton?.onClick.AddListener(OnMailButton);
     }
 
-    private void OnDisable() {
-        this.powerButton.onClick.RemoveListener(OnPowerButton);
-        this.oldMailButton.onClick.RemoveListener(OnOldMailButton);
-        this.mailButton.onClick.RemoveListener(OnMailButton);
+    private void OnDisable()
+    {
+        powerButton?.onClick.RemoveListener(OnPowerButton);
+        oldMailButton?.onClick.RemoveListener(OnOldMailButton);
+        mailButton?.onClick.RemoveListener(OnMailButton);
     }
 
     public void OnPowerButton() {

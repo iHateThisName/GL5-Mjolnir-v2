@@ -24,17 +24,24 @@ public class MailSelectedController : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        if (this.currentSelectedMail == null)
+        if (this.selectedMailBody != null)
         {
-            this.selectedMailBody.text = string.Empty;
+            if (this.currentSelectedMail == null)
+            {
+                this.selectedMailBody.text = string.Empty;
+            }
+            else
+            {
+                SelectMail(currentSelectedMail);
+            }
         }
         else
         {
-            SelectMail(currentSelectedMail);
+            Debug.LogWarning("Selected Mail Body is missing in the Inspector!");
         }
 
-        this.deleteSelectedMail.onClick.AddListener(OnDeleteSelectedMail);
-        this.replaySelectedMail.onClick.AddListener(OnReplaySelectedMail);
+        this.deleteSelectedMail?.onClick.AddListener(OnDeleteSelectedMail);
+        this.replaySelectedMail?.onClick.AddListener(OnReplaySelectedMail);
     }
 
     private void OnReplaySelectedMail()
