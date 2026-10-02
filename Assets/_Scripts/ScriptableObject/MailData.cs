@@ -2,9 +2,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MailData", menuName = "Scriptable Objects/Situation/MailData")]
 public class MailData : TaskData {
     [Header("Mail Data")]
+    [Header("Mail Data")]
     [SerializeField] private string emailAddress = string.Empty;
     [SerializeField] private string emailHeader = string.Empty;
+
+    [TextArea(3, 10)]
     [SerializeField] private string[] emailBody = new string[0];
+
     [SerializeField] private EnumDifficulty difficulty = EnumDifficulty.None;
     [SerializeField] private MailTypeEnum mailType = MailTypeEnum.None;
 
@@ -14,6 +18,34 @@ public class MailData : TaskData {
     public string[] EmailBody => emailBody;
     public EnumDifficulty Difficulty => difficulty;
     public MailTypeEnum MailType => mailType;
+
+    [Header("TV Reveal Data")]
+
+    [Tooltip("Highlight and copy the tags you need from this box!")]
+    [TextArea(5, 6)]
+    [SerializeField]
+    private string tagCheatSheet =
+            "--- COPY TAGS FROM HERE ---\n" +
+            "Spelling Error: <color=red>typo</color>\n" +
+            "Suspicious Idea: <mark=#ff000055>trap</mark>\n" +
+            "Fake Link: <color=#0055FF><u><link=\"virus\">fake.com</link></u></color>";
+
+    [TextArea(3, 10)]
+    [SerializeField] private string[] annotatedEmailBody = new string[0];
+    [SerializeField] private string annotatedEmailAddress = string.Empty;
+
+    private void Reset()
+    {
+        tagCheatSheet =
+            "--- COPY TAGS FROM HERE ---\n" +
+            "Spelling Error: <color=red>typo</color>\n" +
+            "Suspicious Idea: <mark=#ff000055>trap</mark>\n" +
+            "Fake Link: <color=#0055FF><u><link=\"virus\">fake.com</link></u></color>";
+    }
+
+    // Getters that fall back to the normal text if the annotated fields are left empty
+    public string[] AnnotatedEmailBody => annotatedEmailBody.Length > 0 ? annotatedEmailBody : emailBody;
+    public string AnnotatedEmailAddress => string.IsNullOrEmpty(annotatedEmailAddress) ? emailAddress : annotatedEmailAddress;
 
     public MailData(string emailAddress, string emailHeader, string[] emailBody, MailTypeEnum mailType) {
         this.emailAddress = emailAddress;

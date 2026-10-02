@@ -2,13 +2,15 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MailSelectedController : MonoBehaviour {
+public class MailSelectedController : MonoBehaviour, IPointerClickHandler
+{
     [SerializeField] private MailData currentSelectedMail;
 
     [SerializeField] private TMP_Text selectedMailBody;
-    // Buttons
+
     [SerializeField] private Button deleteSelectedMail;
     [SerializeField] private Button replaySelectedMail;
 
@@ -16,10 +18,17 @@ public class MailSelectedController : MonoBehaviour {
     public UnityEvent<MailData> selectedMailDeleted;
     public UnityEvent<MailData> selectedMailReplay;
 
-    private void Start() {
-        if (this.currentSelectedMail == null) {
+    // Fires when player clicks a link
+    public UnityEvent<string> selectedMailLinkClicked;
+
+    private void Start()
+    {
+        if (this.currentSelectedMail == null)
+        {
             this.selectedMailBody.text = string.Empty;
-        } else {
+        }
+        else
+        {
             SelectMail(currentSelectedMail);
         }
 
@@ -36,19 +45,41 @@ public class MailSelectedController : MonoBehaviour {
         }
     }
 
-    private void OnDeleteSelectedMail() {
-        if (this.currentSelectedMail != null) {
+    private void OnDeleteSelectedMail()
+    {
+        if (this.currentSelectedMail != null)
+        {
             this.selectedMailDeleted?.Invoke(currentSelectedMail);
             this.currentSelectedMail = null;
             this.selectedMailBody.text = string.Empty;
         }
     }
 
-    public void SelectMail(MailData mailData) {
+    public void SelectMail(MailData mailData)
+    {
         this.currentSelectedMail = mailData;
         this.selectedMailBody.text = string.Join("\n", mailData.EmailBody);
         this.selectedMailOpened?.Invoke(mailData);
 
         Debug.Log($"Selected mail data: {mailData.EmailHeader}");
+    }
+
+    // Link click logic
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (selectedMailBody == null) return;
+
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(selectedMailBody, eventData.position, eventData.pressEventCamera);
+
+        if (linkIndex != -1) // no link
+        {
+            TMP_LinkInfo linkInfo = selectedMailBody.textInfo.linkInfo[linkIndex];
+            string linkID = linkInfo.GetLinkID();
+
+            Debug.Log($"Player clicked a link with ID: {linkID}");
+
+            // Tell eventManager
+            selectedMailLinkClicked?.Invoke(linkID);
+        }
     }
 }
