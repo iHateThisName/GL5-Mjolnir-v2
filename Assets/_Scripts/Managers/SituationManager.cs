@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +21,24 @@ public class SituationManager : Singleton<SituationManager> {
 
     private void OnDisable() {
         ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
+    }
+
+    [ContextMenu("Debug Log Active Situations")]
+    public void DebugLogActiveSituations() {
+        List<SituationData> activeSituations = Situations.Where(s => s.SituationStateEnum == SituationStateEnum.Active).ToList();
+        Debug.Log($"Active Situations: {activeSituations.Count}");
+        foreach (SituationData situation in activeSituations) {
+            Debug.Log($"Active Situation: {situation.SituationName}");
+        }
+    }
+
+    [ContextMenu("Debug Log All Situations")]
+    public void DebugLogAllSituations() {
+        StringBuilder sb = new StringBuilder();
+        foreach (SituationData situation in Situations) {
+            sb.AppendLine($"Situation: {situation.SituationName}, State: {situation.SituationStateEnum}");
+        }
+        Debug.Log(sb.ToString());
     }
     public void AddSituation(SituationData situationData) {
         if (!Situations.Contains(situationData)) {

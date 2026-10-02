@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
-  m_Name: MailData
+  m_Name: MailData 2
   m_EditorClassIdentifier: Assembly-CSharp::MailData
   situationName: 
   parentSituation: {fileID: 0}
-  requiredSituations: []
+  requiredSituations:
+  - {fileID: 11400000, guid: 5c3cc999af51fe3479593ce7d5b88cd5, type: 2}
   requiredConditions: []
   resultingConditions: []
   SituationStateEnum: 0
   taskType: 0
-  emailAddress: One@gmail.com
-  emailHeader: A Header
+  emailAddress: Two@gmail.com
+  emailHeader: a Header
   emailBody:
   - Test Line 1
   - Test Line 2

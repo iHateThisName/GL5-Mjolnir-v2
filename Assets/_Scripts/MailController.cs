@@ -18,4 +18,9 @@ public class MailController : MonoBehaviour {
         mailAddreass.text = mail.EmailAddress;
         mailSubject.text = mail.EmailSubject;
     }
+
+    public void Initilize(MailData mailData) {
+        mailAddreass.text = mailData.EmailAddress;
+        mailSubject.text = mailData.EmailHeader;
+    }
 }

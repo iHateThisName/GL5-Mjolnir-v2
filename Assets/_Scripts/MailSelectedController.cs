@@ -5,16 +5,16 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MailSelectedController : MonoBehaviour {
-    [SerializeField] private Mail currentSelectedMail;
+    [SerializeField] private MailData currentSelectedMail;
 
     [SerializeField] private TMP_Text selectedMailBody;
     // Buttons
     [SerializeField] private Button deleteSelectedMail;
     [SerializeField] private Button replaySelectedMail;
 
-    public UnityEvent<Mail> selectedMailOpened;
-    public UnityEvent<Mail> selectedMailDeleted;
-    public UnityEvent<Mail> selectedMailReplay;
+    public UnityEvent<MailData> selectedMailOpened;
+    public UnityEvent<MailData> selectedMailDeleted;
+    public UnityEvent<MailData> selectedMailReplay;
 
     private void Start() {
         if (this.currentSelectedMail == null) {
@@ -44,11 +44,11 @@ public class MailSelectedController : MonoBehaviour {
         }
     }
 
-    public void SelectMail(Mail mail) {
-        this.currentSelectedMail = mail;
-        this.selectedMailBody.text = mail.EmailBody;
-        this.selectedMailOpened?.Invoke(mail);
+    public void SelectMail(MailData mailData) {
+        this.currentSelectedMail = mailData;
+        this.selectedMailBody.text = string.Join("\n", mailData.EmailBody);
+        this.selectedMailOpened?.Invoke(mailData);
 
-        Debug.Log($"Selected mail: {mail.EmailSubject}");
+        Debug.Log($"Selected mail data: {mailData.EmailHeader}");
     }
 }
