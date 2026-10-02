@@ -3456,23 +3456,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5997e4055f0e5b4bbb8f313cd0122e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  mails: []
+  mailDataList: []
   mailContainer: {fileID: 8116397377550250127}
-  onMailSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9035188472965735197}
-        m_TargetAssemblyTypeName: MailSelectedController, Assembly-CSharp
-        m_MethodName: SelectMail
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  mailSelectedController: {fileID: 0}
 --- !u!1 &4210607461967560966
 GameObject:
   m_ObjectHideFlags: 0
@@ -4099,6 +4085,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   selectedMailReplay:
+    m_PersistentCalls:
+      m_Calls: []
+  selectedMailLinkClicked:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6004065120567923621

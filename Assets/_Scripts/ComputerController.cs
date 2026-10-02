@@ -11,8 +11,8 @@ public class ComputerController : MonoBehaviour {
 
     // Screen buttons
     [SerializeField] private Button powerButton;
+    [SerializeField] private Button oldMailButton;
     [SerializeField] private Button mailButton;
-    [SerializeField] private Button newMailButton;
     [SerializeField] private EventSystem computerEventSystem;
 
     [Header("Windows")]
@@ -27,14 +27,14 @@ public class ComputerController : MonoBehaviour {
 
     private void OnEnable() {
         this.powerButton.onClick.AddListener(OnPowerButton);
+        this.oldMailButton.onClick.AddListener(OnOldMailButton);
         this.mailButton.onClick.AddListener(OnMailButton);
-        this.newMailButton.onClick.AddListener(OnNewMailButton);
     }
 
     private void OnDisable() {
         this.powerButton.onClick.RemoveListener(OnPowerButton);
+        this.oldMailButton.onClick.RemoveListener(OnOldMailButton);
         this.mailButton.onClick.RemoveListener(OnMailButton);
-        this.newMailButton.onClick.RemoveListener(OnNewMailButton);
     }
 
     public void OnPowerButton() {
@@ -48,12 +48,12 @@ public class ComputerController : MonoBehaviour {
     }
 
     [ContextMenu("Window/Toggle Mail Window")]
-    public void OnMailButton() {
+    public void OnOldMailButton() {
         ToggleComputerWindow(this.WindowMailGameobject);
     }
 
     [ContextMenu("Window/Toggle New Mail Window")]
-    public void OnNewMailButton() {
+    public void OnMailButton() {
         ToggleComputerWindow(this.NewWindowMailGameobject);
     }
 
