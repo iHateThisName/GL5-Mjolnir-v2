@@ -54,21 +54,28 @@ public class MovementController : MonoBehaviour {
             HandleMove(this.moveInput);
         }
     }
-    private void OnInteract(InputAction.CallbackContext context) {
+    private void OnInteract(InputAction.CallbackContext context)
+    {
         Debug.Log("Interact action performed");
 
-        // Check if pointer is over a UI element. If so, ignore the interaction.
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) {
-            return;
-        }
+        // (Removed the IsPointerOverGameObject check that was causing the warning and blocking the raycast)
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 3f)) {
-            if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable)) {
+        if (Physics.Raycast(ray, out RaycastHit hit, 3f))
+        {
+
+            Debug.Log($"Raycast hit: {hit.collider.name}"); //What was clicked
+
+            if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
+            {
                 interactable.Interact(gameObject);
             }
+        }
+        else
+        {
+            Debug.Log("Raycast missed everything.");
         }
 
         Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red, 5f);

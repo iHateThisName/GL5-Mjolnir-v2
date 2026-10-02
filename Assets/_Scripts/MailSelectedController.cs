@@ -3,9 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MailSelectedController : MonoBehaviour, IPointerClickHandler
+public class MailSelectedController : MonoBehaviour, IInteractable
 {
     [SerializeField] private MailData currentSelectedMail;
 
@@ -78,20 +79,20 @@ public class MailSelectedController : MonoBehaviour, IPointerClickHandler
     }
 
     // Link click logic
-    public void OnPointerClick(PointerEventData eventData)
+    public void Interact(GameObject interactor)
     {
         if (selectedMailBody == null) return;
 
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(selectedMailBody, eventData.position, eventData.pressEventCamera);
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-        if (linkIndex != -1) // no link
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(selectedMailBody, mousePosition, Camera.main);
+
+        if (linkIndex != -1)
         {
+            // Extract the ID and fire the event
             TMP_LinkInfo linkInfo = selectedMailBody.textInfo.linkInfo[linkIndex];
             string linkID = linkInfo.GetLinkID();
 
-            Debug.Log($"Player clicked a link with ID: {linkID}");
-
-            // Tell eventManager
             selectedMailLinkClicked?.Invoke(linkID);
         }
     }
