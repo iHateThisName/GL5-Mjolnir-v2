@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public abstract class TaskData : SituationData {
+[CreateAssetMenu(fileName = "TaskData", menuName = "Scriptable Objects/Situation/TaskData")]
+public class TaskData : SituationData {
     [Header("Task Data")]
     [SerializeField] private TaskTypeEnum taskType = TaskTypeEnum.None;
 

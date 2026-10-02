@@ -88,6 +88,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     public enum ConditionEnum : int {
         None = 0, // Should never be used.
         HasCompletedTutorial = 1,
+        HasFailedPhisingEmail = 2,
     }
 
     /// <summary>

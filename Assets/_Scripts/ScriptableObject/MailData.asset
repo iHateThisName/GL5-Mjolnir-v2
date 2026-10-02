@@ -12,17 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
   m_Name: MailData
   m_EditorClassIdentifier: Assembly-CSharp::MailData
-  situationName: 
+  situationName: Test Success of Delete
   parentSituation: {fileID: 0}
   requiredSituations: []
   requiredConditions: []
-  resultingConditions: []
-  SituationStateEnum: 0
+  resultingConditions:
+  - Condition: 2
+    ExpectedState: 0
+  SituationStateEnum: 2
   taskType: 0
   emailAddress: One@gmail.com
   emailHeader: A Header
   emailBody:
-  - Test Line 1
-  - Test Line 2
+  - Delete ME
   difficulty: 1
   mailType: 1
+  isReplyCorrect: 0
+  isDeleteCorrect: 0
+  tagCheatSheet: 
+  annotatedEmailBody: []
+  annotatedEmailAddress: 

@@ -116,6 +116,10 @@ public class SituationManager : Singleton<SituationManager> {
             foreach (ConditionTracker.ConditionState condition in situation.ResultingConditions) {
                 ConditionTracker.Instance.SetCondition(condition);
             }
+
+            // Check if any child situations can now be activated based on the new state of this situation.
+            List<SituationData> childSituations = this.Situations.FindAll(s => s.ParentTask == situation || s.RequiredSituations.Contains(situation));
+            childSituations.ForEach(child => CheckSituationState(child));
         }
 
     }

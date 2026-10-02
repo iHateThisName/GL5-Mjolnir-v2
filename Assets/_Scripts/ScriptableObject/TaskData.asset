@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec63ceacba4bc3548aeabe8c9864de4c, type: 3}
+  m_Name: TaskData
+  m_EditorClassIdentifier: Assembly-CSharp::TaskData
+  situationName: 
+  parentSituation: {fileID: 11400000, guid: 5c3cc999af51fe3479593ce7d5b88cd5, type: 2}
+  requiredSituations:
+  - {fileID: 11400000, guid: 5c3cc999af51fe3479593ce7d5b88cd5, type: 2}
+  - {fileID: 11400000, guid: ca614bfe8cc144248ba0ea5c9f89f567, type: 2}
+  requiredConditions:
+  - Condition: 2
+    ExpectedState: 1
+  resultingConditions:
+  - Condition: 1
+    ExpectedState: 1
+  SituationStateEnum: 0
+  taskType: 0

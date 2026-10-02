@@ -11,12 +11,21 @@ public class MailData : TaskData {
     [SerializeField] private EnumDifficulty difficulty = EnumDifficulty.None;
     [SerializeField] private MailTypeEnum mailType = MailTypeEnum.None;
 
+    [Header("Correct Choice")]
+    [SerializeField] private bool isReplyCorrect = true;
+    [SerializeField] private bool isDeleteCorrect = false;
+    [SerializeField] private bool isLinkCorrect = false;
+
     // Public properties to access the private fields
     public string EmailAddress => emailAddress;
     public string EmailHeader => emailHeader;
     public string[] EmailBody => emailBody;
     public EnumDifficulty Difficulty => difficulty;
     public MailTypeEnum MailType => mailType;
+
+    public bool IsReplyCorrect => isReplyCorrect;
+    public bool IsDeleteCorrect => isDeleteCorrect;
+    public bool IsLinkCorrect => isLinkCorrect;
 
     [Header("TV Reveal Data")]
 

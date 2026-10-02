@@ -43,15 +43,28 @@ public class MailSelectedController : MonoBehaviour, IPointerClickHandler
         {
             this.selectedMailReplay?.Invoke(currentSelectedMail);
         }
+
+        if (this.currentSelectedMail.IsReplyCorrect) {
+            SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.currentSelectedMail);
+        } else {
+            SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Failed, this.currentSelectedMail);
+
+        }
     }
 
     private void OnDeleteSelectedMail()
     {
         if (this.currentSelectedMail != null)
         {
+            if (this.currentSelectedMail.IsDeleteCorrect) {
+                SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.currentSelectedMail);
+            } else {
+                SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Failed, this.currentSelectedMail);
+            }
             this.selectedMailDeleted?.Invoke(currentSelectedMail);
             this.currentSelectedMail = null;
             this.selectedMailBody.text = string.Empty;
+
         }
     }
 
