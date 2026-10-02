@@ -2,7 +2,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MailData", menuName = "Scriptable Objects/Situation/MailData")]
 public class MailData : TaskData {
     [Header("Mail Data")]
-    [Header("Mail Data")]
     [SerializeField] private string emailAddress = string.Empty;
     [SerializeField] private string emailHeader = string.Empty;
 
