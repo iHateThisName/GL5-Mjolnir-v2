@@ -69,13 +69,13 @@ public class EventManager : MonoBehaviour
     {
         if (mailController != null)
         {
-            //mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
-            //mailController.selectedMailReplay.AddListener(HandleMailReplied);
+            mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
+            mailController.selectedMailReplay.AddListener(HandleMailReplied);
         }
         if (lindasMailController != null)
         {
-            //lindasMailController.selectedMailDeleted.AddListener(HandleMailDeleted);
-            //lindasMailController.selectedMailReplay.AddListener(HandleMailReplied);
+            lindasMailController.selectedMailDeleted.AddListener(HandleMailDeleted);
+            lindasMailController.selectedMailReplay.AddListener(HandleMailReplied);
         }
         if (officeChair != null) officeChair.onPlayerSatDown.AddListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.AddListener(HandlePlayerSatAtLindasDesk);
@@ -94,13 +94,13 @@ public class EventManager : MonoBehaviour
         // (Same cleanup as before)
         if (mailController != null)
         {
-            //mailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
-            //mailController.selectedMailReplay.RemoveListener(HandleMailReplied);
+            mailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
+            mailController.selectedMailReplay.RemoveListener(HandleMailReplied);
         }
         if (lindasMailController != null)
         {
-            //lindasMailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
-            //lindasMailController.selectedMailReplay.RemoveListener(HandleMailReplied);
+            lindasMailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
+            lindasMailController.selectedMailReplay.RemoveListener(HandleMailReplied);
         }
         if (officeChair != null) officeChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtLindasDesk);
@@ -148,21 +148,21 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void HandleMailDeleted(Mail mail)
+    private void HandleMailDeleted(MailData mail)
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        if (mail.EmailType == MailData.MailTypeEnum.Company || mail.EmailType == MailData.MailTypeEnum.Personal)
+        if (mail.MailType == MailData.MailTypeEnum.Company || mail.MailType == MailData.MailTypeEnum.Personal)
             TriggerDeleteWarning();
         else
             AdvanceState();
     }
 
-    private void HandleMailReplied(Mail mail)
+    private void HandleMailReplied(MailData mail)
     {
         if (mail != GetExpectedMailForCurrentState()) return;
 
-        if (mail.EmailType == MailData.MailTypeEnum.Scam || mail.EmailType == MailData.MailTypeEnum.Spam)
+        if (mail.MailType == MailData.MailTypeEnum.Scam || mail.MailType == MailData.MailTypeEnum.Spam)
             TriggerScamWarning();
         else
             AdvanceState();

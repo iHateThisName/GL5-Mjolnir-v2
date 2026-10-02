@@ -9,10 +9,12 @@ public class MailBoxManager : MonoBehaviour {
 
     private void OnEnable() {
         this.mailSelectedController.selectedMailDeleted.AddListener(OnDeleteMail);
+        SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
     }
 
     private void OnDisable() {
         this.mailSelectedController.selectedMailDeleted.RemoveListener(OnDeleteMail);
+        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
     }
 
     private void Awake() {
@@ -27,15 +29,47 @@ public class MailBoxManager : MonoBehaviour {
         if (this.mailDataList.Count == 0) return;
 
         foreach (MailData mailData in this.mailDataList) {
-            MailController mailController = Instantiate(mailPrefab);
-            mailController.gameObject.transform.SetParent(this.mailContainer, false);
-            mailController.Initilize(mailData);
-            mailController.mailButton.onClick.AddListener(() => OnMailSelected(mailData));
-
-            this.mailGameObjects.Add(mailData, mailController.gameObject);
+            InstantiateMailUI(mailData);
         }
 
         Debug.Log($"MailBoxManager initialized with {this.mailDataList.Count} mails.");
+    }
+
+    private void OnSituationStateChange(SituationData data) {
+
+        // Check if the sitaution is of type MailData
+        if (data is MailData mailData) {
+
+            // Check if this MailBox containst the mailData
+            if (this.mailDataList.Contains(mailData)) {
+
+                // This mailbox contains this mail, the SituationStateEnum has been changed and needs to be reflected
+
+                switch (data.SituationStateEnum) {
+                    case SituationManager.SituationStateEnum.Inactive:
+                        // The mail is Inactive make it not show up
+                        this.mailGameObjects[mailData].SetActive(false);
+
+                        break;
+                    case SituationManager.SituationStateEnum.Active: {
+                            // The mail have been activated need to display it in the mailbox
+                            GameObject go = this.mailGameObjects[mailData];
+                            go.SetActive(true);
+                            break;
+                        }
+
+                    case SituationManager.SituationStateEnum.Success:
+                        
+                        break;
+                    case SituationManager.SituationStateEnum.Failed:
+                        break;
+                }
+
+                Debug.Log($"MailBoxManager: {mailData.SituationName}, Mail is {data.SituationStateEnum}");
+
+            }
+
+        }
     }
 
     /// <summary>
@@ -50,8 +84,7 @@ public class MailBoxManager : MonoBehaviour {
         }
 
         if (!mailGameObjects.ContainsKey(newMailData)) {
-            MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
-            InstantiateMailUI(newMailData, mailPrefab);
+            InstantiateMailUI(newMailData);
         }
     }
 
@@ -60,13 +93,14 @@ public class MailBoxManager : MonoBehaviour {
             mailDataList.Add(newMailData);
         }
         if (!mailGameObjects.ContainsKey(newMailData)) {
-            MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
-            InstantiateMailUI(newMailData, mailPrefab);
+            InstantiateMailUI(newMailData);
         }
     }
 
-    private void InstantiateMailUI(MailData mailData, MailController prefab) {
-        MailController mailController = Instantiate(prefab);
+    private void InstantiateMailUI(MailData mailData) {
+        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
+
+        MailController mailController = Instantiate(mailPrefab);
         mailController.gameObject.transform.SetParent(this.mailContainer, false);
 
         mailController.transform.localScale = Vector3.one;
@@ -74,7 +108,13 @@ public class MailBoxManager : MonoBehaviour {
         mailController.Initilize(mailData);
         mailController.mailButton.onClick.AddListener(() => OnMailSelected(mailData));
 
+        if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Inactive) {
+            mailController.gameObject.SetActive(false);
+        }
+
         this.mailGameObjects.Add(mailData, mailController.gameObject);
+
+        Debug.Log($"{mailData.name} was instantiate and is {mailController.gameObject.activeSelf}");
     }
 
     private void OnMailSelected(MailData mailData) {

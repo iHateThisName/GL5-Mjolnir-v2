@@ -1669,12 +1669,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1298810162418579521, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1298810162418579521, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: 'mailDataList.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 5c3cc999af51fe3479593ce7d5b88cd5, type: 2}
+    - target: {fileID: 1298810162418579521, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
+      propertyPath: 'mailDataList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ca614bfe8cc144248ba0ea5c9f89f567, type: 2}
     - target: {fileID: 1390031885264287150, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1729,7 +1733,7 @@ PrefabInstance:
       objectReference: {fileID: 1428647832}
     - target: {fileID: 2586504674704842386, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2045
+      value: 2048
       objectReference: {fileID: 0}
     - target: {fileID: 2717232837606909167, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1761,7 +1765,7 @@ PrefabInstance:
       objectReference: {fileID: 112589578}
     - target: {fileID: 3217342952737321495, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2878
+      value: 2881
       objectReference: {fileID: 0}
     - target: {fileID: 3519354185796316700, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_Mesh
@@ -1869,7 +1873,7 @@ PrefabInstance:
       objectReference: {fileID: 691100310}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2396
+      value: 2399
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1897,7 +1901,7 @@ PrefabInstance:
       objectReference: {fileID: 251357144}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 6597
+      value: 6600
       objectReference: {fileID: 0}
     - target: {fileID: 7728581950074921490, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_Mesh
@@ -2194,6 +2198,7 @@ Transform:
   m_Children:
   - {fileID: 2141171663}
   - {fileID: 1926145996}
+  - {fileID: 1857504217}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561942343
@@ -3592,6 +3597,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1857504216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857504217}
+  - component: {fileID: 1857504218}
+  m_Layer: 0
+  m_Name: ConditionTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857504217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857504216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1507637817}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1857504218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857504216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8f4beb5258a2244972c8108c0d91b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConditionTracker
+  AutoUnparentOnAwake: 1
 --- !u!1 &1926145995
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -21,6 +22,15 @@ public class SituationManager : Singleton<SituationManager> {
 
     private void OnDisable() {
         ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
+    }
+
+    private async void Start() {
+
+        await Awaitable.WaitForSecondsAsync(1);
+
+        this.Situations.ForEach(situation => {
+            CheckSituationState(situation);
+        });
     }
 
     [ContextMenu("Debug Log Active Situations")]

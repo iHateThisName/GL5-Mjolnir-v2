@@ -27,11 +27,12 @@ public abstract class SituationData : ScriptableObject {
     // Public field
     public SituationManager.SituationStateEnum SituationStateEnum = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the current state of the situation
 
+    public bool IsCompleted => this.SituationStateEnum == SituationManager.SituationStateEnum.Success || this.SituationStateEnum == SituationManager.SituationStateEnum.Failed;
     public bool IsRequiredSituationsCompleted() {
         int numberOfSituationsCompleted = 0;
 
         foreach (SituationData situation in requiredSituations) {
-            if (situation.IsRequiredConditionsMet()) {
+            if (situation.IsRequiredConditionsMet() && situation.IsCompleted) {
                 numberOfSituationsCompleted++;
             } else {
                 return false; // If any required situation is not completed, return false immediately
