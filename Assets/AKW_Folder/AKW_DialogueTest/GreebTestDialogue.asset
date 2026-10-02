@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAsset
   situationName: GreebTestDialogue
   parentSituation: {fileID: 0}
-  requiredTasks: []
+  requiredSituations: []
   requiredConditions: []
   resultingConditions: []
+  SituationStateEnum: 0
+  Portrait: {fileID: 0}
+  Name: Greeb
   Lines:
   - Greeble
   - Greeb needs your help

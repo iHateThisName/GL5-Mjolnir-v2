@@ -19,24 +19,25 @@ public class DialogueSystemV0 : MonoBehaviour
 
     private void OnEnable()
     {
-        NpcCollider.OnInteract += ShowDialogue;
+        NpcCollider.OnInteract += showDialogue;
         //ShowDialogue();
         //dialogueCanvas.SetActive(true);
         nameText.text = name;
+        //characterPortrait.GetComponent(image.sourceImage) = dialogue.Portrait; //To change the npc portrait (work in progress)
         dialogueText.text = dialogue.Lines[dialogIndex];
         dialoguePanel.SetActive(true);
     }
 
     private void OnDisable()
     {
-        NpcCollider.OnInteract -= ShowDialogue;
+        NpcCollider.OnInteract -= showDialogue;
         //dialogueCanvas.SetActive(false);
         nameText.text = null;
         dialogueText.text = null;
         dialoguePanel.SetActive(false);
     }
 
-    private void ShowDialogue()
+    private void showDialogue()
     {
 
         // Check if the dialog is finished
@@ -64,7 +65,7 @@ public class DialogueSystemV0 : MonoBehaviour
         dialoguePanel.SetActive(true);
     }
 
-    public void EndDialogue()
+    public void EndDialogue() // to reset the dialogue box for the next?
     {
         nameText.text = null;
         dialogueText.text = null; ;
