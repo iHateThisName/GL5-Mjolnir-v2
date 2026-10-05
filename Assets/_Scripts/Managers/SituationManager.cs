@@ -85,10 +85,6 @@ public class SituationManager : Singleton<SituationManager> {
                     }
                 }
 
-                foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingFailedConditions) {
-                    ConditionTracker.instance.SetCondition(raisedCondition);
-                }
-
                 // Update the situation state.
                 if (situation.SituationStateEnum == SituationStateEnum.Inactive && situation.IsRequiredSituationsCompleted()) {
                     situation.SituationStateEnum = SituationStateEnum.Active;
