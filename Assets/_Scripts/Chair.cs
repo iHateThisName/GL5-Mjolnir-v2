@@ -1,6 +1,7 @@
 ﻿using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Assets._Scripts {
     public class Chair : MonoBehaviour, IInteractable {
@@ -39,6 +40,14 @@ namespace Assets._Scripts {
 
             //Fire event
             onPlayerSatDown?.Invoke();
+        }
+
+        private void Update() {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame) {
+                if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
+                    StandUp();
+                }
+            }
         }
 
         public void StandUp() {
