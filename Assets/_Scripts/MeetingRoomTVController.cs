@@ -9,17 +9,32 @@ public class MeetingRoomTVController : MonoBehaviour
     [SerializeField] private TMP_Text tvSubjectText;
     [SerializeField] private TMP_Text tvBodyText;
 
+    [SerializeField] private MailData passwordExpiredScamMailData; // Reference to the specific mail data for the password expired scam email
+
     private void OnEnable() {
-        ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
+        SituationManager.Instance.OnSituationStateChange += OnSituationStateChanged;
     }
     
     private void OnDisable() {
-        ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
+        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChanged;
     }
 
-    private void OnConditionStateChanged(ConditionTracker.ConditionState state) {
-        if (state.Condition == ConditionTracker.ConditionEnum.FailedPasswordExpiredScam && state.ExpectedState) {
-            Debug.Log("MeetingRoomTVController: Displaying password expired scam email on TV.");
+    private void OnSituationStateChanged(SituationData data) {
+
+        // Check if the situation data is of type MailData and matches the specific mail data for the password expired scam email
+        if (data is MailData mailData && this.passwordExpiredScamMailData == mailData) {
+
+            if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Success) {
+
+                // Success
+
+                DisplayMail(mailData, true);
+
+            } else if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
+
+                // Failed
+
+            }
         }
     }
 
