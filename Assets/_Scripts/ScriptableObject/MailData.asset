@@ -16,10 +16,9 @@ MonoBehaviour:
   parentSituation: {fileID: 0}
   requiredSituations: []
   requiredConditions: []
-  resultingConditions:
-  - Condition: 2
-    ExpectedState: 0
-  SituationStateEnum: 2
+  resultingConditions: []
+  initialState: 0
+  SituationStateEnum: 1
   taskType: 0
   emailAddress: One@gmail.com
   emailHeader: A Header
@@ -28,7 +27,8 @@ MonoBehaviour:
   difficulty: 1
   mailType: 1
   isReplyCorrect: 0
-  isDeleteCorrect: 0
+  isDeleteCorrect: 1
+  isLinkCorrect: 0
   tagCheatSheet: 
   annotatedEmailBody: []
   annotatedEmailAddress: 

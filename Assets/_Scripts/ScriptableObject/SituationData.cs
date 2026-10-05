@@ -17,6 +17,8 @@ public abstract class SituationData : ScriptableObject {
     [Tooltip("Optional, Array of conditions that will be set when this situation is completed.")]
     [SerializeField] private ConditionTracker.ConditionState[] resultingConditions = new ConditionTracker.ConditionState[0];
 
+    [SerializeField] private SituationManager.SituationStateEnum initialState = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the starte state of the situation
+
     // Public properties to access the private fields
     public string SituationName => situationName; // Name of the situation, used for identification and task name.
     public SituationData[] RequiredSituations => requiredSituations; // Optional, Array of situations that must be completed before this situation can be activated.
@@ -55,5 +57,9 @@ public abstract class SituationData : ScriptableObject {
         }
 
         return numberOfConditionsMet == requiredConditions.Length;
+    }
+
+    public void Initialize() {
+        this.SituationStateEnum = this.initialState;
     }
 }

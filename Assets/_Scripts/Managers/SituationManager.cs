@@ -12,6 +12,7 @@ using UnityEngine;
 /// Situations represent specific scenarios or events that can occur during gameplay, and they may have associated conditions that need to be met for them to be active or resolved.
 /// </summary>
 
+[DefaultExecutionOrder(-9)]
 public class SituationManager : Singleton<SituationManager> {
     [field: SerializeField] public List<SituationData> Situations { get; private set; } = new List<SituationData>();
     public event System.Action<SituationData> OnSituationStateChange; // When the situation state has changed based on SituationStateEnum
@@ -25,6 +26,10 @@ public class SituationManager : Singleton<SituationManager> {
     }
 
     private async void Start() {
+
+        this.Situations.ForEach(situation => {
+            situation.Initialize();
+        });
 
         await Awaitable.WaitForSecondsAsync(1);
 

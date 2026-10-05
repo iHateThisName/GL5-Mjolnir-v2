@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: MailData 2
   m_EditorClassIdentifier: Assembly-CSharp::MailData
   situationName: Test Success On Reply
-  parentSituation: {fileID: 11400000, guid: ecaa8820f11223f4e937b1489a1352c2, type: 2}
+  parentSituation: {fileID: 0}
   requiredSituations:
   - {fileID: 11400000, guid: 5c3cc999af51fe3479593ce7d5b88cd5, type: 2}
   requiredConditions: []
   resultingConditions: []
-  SituationStateEnum: 3
+  initialState: 0
+  SituationStateEnum: 0
   taskType: 0
   emailAddress: Two@gmail.com
   emailHeader: a Header
@@ -26,8 +27,9 @@ MonoBehaviour:
   - Please Reply
   difficulty: 1
   mailType: 1
-  isReplyCorrect: 0
+  isReplyCorrect: 1
   isDeleteCorrect: 0
+  isLinkCorrect: 0
   tagCheatSheet: 
   annotatedEmailBody: []
   annotatedEmailAddress: 
