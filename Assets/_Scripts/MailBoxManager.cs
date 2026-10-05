@@ -143,11 +143,12 @@ public class MailBoxManager : MonoBehaviour {
         this.mailSelectedController.SelectMail(mailData);
     }
 
-    private void OnDeleteMail(MailData mailData) {
-        if (this.mailGameObjects.TryGetValue(mailData, out GameObject goMail)) {
+    private void OnDeleteMail(MailData mailData)
+    {
+        if (this.mailGameObjects.TryGetValue(mailData, out GameObject goMail))
+        {
+            // Simply hide the button from the inbox list
             goMail.SetActive(false);
-        } else {
-            Debug.LogWarning($"Mail {mailData.EmailHeader} not found in mailGameObjects dictionary.");
         }
     }
 }

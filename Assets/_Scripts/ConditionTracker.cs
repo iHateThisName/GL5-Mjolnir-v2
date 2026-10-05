@@ -93,6 +93,9 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         // Scams
         FailedPasswordExpiredScam = 3,
         hasCompletedMeeting = 4,
+
+        //Company
+        DeletedCompanyMail = 5,
     }
 
     /// <summary>

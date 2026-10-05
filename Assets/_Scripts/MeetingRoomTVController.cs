@@ -1,3 +1,4 @@
+using Assets._Scripts;
 using System;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class MeetingRoomTVController : MonoBehaviour
     [SerializeField] private TMP_Text tvBodyText;
 
     [SerializeField] Button ContinueButton;
+    [SerializeField] Chair chair;
 
     [SerializeField] private MailData passwordExpiredScamMailData; // Reference to the specific mail data for the password expired scam email
 
@@ -64,5 +66,7 @@ public class MeetingRoomTVController : MonoBehaviour
     {
         ConditionTracker.ConditionState conditionState = new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.hasCompletedMeeting, true);
         ConditionTracker.Instance.SetCondition(conditionState);
+        Debug.Log("Clicked");
+        chair.StandUp();
     }
 }
