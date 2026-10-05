@@ -17,6 +17,9 @@ namespace Assets._Scripts {
                 return;
             }
 
+            //Disable the box collider
+            GetComponent<BoxCollider>().enabled = false;
+
             // refrence to be used later.
             CinemachineBrain cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
 
@@ -54,6 +57,9 @@ namespace Assets._Scripts {
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
             lockedCamera.gameObject.SetActive(false);
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
+
+            //Disable the box collider
+            GetComponent<BoxCollider>().enabled = true;
         }
     }
 }
