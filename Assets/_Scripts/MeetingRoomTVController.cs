@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeetingRoomTVController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class MeetingRoomTVController : MonoBehaviour
     [SerializeField] private TMP_Text tvSenderAddressText;
     [SerializeField] private TMP_Text tvSubjectText;
     [SerializeField] private TMP_Text tvBodyText;
+
+    [SerializeField] Button ContinueButton;
 
     [SerializeField] private MailData passwordExpiredScamMailData; // Reference to the specific mail data for the password expired scam email
 
@@ -28,11 +31,12 @@ public class MeetingRoomTVController : MonoBehaviour
 
                 // Success
 
-                DisplayMail(mailData, true);
+                //DisplayMail(mailData, true);
 
             } else if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
 
                 // Failed
+                DisplayMail(mailData, true);
 
             }
         }
@@ -54,5 +58,11 @@ public class MeetingRoomTVController : MonoBehaviour
             string[] bodyToUse = showAnnotated ? mail.AnnotatedEmailBody : mail.EmailBody;
             tvBodyText.text = string.Join("\n", bodyToUse);
         }
+    }
+
+    public void ContinueDayButton()
+    {
+        ConditionTracker.ConditionState conditionState = new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.hasCompletedMeeting, true);
+        ConditionTracker.Instance.SetCondition(conditionState);
     }
 }
