@@ -27,20 +27,25 @@ public class MeetingRoomTVController : MonoBehaviour
     private void OnSituationStateChanged(SituationData data) {
 
         // Check if the situation data is of type MailData and matches the specific mail data for the password expired scam email
-        if (data is MailData mailData && this.passwordExpiredScamMailData == mailData) {
+        if (data is MailData mailData) {
 
-            if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Success) {
+            if (this.passwordExpiredScamMailData == mailData) {
 
-                // Success
+                if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Success) {
 
-                //DisplayMail(mailData, true);
+                    // Success
 
-            } else if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
+                    //DisplayMail(mailData, true);
 
-                // Failed
-                DisplayMail(mailData, true);
+                } else if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
 
+                    // Failed
+                    DisplayMail(mailData, true);
+                    this.chair.Interact(PlayerRefrenceProvider.Instance.PlayerMovementController.gameObject);
+
+                }
             }
+
         }
     }
 
