@@ -1,10 +1,7 @@
-using System;
-using UnityEditor.HardwareProfiles;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MailUIController : MonoBehaviour
-{
+public class MailUIController : MonoBehaviour {
     // Tracks where the player is so the Back button knows what to close
     private enum MailState { Home, InboxList, DeletedList, ReadingInbox, ReadingDeleted }
     private MailState currentState = MailState.Home;
@@ -25,8 +22,7 @@ public class MailUIController : MonoBehaviour
 
     [SerializeField] private GameObject BossCanvasOverlay;
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         // Setup core navigation
         inboxButton.onClick.AddListener(OpenInbox);
         deletedButton.onClick.AddListener(OpenDeleted);
@@ -41,19 +37,16 @@ public class MailUIController : MonoBehaviour
         OpenHome();
     }
 
-    private void OnConditonChanged(ConditionTracker.ConditionState state)
-    {
-        if(state.Condition == ConditionTracker.ConditionEnum.DeletedCompanyMail && state.ExpectedState)
+    private void OnConditonChanged(ConditionTracker.ConditionState state) {
+        if (state.Condition == ConditionTracker.ConditionEnum.DeletedCompanyMail && state.ExpectedState)
             BossCanvasOverlay.SetActive(true);
     }
 
-    public void ContinueFromBossOverlay()
-    {
+    public void ContinueFromBossOverlay() {
         BossCanvasOverlay.SetActive(false);
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         inboxButton.onClick.RemoveListener(OpenInbox);
         deletedButton.onClick.RemoveListener(OpenDeleted);
         backButton.onClick.RemoveListener(OnBackButtonClicked);
@@ -64,8 +57,7 @@ public class MailUIController : MonoBehaviour
     /// <summary>
     /// Default state: Shows only the sidebar. Hides all lists and emails.
     /// </summary>
-    public void OpenHome()
-    {
+    public void OpenHome() {
         currentState = MailState.Home;
 
         leftContainer.SetActive(true);
@@ -76,8 +68,7 @@ public class MailUIController : MonoBehaviour
         backButton.gameObject.SetActive(false); // Hide back button on home screen
     }
 
-    public void OpenInbox()
-    {
+    public void OpenInbox() {
         currentState = MailState.InboxList;
 
         leftContainer.SetActive(true);
@@ -88,8 +79,7 @@ public class MailUIController : MonoBehaviour
         backButton.gameObject.SetActive(true); // Show back button to hide the inbox list
     }
 
-    public void OpenDeleted()
-    {
+    public void OpenDeleted() {
         currentState = MailState.DeletedList;
 
         leftContainer.SetActive(true);
@@ -103,8 +93,7 @@ public class MailUIController : MonoBehaviour
     /// <summary>
     /// Called when an email is clicked to open the reading view.
     /// </summary>
-    public void OpenEmailReadView(MailData mailData)
-    {
+    public void OpenEmailReadView(MailData mailData) {
         // Track which list we came from so the Back button works correctly later
         if (currentState == MailState.InboxList) currentState = MailState.ReadingInbox;
         else if (currentState == MailState.DeletedList) currentState = MailState.ReadingDeleted;
@@ -119,10 +108,8 @@ public class MailUIController : MonoBehaviour
     /// <summary>
     /// Evaluates the current state and steps backwards one level.
     /// </summary>
-    private void OnBackButtonClicked()
-    {
-        switch (currentState)
-        {
+    private void OnBackButtonClicked() {
+        switch (currentState) {
             case MailState.InboxList:
             case MailState.DeletedList:
                 OpenHome(); // Closes the lists and returns to the Sidebar
@@ -136,8 +123,7 @@ public class MailUIController : MonoBehaviour
         }
     }
 
-    private void CloseMailWindow()
-    {
+    private void CloseMailWindow() {
         // Disables the entire mail window, returning the player to the desktop
         gameObject.SetActive(false);
     }

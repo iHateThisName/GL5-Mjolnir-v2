@@ -6,19 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Einar/Demo_StateMachine.unity
-    guid: 06508e7a60b16194fb62ca5bfdec4435
-  - enabled: 1
-    path: Assets/Scenes/HowToPlayScene.unity
-    guid: 0c5fed9d95caa4146aa60dfedb5a3039
-  - enabled: 1
-    path: Assets/Scenes/Einar/LoseScene.unity
-    guid: 3fb36d85a7e5919419df25e9656bedd0
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/WinScene.unity
-    guid: d9d1c2da8ae6e2f42929706e19615f64
+    path: Assets/Scenes/_Build/BuildScene.unity
+    guid: 781cd6f0556302f43a515e2cff9ffe0e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
