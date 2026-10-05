@@ -15,7 +15,8 @@ public abstract class SituationData : ScriptableObject {
     [SerializeField] private ConditionTracker.ConditionState[] requiredConditions = new ConditionTracker.ConditionState[0];
 
     [Tooltip("Optional, Array of conditions that will be set when this situation is completed.")]
-    [SerializeField] private ConditionTracker.ConditionState[] resultingConditions = new ConditionTracker.ConditionState[0];
+    [SerializeField] private ConditionTracker.ConditionState[] resultingSuccessConditions = new ConditionTracker.ConditionState[0];
+    [SerializeField] private ConditionTracker.ConditionState[] resultingFailedConditions = new ConditionTracker.ConditionState[0];
 
     [SerializeField] private SituationManager.SituationStateEnum initialState = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the starte state of the situation
 
@@ -24,8 +25,8 @@ public abstract class SituationData : ScriptableObject {
     public SituationData[] RequiredSituations => requiredSituations; // Optional, Array of situations that must be completed before this situation can be activated.
     public SituationData ParentTask => parentSituation; // Optional, The parent task that this situation is a part of. If null, this situation is a root task.
     public ConditionTracker.ConditionState[] RequiredConditions => requiredConditions; // Optional, Array of conditions that must be met for this situation to be activated.
-    public ConditionTracker.ConditionState[] ResultingConditions => resultingConditions; // Optional, Array of conditions that will be set when this situation is completed.
-
+    public ConditionTracker.ConditionState[] ResultingSuccessConditions => resultingSuccessConditions; // Optional, Array of conditions that will be set when this situation is completed.
+    public ConditionTracker.ConditionState[] ResultingFailedConditions => resultingFailedConditions; // Optional, Array of conditions that will be set when this situation fails.
     // Public field
     public SituationManager.SituationStateEnum SituationStateEnum = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the current state of the situation
 

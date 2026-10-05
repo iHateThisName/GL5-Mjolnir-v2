@@ -72,11 +72,23 @@ public class SituationManager : Singleton<SituationManager> {
         situationsRelated.ForEach(situation => {
             if (situation.IsRequiredConditionsMet()) {
 
-                // Raise the resulting conditions associated with that situation.
-                foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingConditions) {
-                    ConditionTracker.Instance.SetCondition(raisedCondition);
+                if (situation.SituationStateEnum == SituationStateEnum.Success) {
+                    // Raise the resulting conditions associated with that situation.
+                    foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingSuccessConditions) {
+                        ConditionTracker.Instance.SetCondition(raisedCondition);
+                    }
                 }
-                
+                else if (situation.SituationStateEnum == SituationStateEnum.Failed) {
+                    // Raise the resulting conditions associated with that situation.
+                    foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingFailedConditions) {
+                        ConditionTracker.Instance.SetCondition(raisedCondition);
+                    }
+                }
+
+                foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingFailedConditions) {
+                    ConditionTracker.instance.SetCondition(raisedCondition);
+                }
+
                 // Update the situation state.
                 if (situation.SituationStateEnum == SituationStateEnum.Inactive && situation.IsRequiredSituationsCompleted()) {
                     situation.SituationStateEnum = SituationStateEnum.Active;
@@ -117,9 +129,17 @@ public class SituationManager : Singleton<SituationManager> {
         if (newState == SituationManager.SituationStateEnum.Success || newState == SituationManager.SituationStateEnum.Failed) {
             situation.SituationStateEnum = newState;
 
-            // Set the resulting conditions when the situation is completed
-            foreach (ConditionTracker.ConditionState condition in situation.ResultingConditions) {
-                ConditionTracker.Instance.SetCondition(condition);
+            if (newState == SituationManager.SituationStateEnum.Success) {
+                // Set the resulting conditions when the situation is completed successfully
+                foreach (ConditionTracker.ConditionState condition in situation.ResultingSuccessConditions) {
+                    ConditionTracker.Instance.SetCondition(condition);
+                }
+            }
+            else if (newState == SituationManager.SituationStateEnum.Failed) {
+                // Set the resulting conditions when the situation fails
+                foreach (ConditionTracker.ConditionState condition in situation.ResultingFailedConditions) {
+                    ConditionTracker.Instance.SetCondition(condition);
+                }
             }
 
             // Check if any child situations can now be activated based on the new state of this situation.
