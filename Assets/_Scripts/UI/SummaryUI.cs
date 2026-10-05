@@ -17,11 +17,15 @@ public class SummaryUI : MonoBehaviour {
 
     private void OnEnable() {
         SituationManager.Instance.OnSituationStateChange += OnSituationStateChanged;
+        ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
     }
 
     private void OnDisable() {
         SituationManager.Instance.OnSituationStateChange -= OnSituationStateChanged;
+        ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
     }
+
+
     private void Start() {
         this.totalNumberOfNessecarySituations = SituationManager.Instance.Situations.Where(x => x.TypeEnum == SituationData.situationTypeEnum.PrimaryTask).Count();
     }
@@ -37,6 +41,11 @@ public class SummaryUI : MonoBehaviour {
                     DisplayEndOfTheDaySummary();
                 }
             }
+        }
+    }
+    private void OnConditionStateChanged(ConditionTracker.ConditionState state) {
+        if (state.Condition == ConditionTracker.ConditionEnum.IsDayComplete && state.ExpectedState) {
+            DisplayEndOfTheDaySummary();
         }
     }
 
@@ -72,7 +81,7 @@ public class SummaryUI : MonoBehaviour {
             }
         });
 
-        summaryBuilder.AppendLine($"Completed Tasks: {totalCompletedSituations}/{this.totalNumberOfNessecarySituations}");
+        summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}/{this.totalNumberOfNessecarySituations}");
         summaryBuilder.AppendLine($"Emails: {totalEmails}");
         summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
         summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
