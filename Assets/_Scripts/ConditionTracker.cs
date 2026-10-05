@@ -89,6 +89,9 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         None = 0, // Should never be used.
         HasCompletedTutorial = 1,
         HasFailedPhisingEmail = 2,
+
+        // Scams
+        FailedPasswordExpiredScam = 3,
     }
 
     /// <summary>
