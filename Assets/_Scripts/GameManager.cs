@@ -24,7 +24,7 @@ public class GameManager : Singleton<GameManager> {
     //[SerializeField] private Dictionary<string, LevelData> levelDataLookup = new Dictionary<string, LevelData>();
 
     private void Start() {
-        this.CurrentPlayerState = EnumPlayerState.Walking;
+        //this.CurrentPlayerState = EnumPlayerState.Walking;
         SetLookSensitivity(this.LookSensitivity);
     }
 

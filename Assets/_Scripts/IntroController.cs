@@ -51,7 +51,7 @@ public class IntroController : MonoBehaviour
         {
             // We have reached the end of the texts, hide the entire panel!
             if (introPanel != null) introPanel.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+            GameManager.Instance.SetPlayerState(EnumPlayerState.Walking);
         }
     }
 }
