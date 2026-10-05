@@ -11,7 +11,7 @@ using UnityEngine;
 public class SummaryUI : MonoBehaviour {
     [SerializeField] private GameObject summaryContainer;
     [SerializeField] private TMP_Text summaryText;
-    private int totalNumberOfNessecarySituations = 0;
+    [SerializeField] private int totalNumberOfNessecarySituations = 0;
     private int completedSituationsCount = 0;
     private int completedNecessarySituationsCount = 0;
 
@@ -37,9 +37,9 @@ public class SummaryUI : MonoBehaviour {
 
             if (data.TypeEnum == SituationData.situationTypeEnum.PrimaryTask) {
                 this.completedNecessarySituationsCount++;
-                if (this.totalNumberOfNessecarySituations == this.completedNecessarySituationsCount) {
-                    DisplayEndOfTheDaySummary();
-                }
+                //if (this.totalNumberOfNessecarySituations == this.completedNecessarySituationsCount) {
+                //    DisplayEndOfTheDaySummary();
+                //}
             }
         }
     }
@@ -81,10 +81,10 @@ public class SummaryUI : MonoBehaviour {
             }
         });
 
-        summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}/{this.totalNumberOfNessecarySituations}");
-        summaryBuilder.AppendLine($"Emails: {totalEmails}");
+        summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}");
+        //summaryBuilder.AppendLine($"Emails: {totalEmails}");
         summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
-        summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
+        //summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
 
         this.summaryText.text = summaryBuilder.ToString();
         this.summaryContainer.SetActive(true);

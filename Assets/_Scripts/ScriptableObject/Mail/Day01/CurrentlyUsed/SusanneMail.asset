@@ -10,42 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
-  m_Name: BossMail
+  m_Name: SusanneMail
   m_EditorClassIdentifier: Assembly-CSharp::MailData
-  situationName: BossMail
+  situationName: Susanne
   parentSituation: {fileID: 0}
-  requiredSituations: []
-  requiredConditions: []
-  resultingSuccessConditions: []
-  resultingFailedConditions:
-  - Condition: 5
+  requiredSituations:
+  - {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
+  requiredConditions:
+  - Condition: 3
+    ExpectedState: 0
+  resultingSuccessConditions:
+  - Condition: 6
     ExpectedState: 1
-  initialState: 1
-  SituationStateEnum: 0
+  resultingFailedConditions:
+  - Condition: 6
+    ExpectedState: 1
+  initialState: 0
+  typeEnum: 0
+  SituationStateEnum: 1
   taskType: 0
-  emailAddress: a.vance@company-internal.com
-  emailHeader: 'Action Required: Weekly Incident Report'
+  emailAddress: susanneighbour@bmail.sum
+  emailHeader: About your key
   emailBody:
-  - 'Good morning,
-
-
-    Just a quick reminder that I need your weekly incident report submitted by EOD today.
-
-
-    Please make sure to highlight any suspicious phishing attempts or flagged emails that made it through the external filter this week. Management is getting concerned about the recent spike in social engineering attacks across the sector, so I want to make sure our logs are entirely up to date.
-
-
-    Drop the file in the shared secure drive once you''re done.
-
-
-    Thanks,
-
-
-    Arthur Vance
-
-    Director of IT Operations'
+  - 'Hey, I found your key on the ground outside your apartment. I have put it back under your rock.  Have a nice day  Added a picture where the key is now  picture.here  Kind regards, Susan '
   difficulty: 1
-  mailType: 1
+  mailType: 2
   isReplyCorrect: 1
   isDeleteCorrect: 0
   isLinkCorrect: 0

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -36,6 +37,10 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     public bool HasCondition(ConditionEnum condition) {
         return conditions.Contains(condition);
     }
+
+    [ContextMenu("Debug true conditions")]
+    public void DebugTrueConditions() => Debug.Log($"count: {this.conditions.Count} - {this.conditions.ToString()}");
+
 
     /// <summary>
     /// Updates the state of a condition.

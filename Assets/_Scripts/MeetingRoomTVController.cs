@@ -13,6 +13,7 @@ public class MeetingRoomTVController : MonoBehaviour
 
     [SerializeField] Button ContinueButton;
     [SerializeField] Chair chair;
+    [SerializeField] Chair workStationChair;
 
     [SerializeField] private MailData passwordExpiredScamMailData; // Reference to the specific mail data for the password expired scam email
 
@@ -40,6 +41,7 @@ public class MeetingRoomTVController : MonoBehaviour
                 } else if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
 
                     // Failed
+                    this.workStationChair.StandUp();
                     DisplayMail(mailData, true);
                     this.chair.Interact(PlayerRefrenceProvider.Instance.PlayerMovementController.gameObject);
 

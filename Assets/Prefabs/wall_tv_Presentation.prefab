@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4192758097948928637}
   - component: {fileID: 3719608004801969199}
   - component: {fileID: 2511124368853297387}
+  - component: {fileID: 1563366341162165505}
+  - component: {fileID: 8110553877815955716}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -26,13 +28,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2480323832844151151}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1073040041535050172}
-  m_Father: {fileID: 8669675337953639998}
+  m_Father: {fileID: 2570059737816247707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -133,6 +135,39 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1563366341162165505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480323832844151151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461fec3479385034da4f3fbe1d05f5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableUIButton
+--- !u!65 &8110553877815955716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480323832844151151}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3354389, y: 0.11206138, z: 0.17156824}
+  m_Center: {x: -0.0045405626, y: -0.0013630589, z: -0.019546986}
 --- !u!1 &4300473026661360612
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +201,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8669675337953639998}
+  - {fileID: 7133158884133450291}
   m_Father: {fileID: 8535225391537556971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -253,6 +289,7 @@ MonoBehaviour:
   tvSubjectText: {fileID: 6094938431689263236}
   tvBodyText: {fileID: 5310234436575266703}
   ContinueButton: {fileID: 2511124368853297387}
+  chair: {fileID: 0}
   passwordExpiredScamMailData: {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
 --- !u!1 &5523428238353292421
 GameObject:
@@ -287,7 +324,6 @@ RectTransform:
   - {fileID: 207879901476319810}
   - {fileID: 3307415561465070334}
   - {fileID: 4250736948782194603}
-  - {fileID: 7133158884133450291}
   m_Father: {fileID: 2570059737816247707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -889,9 +925,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8444651813047317851, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
       propertyPath: m_Name
       value: wall_tv_Presentation
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207737922192430328, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
       propertyPath: m_LocalScale.x

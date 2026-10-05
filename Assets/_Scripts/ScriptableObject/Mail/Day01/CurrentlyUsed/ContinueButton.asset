@@ -17,10 +17,11 @@ MonoBehaviour:
   requiredSituations:
   - {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
   requiredConditions:
-  - Condition: 3
+  - Condition: 4
     ExpectedState: 1
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  SituationStateEnum: 0
+  typeEnum: 0
+  SituationStateEnum: 1
   taskType: 0

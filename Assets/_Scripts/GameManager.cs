@@ -28,6 +28,8 @@ public class GameManager : Singleton<GameManager> {
         SetLookSensitivity(this.LookSensitivity);
     }
 
+
+
     //public void OnLoadeLevel() {
     //    string sceneName = SceneManager.GetActiveScene().name;
 

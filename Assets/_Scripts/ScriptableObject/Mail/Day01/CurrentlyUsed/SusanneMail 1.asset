@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MailData
   situationName: Susanne
   parentSituation: {fileID: 0}
-  requiredSituations:
-  - {fileID: 11400000, guid: 7549a3dbee1195d448d632e7cd40e7f4, type: 2}
+  requiredSituations: []
   requiredConditions:
-  - Condition: 3
+  - Condition: 4
     ExpectedState: 1
-  resultingSuccessConditions: []
-  resultingFailedConditions: []
+  resultingSuccessConditions:
+  - Condition: 6
+    ExpectedState: 1
+  resultingFailedConditions:
+  - Condition: 6
+    ExpectedState: 1
   initialState: 0
+  typeEnum: 0
   SituationStateEnum: 0
   taskType: 0
   emailAddress: susanneighbour@bmail.sum
