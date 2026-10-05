@@ -1396,6 +1396,7 @@ MonoBehaviour:
   onPlayerSatDown:
     m_PersistentCalls:
       m_Calls: []
+  boxCollider: {fileID: 1306753063479163555}
 --- !u!65 &1306753063479163555
 BoxCollider:
   m_ObjectHideFlags: 0

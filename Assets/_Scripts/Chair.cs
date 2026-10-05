@@ -11,14 +11,12 @@ namespace Assets._Scripts {
         public Quaternion playerRotation;
 
         public UnityEvent onPlayerSatDown;
+        [SerializeField] private BoxCollider boxCollider;
         public async void Interact(GameObject interactor) {
-            if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
-                Debug.Log("Already sitting. Cannot sit down.");
-                return;
-            }
+            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
 
             //Disable the box collider
-            GetComponent<BoxCollider>().enabled = false;
+            this.boxCollider.enabled = false;
 
             // refrence to be used later.
             CinemachineBrain cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -28,7 +26,7 @@ namespace Assets._Scripts {
             this.playerRotation = interactor.transform.root.rotation;
 
             // Starting the camera blend
-            lockedCamera.gameObject.SetActive(true); // enable the locked sitting camera
+            this.lockedCamera.gameObject.SetActive(true); // enable the locked sitting camera
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Sitting; // disables the walking camera
 
             // Wait for the blend to happen
@@ -37,6 +35,9 @@ namespace Assets._Scripts {
             while (cameraBrain.IsBlending) {
                 await Awaitable.NextFrameAsync();
             }
+
+            // Check if the player is still in the sitting state before teleporting
+            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Sitting) return;
 
             // Telporting the player
             GameManager.Instance.TeleportPlayer(this.sitPosition.position, this.sitPosition.rotation);
@@ -54,12 +55,14 @@ namespace Assets._Scripts {
         }
 
         public void StandUp() {
+            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Sitting) return;
+
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
-            lockedCamera.gameObject.SetActive(false);
+            this.lockedCamera.gameObject.SetActive(false);
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
 
             //Disable the box collider
-            GetComponent<BoxCollider>().enabled = true;
+            this.boxCollider.enabled = true;
         }
     }
 }

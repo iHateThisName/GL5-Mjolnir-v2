@@ -70,6 +70,9 @@ public class GameManager : Singleton<GameManager> {
 
                 // Making sure the player walk camera is active when the player is in walking state.
                 PlayerRefrenceProvider.Instance.PlayerWalkCamera.gameObject.SetActive(true);
+
+                // Make the crosshair visible when the player is in walking state.
+                PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = true;
                 break;
 
             case EnumPlayerState.Sitting:
@@ -81,6 +84,9 @@ public class GameManager : Singleton<GameManager> {
 
                 // Making sure the player walk camera is inactive when the player is in sitting state.
                 PlayerRefrenceProvider.Instance.PlayerWalkCamera.gameObject.SetActive(false);
+
+                // Make the crosshair invisible when the player is in sitting state.
+                PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 break;
 
             default:
