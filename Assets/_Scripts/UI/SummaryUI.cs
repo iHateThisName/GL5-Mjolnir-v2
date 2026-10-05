@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class SummaryUI : MonoBehaviour {
     [SerializeField] private TMP_Text summaryText;
     private int totalNumberOfNessecarySituations = 0;
     private int completedSituationsCount = 0;
+    private int completedNecessarySituationsCount = 0;
 
     private void OnEnable() {
         SituationManager.Instance.OnSituationStateChange += OnSituationStateChanged;
@@ -21,7 +23,7 @@ public class SummaryUI : MonoBehaviour {
         SituationManager.Instance.OnSituationStateChange -= OnSituationStateChanged;
     }
     private void Start() {
-        if (this.totalNumberOfNessecarySituations == 0) this.totalNumberOfNessecarySituations = SituationManager.Instance.Situations.Count;
+        this.totalNumberOfNessecarySituations = SituationManager.Instance.Situations.Where(x => x.TypeEnum == SituationData.situationTypeEnum.PrimaryTask).Count();
     }
 
     private void OnSituationStateChanged(SituationData data) {
@@ -29,8 +31,11 @@ public class SummaryUI : MonoBehaviour {
         if (data.IsCompleted) {
             this.completedSituationsCount++;
 
-            if (this.totalNumberOfNessecarySituations == this.completedSituationsCount) {
-                DisplayEndOfTheDaySummary();
+            if (data.TypeEnum == SituationData.situationTypeEnum.PrimaryTask) {
+                this.completedNecessarySituationsCount++;
+                if (this.totalNumberOfNessecarySituations == this.completedNecessarySituationsCount) {
+                    DisplayEndOfTheDaySummary();
+                }
             }
         }
     }
