@@ -739,6 +739,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9193160772056640233, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: mailFailedSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 7be270c695d428b40b3f7c52cf870aab, type: 3}
+    - target: {fileID: 9193160772056640233, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: mailSuccessSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a80e837b765d524988b5b98e772823c, type: 3}
+    - target: {fileID: 9193160772056640233, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: mailReceivedSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: b6e7e9f796b7da6448ed5a3533d83df5, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

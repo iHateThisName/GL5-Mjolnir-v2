@@ -9,6 +9,10 @@ public class MailBoxManager : MonoBehaviour {
     [SerializeField] private Transform mailContainer;
     [SerializeField] private MailSelectedController mailSelectedController;
 
+    [Header("SFX References")]
+    [SerializeField] private AudioClip mailSuccessSFX;
+    [SerializeField] private AudioClip mailFailedSFX;
+
     private void OnEnable()
     {
         if (this.mailSelectedController != null)
@@ -74,9 +78,12 @@ public class MailBoxManager : MonoBehaviour {
                         }
 
                     case SituationManager.SituationStateEnum.Success:
-                        
+                        // The mail has been successful
+                        AudioManager.Instance.PlaySFX(mailSuccessSFX);
                         break;
                     case SituationManager.SituationStateEnum.Failed:
+                        // The mail has failed
+                        AudioManager.Instance.PlaySFX(mailFailedSFX, 0.25f);
                         break;
                 }
 
