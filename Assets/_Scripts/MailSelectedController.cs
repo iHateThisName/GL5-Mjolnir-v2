@@ -79,10 +79,28 @@ public class MailSelectedController : MonoBehaviour, IInteractable
     public void SelectMail(MailData mailData)
     {
         this.currentSelectedMail = mailData;
-        this.selectedMailBody.text = string.Join("\n", mailData.EmailBody);
-        this.selectedMailOpened?.Invoke(mailData);
 
-        Debug.Log($"Selected mail data: {mailData.EmailHeader}");
+        // Check if this email has already been processed/deleted
+        bool isHandled = mailData.SituationStateEnum == SituationManager.SituationStateEnum.Success ||
+                         mailData.SituationStateEnum == SituationManager.SituationStateEnum.Failed;
+
+        if (isHandled)
+        {
+            // Show annotated text and hide action buttons
+            this.selectedMailBody.text = string.Join("\n", mailData.AnnotatedEmailBody);
+            this.deleteSelectedMail.gameObject.SetActive(false);
+            this.replaySelectedMail.gameObject.SetActive(false);
+        }
+        else
+        {
+            // Show normal text and allow actions
+            this.selectedMailBody.text = string.Join("\n", mailData.EmailBody);
+            this.deleteSelectedMail.gameObject.SetActive(true);
+            this.replaySelectedMail.gameObject.SetActive(true);
+        }
+
+        this.selectedMailOpened?.Invoke(mailData);
+        Debug.Log($"Selected mail data: {mailData.EmailHeader}. Handled: {isHandled}");
     }
 
     // Link click logic

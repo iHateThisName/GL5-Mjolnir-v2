@@ -7,6 +7,7 @@ public class MailUIController : MonoBehaviour
     [SerializeField] private GameObject leftContainer;
     [SerializeField] private GameObject emailListPanel;
     [SerializeField] private GameObject emailPanel;
+    [SerializeField] private GameObject deletedListPanel;
 
     [Header("Buttons")]
     [SerializeField] private Button inboxButton;
@@ -21,6 +22,7 @@ public class MailUIController : MonoBehaviour
         inboxButton.onClick.AddListener(OpenInbox);
         backButton.onClick.AddListener(OpenInbox);
         closeTabButton.onClick.AddListener(CloseMailWindow);
+        deletedButton.onClick.AddListener(OpenDeleted);
 
         // Setup placeholder buttons
         settingsButton.onClick.AddListener(() => Debug.Log("Settings button clicked - Not implemented yet"));
@@ -37,6 +39,7 @@ public class MailUIController : MonoBehaviour
         closeTabButton.onClick.RemoveListener(CloseMailWindow);
         settingsButton.onClick.RemoveAllListeners();
         deletedButton.onClick.RemoveAllListeners();
+        deletedButton.onClick.RemoveListener(OpenDeleted);
     }
 
     /// <summary>
@@ -49,6 +52,16 @@ public class MailUIController : MonoBehaviour
 
         emailPanel.SetActive(false);
         backButton.gameObject.SetActive(false); // Hide back button on home screen
+    }
+
+    public void OpenDeleted()
+    {
+        leftContainer.SetActive(true);
+        emailListPanel.SetActive(false); // Hide inbox
+        if (deletedListPanel != null) deletedListPanel.SetActive(true);
+
+        emailPanel.SetActive(false);
+        backButton.gameObject.SetActive(false);
     }
 
     /// <summary>

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MailBoxManager : MonoBehaviour {
+
+    [SerializeField] private Transform deletedMailContainer;
     [SerializeField] private List<MailData> mailDataList = new List<MailData>();
     [field: SerializeField] private Dictionary<MailData, GameObject> mailGameObjects { get; } = new Dictionary<MailData, GameObject>();
     [SerializeField] private Transform mailContainer;
