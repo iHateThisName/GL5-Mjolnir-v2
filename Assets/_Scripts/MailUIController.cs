@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +20,29 @@ public class MailUIController : MonoBehaviour {
     [SerializeField] private Button backButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button closeTabButton;
-    [SerializeField] private Button bossButton;
 
+    [Header("Temp, Boss Overlay")]
+    [SerializeField] private Button bossButton;
     [SerializeField] private GameObject BossCanvasOverlay;
+
+    [Header("Report Overlay")]
+    [SerializeField] private Button reportMailButton;
+    [SerializeField] private Button[] cancelButtons;
+    [SerializeField] private GameObject ReportOverlay;
+    [SerializeField] private Button SuspiciousLinkButton;
+    [SerializeField] private GameObject SuspiciousLinkCheckMark;
+    [SerializeField] private Button UnknownSenderButton;
+    [SerializeField] private GameObject UnknownSenderCheckMark;
+    [SerializeField] private Button TimePressureButton;
+    [SerializeField] private GameObject TimePressureCheckMark;
+    [SerializeField] private Button SpellingErrorsButton;
+    [SerializeField] private GameObject SpellingErrorsCheckMark;
+
+    private bool isSuspiciousLinkReported = false;
+    private bool isUnknownSenderReported = false;
+    private bool isTimePressureReported = false;
+    private bool isSpellingErrorsReported = false;
+
 
     private void OnEnable() {
         // Setup core navigation
@@ -35,6 +57,26 @@ public class MailUIController : MonoBehaviour {
 
         // Force the app to open just the sidebar by default
         OpenHome();
+
+        // Report buttons
+        this.reportMailButton.onClick.AddListener(OnReportClicked);
+        foreach (Button button in cancelButtons) {
+            button.onClick.AddListener(OnCanceled);
+        }
+        SuspiciousLinkButton.onClick.AddListener(() => OnReportClicked(ref this.isSuspiciousLinkReported, this.SuspiciousLinkCheckMark));
+        UnknownSenderButton.onClick.AddListener(() => OnReportClicked(ref this.isUnknownSenderReported, this.UnknownSenderCheckMark));
+        TimePressureButton.onClick.AddListener(() => OnReportClicked(ref this.isTimePressureReported, this.TimePressureCheckMark));
+        SpellingErrorsButton.onClick.AddListener(() => OnReportClicked(ref this.isSpellingErrorsReported, this.SpellingErrorsCheckMark));
+    }
+
+    private void OnReportClicked(ref bool reportBool, GameObject reportCheckMark) {
+        reportBool = !reportBool;
+
+        if (reportBool) {
+            reportCheckMark.SetActive(true);
+        } else {
+            reportCheckMark.SetActive(false);
+        }
     }
 
     private void OnDisable() {
@@ -43,6 +85,7 @@ public class MailUIController : MonoBehaviour {
         backButton.onClick.RemoveListener(OnBackButtonClicked);
         closeTabButton.onClick.RemoveListener(CloseMailWindow);
         settingsButton.onClick.RemoveAllListeners();
+        reportMailButton.onClick.RemoveListener(OnReportClicked);
     }
 
     private void OnConditonChanged(ConditionTracker.ConditionState state) {
@@ -121,6 +164,34 @@ public class MailUIController : MonoBehaviour {
                 OpenDeleted(); // Closes the email and returns to Deleted list
                 break;
         }
+    }
+
+    private void OnReportClicked() {
+        this.ReportOverlay.SetActive(false);
+
+        StringBuilder reportSummary = new StringBuilder("Report Summary:\n");
+        reportSummary.AppendLine($"Suspicious Link: {this.isSuspiciousLinkReported}");
+        reportSummary.AppendLine($"Unknown Sender: {this.isUnknownSenderReported}");
+        reportSummary.AppendLine($"Time Pressure: {this.isTimePressureReported}");
+        reportSummary.AppendLine($"Spelling Errors: {this.isSpellingErrorsReported}");
+
+        Debug.Log(reportSummary.ToString());
+    }
+
+    private void OnCanceled() {
+        this.ReportOverlay.SetActive(false);
+
+        //this.isSuspiciousLinkReported = false;
+        //this.SpellingErrorsCheckMark.SetActive(false);
+
+        //this.isUnknownSenderReported = false;
+        //this.UnknownSenderCheckMark.SetActive(false);
+
+        //this.isTimePressureReported = false;
+        //this.TimePressureCheckMark.SetActive(false);
+
+        //this.isSpellingErrorsReported = false;
+        //this.SpellingErrorsCheckMark.SetActive(false);
     }
 
     private void CloseMailWindow() {
