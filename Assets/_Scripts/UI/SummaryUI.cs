@@ -11,9 +11,11 @@ using UnityEngine;
 public class SummaryUI : MonoBehaviour {
     [SerializeField] private GameObject summaryContainer;
     [SerializeField] private TMP_Text summaryText;
-    [SerializeField] private int totalNumberOfNessecarySituations = 0;
+    private int totalNumberOfPrimaryTasks = 0;
+    private int totalNumberOfMailTasks = 0;
     private int completedSituationsCount = 0;
     private int completedNecessarySituationsCount = 0;
+    private int completedMailCount = 0;
 
     private void OnEnable() {
         SituationManager.Instance.OnSituationStateChange += OnSituationStateChanged;
@@ -27,7 +29,11 @@ public class SummaryUI : MonoBehaviour {
 
 
     private void Start() {
-        this.totalNumberOfNessecarySituations = SituationManager.Instance.Situations.Where(x => x.TypeEnum == SituationData.situationTypeEnum.PrimaryTask).Count();
+        List<TaskData> allTasks = SituationManager.Instance.Situations.OfType<TaskData>().ToList();
+        List<MailData> allEmails = SituationManager.Instance.Situations.OfType<MailData>().ToList();
+
+        this.totalNumberOfPrimaryTasks = allTasks.Count(task => task.TaskType == TaskData.TaskTypeEnum.Main);
+        this.totalNumberOfMailTasks = allEmails.Count;
     }
 
     private void OnSituationStateChanged(SituationData data) {
@@ -35,11 +41,9 @@ public class SummaryUI : MonoBehaviour {
         if (data.IsCompleted) {
             this.completedSituationsCount++;
 
-            if (data.TypeEnum == SituationData.situationTypeEnum.PrimaryTask) {
-                this.completedNecessarySituationsCount++;
-                //if (this.totalNumberOfNessecarySituations == this.completedNecessarySituationsCount) {
-                //    DisplayEndOfTheDaySummary();
-                //}
+            // Check if the situation is a of type MailData
+            if (data is MailData mailData) {
+                this.completedMailCount++;
             }
         }
     }
@@ -82,7 +86,7 @@ public class SummaryUI : MonoBehaviour {
         });
 
         summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}");
-        //summaryBuilder.AppendLine($"Emails: {totalEmails}");
+        summaryBuilder.AppendLine($"Emails: {totalEmails}/{this.totalNumberOfMailTasks}");
         summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
         //summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
 

@@ -21,7 +21,6 @@ public abstract class SituationData : ScriptableObject {
 
     [SerializeField] private SituationManager.SituationStateEnum initialState = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the starte state of the situation
 
-    [SerializeField] private situationTypeEnum typeEnum = situationTypeEnum.None; // Situation type enum to represent the type of the situation
     // Public properties to access the private fields
     public string SituationName => situationName; // Name of the situation, used for identification and task name.
     public SituationData[] RequiredSituations => requiredSituations; // Optional, Array of situations that must be completed before this situation can be activated.
@@ -31,7 +30,6 @@ public abstract class SituationData : ScriptableObject {
     public ConditionTracker.ConditionState[] ResultingFailedConditions => resultingFailedConditions; // Optional, Array of conditions that will be set when this situation fails.
     // Public field
     public SituationManager.SituationStateEnum SituationStateEnum = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the current state of the situation
-    public situationTypeEnum TypeEnum => typeEnum; // Situation type enum to represent the type of the situation
     public bool IsCompleted => this.SituationStateEnum == SituationManager.SituationStateEnum.Success || this.SituationStateEnum == SituationManager.SituationStateEnum.Failed;
     public bool IsRequiredSituationsCompleted() {
         int numberOfSituationsCompleted = 0;
@@ -64,10 +62,5 @@ public abstract class SituationData : ScriptableObject {
 
     public void Initialize() {
         this.SituationStateEnum = this.initialState;
-    }
-
-    public enum situationTypeEnum : int     {
-        None = 0,
-        PrimaryTask = 1,
     }
 }
