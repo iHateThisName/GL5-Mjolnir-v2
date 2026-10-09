@@ -16,6 +16,12 @@ public class MailData : TaskData {
     [SerializeField] private bool isDeleteCorrect = false;
     [SerializeField] private bool isLinkCorrect = false;
 
+    [Header("Correct Report Options")]
+    [SerializeField] private bool isSuspiciousLinkReported = false;
+    [SerializeField] private bool isUnknownSenderReported = false;
+    [SerializeField] private bool isTimePressureReported = false;
+    [SerializeField] private bool isSpellingErrorsReported = false;
+
     // Public properties to access the private fields
     public string EmailAddress => emailAddress;
     public string EmailHeader => emailHeader;
@@ -26,6 +32,11 @@ public class MailData : TaskData {
     public bool IsReplyCorrect => isReplyCorrect;
     public bool IsDeleteCorrect => isDeleteCorrect;
     public bool IsLinkCorrect => isLinkCorrect;
+
+    public bool IsSuspiciousLinkReported => isSuspiciousLinkReported;
+    public bool IsUnknownSenderReported => isUnknownSenderReported;
+    public bool IsTimePressureReported => isTimePressureReported;
+    public bool IsSpellingErrorsReported => isSpellingErrorsReported;
 
     [Header("TV Reveal Data")]
 

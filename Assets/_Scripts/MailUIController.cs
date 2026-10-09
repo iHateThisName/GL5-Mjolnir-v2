@@ -8,6 +8,8 @@ public class MailUIController : MonoBehaviour {
     private enum MailState { Home, InboxList, DeletedList, ReadingInbox, ReadingDeleted }
     private MailState currentState = MailState.Home;
 
+    [SerializeField] private MailSelectedController mailSelectedController;
+
     [Header("Panels")]
     [SerializeField] private GameObject leftContainer;
     [SerializeField] private GameObject emailListPanel;
@@ -176,6 +178,8 @@ public class MailUIController : MonoBehaviour {
         reportSummary.AppendLine($"Spelling Errors: {this.isSpellingErrorsReported}");
 
         Debug.Log(reportSummary.ToString());
+
+        this.mailSelectedController.OnReport(this.isSuspiciousLinkReported, this.isUnknownSenderReported, this.isTimePressureReported, this.isSpellingErrorsReported);
     }
 
     private void OnCanceled() {

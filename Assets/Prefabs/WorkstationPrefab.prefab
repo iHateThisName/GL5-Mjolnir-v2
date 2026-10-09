@@ -1455,6 +1455,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: ComputerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2818010323676186555}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenInbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MailUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383230463362229643, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8674500830503392107, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1584,6 +1612,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+--- !u!114 &2818010323676186555 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5370949927394858259, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+  m_PrefabInstance: {fileID: 7895628139892413096}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975371fb38847d243975068db81f497d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MailUIController
 --- !u!4 &5759164650320862285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2485510122705587941, guid: d44ea11222ff9d1409eee23947228a07, type: 3}

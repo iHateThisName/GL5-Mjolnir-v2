@@ -88,6 +88,7 @@ public class SummaryUI : MonoBehaviour {
         summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}");
         summaryBuilder.AppendLine($"Emails: {totalMails}/{this.totalNumberOfMailTasks}");
         summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
+        summaryBuilder.AppendLine($"Scams Reported Correctly: {SituationManager.Instance.currentScamReportsScore}/{SituationManager.Instance.TotalScamReportScore}");
         //summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
 
         this.summaryText.text = summaryBuilder.ToString();

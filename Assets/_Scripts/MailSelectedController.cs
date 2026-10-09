@@ -1,12 +1,10 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MailSelectedController : MonoBehaviour, IInteractable
-{
+public class MailSelectedController : MonoBehaviour, IInteractable {
     [SerializeField] private MailData currentSelectedMail;
 
     [Header("Main Email Panel UI")]
@@ -26,8 +24,7 @@ public class MailSelectedController : MonoBehaviour, IInteractable
     public UnityEvent<MailData> selectedMailReplay;
     public UnityEvent<string> selectedMailLinkClicked;
 
-    private void Start()
-    {
+    private void Start() {
         if (this.currentSelectedMail == null) ClearMailUI();
         else SelectMail(currentSelectedMail);
 
@@ -35,10 +32,8 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         this.replaySelectedMail?.onClick.AddListener(OnReplaySelectedMail);
     }
 
-    private void OnReplaySelectedMail()
-    {
-        if (currentSelectedMail != null)
-        {
+    private void OnReplaySelectedMail() {
+        if (currentSelectedMail != null) {
             currentSelectedMail.SituationStateEnum = currentSelectedMail.IsReplyCorrect
                 ? SituationManager.SituationStateEnum.Success
                 : SituationManager.SituationStateEnum.Failed;
@@ -51,13 +46,10 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         }
     }
 
-    private void OnDeleteSelectedMail()
-    {
-        if (this.currentSelectedMail != null)
-        {
+    private void OnDeleteSelectedMail() {
+        if (this.currentSelectedMail != null) {
             // Send the annotated text to the Deleted Panel instantly
-            if (this.deletedPanelBodyText != null)
-            {
+            if (this.deletedPanelBodyText != null) {
                 this.deletedPanelBodyText.text = currentSelectedMail.AnnotatedEmailBody != null && currentSelectedMail.AnnotatedEmailBody.Length > 0
                     ? string.Join("\n", currentSelectedMail.AnnotatedEmailBody)
                     : "No annotated text available.";
@@ -75,14 +67,12 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         }
     }
 
-    public void SelectMail(MailData mailData)
-    {
+    public void SelectMail(MailData mailData) {
         this.currentSelectedMail = mailData;
 
         if (this.selectedMailSender != null) this.selectedMailSender.text = mailData.EmailAddress;
         if (this.selectedMailSubject != null) this.selectedMailSubject.text = mailData.EmailHeader;
-        if (this.selectedMailBody != null)
-        {
+        if (this.selectedMailBody != null) {
             this.selectedMailBody.text = mailData.EmailBody != null ? string.Join("\n", mailData.EmailBody) : "No body text found.";
         }
 
@@ -92,23 +82,26 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         this.selectedMailOpened?.Invoke(mailData);
     }
 
-    private void ClearMailUI()
-    {
+    private void ClearMailUI() {
         if (this.selectedMailSender != null) this.selectedMailSender.text = string.Empty;
         if (this.selectedMailSubject != null) this.selectedMailSubject.text = string.Empty;
         if (this.selectedMailBody != null) this.selectedMailBody.text = string.Empty;
     }
 
-    public void Interact(GameObject interactor)
-    {
+    public void Interact(GameObject interactor) {
         if (selectedMailBody == null) return;
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         int linkIndex = TMP_TextUtilities.FindIntersectingLink(selectedMailBody, mousePosition, Camera.main);
 
-        if (linkIndex != -1)
-        {
+        if (linkIndex != -1) {
             TMP_LinkInfo linkInfo = selectedMailBody.textInfo.linkInfo[linkIndex];
             selectedMailLinkClicked?.Invoke(linkInfo.GetLinkID());
         }
+    }
+
+    public void OnReport(bool isSuspiciousLinkReported, bool isUnknownSenderReported, bool isTimePressureReported, bool isSpellingErrorsReported) {
+        SituationManager.Instance.ReportScam(this.currentSelectedMail, isSuspiciousLinkReported, isUnknownSenderReported, isTimePressureReported, isSpellingErrorsReported);
+        OnDeleteSelectedMail();
+        //currentSelectedMail
     }
 }

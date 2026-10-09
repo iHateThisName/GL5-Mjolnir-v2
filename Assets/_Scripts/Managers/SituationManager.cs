@@ -15,6 +15,8 @@ public class SituationManager : Singleton<SituationManager> {
     [field: SerializeField] public List<SituationData> Situations { get; private set; } = new List<SituationData>();
     public event System.Action<SituationData> OnSituationStateChange; // When the situation state has changed based on SituationStateEnum
 
+    public int TotalScamReportScore => this.Situations.OfType<MailData>().Where(mail => mail.IsSuspiciousLinkReported || mail.IsUnknownSenderReported || mail.IsTimePressureReported || mail.IsSpellingErrorsReported).Count() * 4;
+    public int currentScamReportsScore = 0;
     private void OnEnable() {
         ConditionTracker.Instance.OnConditionStateChanged += OnCoditionChanged;
     }
@@ -143,5 +145,31 @@ public class SituationManager : Singleton<SituationManager> {
         }
 
     }
+
+    internal void ReportScam(MailData currentSelectedMail, bool isSuspiciousLinkReported, bool isUnknownSenderReported,
+                             bool isTimePressureReported, bool isSpellingErrorsReported) {
+        
+
+        int correctReports = 0;
+
+        if (currentSelectedMail.IsSuspiciousLinkReported == isSuspiciousLinkReported) {
+            correctReports++;
+        }
+
+        if (currentSelectedMail.IsUnknownSenderReported == isUnknownSenderReported) {
+            correctReports++;
+        }
+
+        if (currentSelectedMail.IsTimePressureReported == isTimePressureReported) {
+            correctReports++;
+        }
+
+        if (currentSelectedMail.IsSpellingErrorsReported == isSpellingErrorsReported) {
+            correctReports++;
+        }
+
+        this.currentScamReportsScore += correctReports;
+    }
+
     [System.Serializable] public enum SituationStateEnum : int { Inactive = 0, Active = 1, Success = 2, Failed = 3 }
 }

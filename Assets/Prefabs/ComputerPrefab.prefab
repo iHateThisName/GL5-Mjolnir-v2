@@ -2121,6 +2121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975371fb38847d243975068db81f497d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MailUIController
+  mailSelectedController: {fileID: 9035188472965735197}
   leftContainer: {fileID: 2611775287682144623}
   emailListPanel: {fileID: 2452695274538230215}
   emailPanel: {fileID: 2462998836711529022}
