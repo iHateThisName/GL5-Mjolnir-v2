@@ -37,6 +37,14 @@ public class MailUIController : MonoBehaviour {
         OpenHome();
     }
 
+    private void OnDisable() {
+        inboxButton.onClick.RemoveListener(OpenInbox);
+        deletedButton.onClick.RemoveListener(OpenDeleted);
+        backButton.onClick.RemoveListener(OnBackButtonClicked);
+        closeTabButton.onClick.RemoveListener(CloseMailWindow);
+        settingsButton.onClick.RemoveAllListeners();
+    }
+
     private void OnConditonChanged(ConditionTracker.ConditionState state) {
         if (state.Condition == ConditionTracker.ConditionEnum.DeletedCompanyMail && state.ExpectedState)
             BossCanvasOverlay.SetActive(true);
@@ -44,14 +52,6 @@ public class MailUIController : MonoBehaviour {
 
     public void ContinueFromBossOverlay() {
         BossCanvasOverlay.SetActive(false);
-    }
-
-    private void OnDisable() {
-        inboxButton.onClick.RemoveListener(OpenInbox);
-        deletedButton.onClick.RemoveListener(OpenDeleted);
-        backButton.onClick.RemoveListener(OnBackButtonClicked);
-        closeTabButton.onClick.RemoveListener(CloseMailWindow);
-        settingsButton.onClick.RemoveAllListeners();
     }
 
     /// <summary>

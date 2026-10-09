@@ -60,7 +60,7 @@ public class SummaryUI : MonoBehaviour {
         List<SituationData> failedScam = new List<SituationData>();
         List<SituationData> successfulScam = new List<SituationData>();
         int totalCompletedSituations = 0;
-        int totalEmails = 0;
+        int totalMails = 0;
 
         SituationManager.Instance.Situations.ForEach(situation => {
 
@@ -81,12 +81,12 @@ public class SummaryUI : MonoBehaviour {
                     }
 
                 }
-                totalEmails++;
+                totalMails++;
             }
         });
 
         summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}");
-        summaryBuilder.AppendLine($"Emails: {totalEmails}/{this.totalNumberOfMailTasks}");
+        summaryBuilder.AppendLine($"Emails: {totalMails}/{this.totalNumberOfMailTasks}");
         summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
         //summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
 

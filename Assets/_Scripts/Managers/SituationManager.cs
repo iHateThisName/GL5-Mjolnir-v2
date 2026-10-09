@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -62,6 +60,7 @@ public class SituationManager : Singleton<SituationManager> {
             // If a situation gets added that does not start inactive then notify any listner.
             if (situationData.SituationStateEnum != SituationStateEnum.Inactive) {
                 OnSituationStateChange?.Invoke(situationData);
+                Debug.Log($"Situation {situationData.SituationName} added. Current state: {situationData.SituationStateEnum}");
             }
         }
     }
@@ -77,8 +76,7 @@ public class SituationManager : Singleton<SituationManager> {
                     foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingSuccessConditions) {
                         ConditionTracker.Instance.SetCondition(raisedCondition);
                     }
-                }
-                else if (situation.SituationStateEnum == SituationStateEnum.Failed) {
+                } else if (situation.SituationStateEnum == SituationStateEnum.Failed) {
                     // Raise the resulting conditions associated with that situation.
                     foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingFailedConditions) {
                         ConditionTracker.Instance.SetCondition(raisedCondition);
@@ -91,6 +89,7 @@ public class SituationManager : Singleton<SituationManager> {
 
                     // Notify that the state has been changed.
                     OnSituationStateChange?.Invoke(situation);
+                    Debug.Log($"Situation {situation.SituationName} is now active due to condition change: {changed.Condition}");
                 }
             }
         });
@@ -101,10 +100,7 @@ public class SituationManager : Singleton<SituationManager> {
         List<SituationData> NotCompletedSituations = Situations.FindAll(x => x.SituationStateEnum != SituationStateEnum.Success || x.SituationStateEnum != SituationStateEnum.Failed);
 
         foreach (SituationData situation in NotCompletedSituations) {
-            if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
-                situation.SituationStateEnum = SituationStateEnum.Active;
-                OnSituationStateChange?.Invoke(situation);
-            }
+            CheckSituationState(situation);
         }
     }
 
@@ -113,13 +109,14 @@ public class SituationManager : Singleton<SituationManager> {
             if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
                 situation.SituationStateEnum = SituationStateEnum.Active;
                 OnSituationStateChange?.Invoke(situation);
+                Debug.Log("Situation " + situation.SituationName + " is now active.");
             }
         }
     }
 
     public void SetSituationState(SituationManager.SituationStateEnum newState, SituationData situation) {
         if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Inactive) return;
-        
+
         // State has to be active to change state to success or failed
 
         if (newState == SituationManager.SituationStateEnum.Success || newState == SituationManager.SituationStateEnum.Failed) {
@@ -130,8 +127,7 @@ public class SituationManager : Singleton<SituationManager> {
                 foreach (ConditionTracker.ConditionState condition in situation.ResultingSuccessConditions) {
                     ConditionTracker.Instance.SetCondition(condition);
                 }
-            }
-            else if (newState == SituationManager.SituationStateEnum.Failed) {
+            } else if (newState == SituationManager.SituationStateEnum.Failed) {
                 // Set the resulting conditions when the situation fails
                 foreach (ConditionTracker.ConditionState condition in situation.ResultingFailedConditions) {
                     ConditionTracker.Instance.SetCondition(condition);
@@ -143,6 +139,7 @@ public class SituationManager : Singleton<SituationManager> {
             childSituations.ForEach(child => CheckSituationState(child));
 
             OnSituationStateChange?.Invoke(situation);
+            Debug.Log($"Situation {situation.SituationName} has changed state to {newState}");
         }
 
     }
