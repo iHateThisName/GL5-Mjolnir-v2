@@ -13,27 +13,16 @@ public class MailBoxManager : MonoBehaviour {
     [SerializeField] private AudioClip mailSuccessSFX;
     [SerializeField] private AudioClip mailFailedSFX;
 
-    private void OnEnable()
-    {
-        if (this.mailSelectedController != null)
-        {
-            this.mailSelectedController.selectedMailDeleted.AddListener(OnDeleteMail);
-        }
-
-        if (SituationManager.Instance != null)
-        {
-            SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
-        }
+    private void OnEnable() {
+        this.mailSelectedController.selectedMailReplayed.AddListener(HideMail);
+        this.mailSelectedController.selectedMailDeleted.AddListener(HideMail);
+        SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
     }
 
-    private void OnDisable()
-    {
-        this.mailSelectedController?.selectedMailDeleted?.RemoveListener(OnDeleteMail);
-
-        if (SituationManager.Instance != null)
-        {
-            SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
-        }
+    private void OnDisable() {
+        this.mailSelectedController.selectedMailDeleted?.RemoveListener(HideMail);
+        this.mailSelectedController.selectedMailReplayed?.RemoveListener(HideMail);
+        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
     }
 
     private void Awake() {
@@ -143,10 +132,8 @@ public class MailBoxManager : MonoBehaviour {
         this.mailSelectedController.SelectMail(mailData);
     }
 
-    private void OnDeleteMail(MailData mailData)
-    {
-        if (this.mailGameObjects.TryGetValue(mailData, out GameObject goMail))
-        {
+    private void HideMail(MailData mailData) {
+        if (this.mailGameObjects.TryGetValue(mailData, out GameObject goMail)) {
             // Simply hide the button from the inbox list
             goMail.SetActive(false);
         }

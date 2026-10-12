@@ -23,7 +23,7 @@ public class MailSelectedController : MonoBehaviour, IInteractable {
 
     public UnityEvent<MailData> selectedMailOpened;
     public UnityEvent<MailData> selectedMailDeleted;
-    public UnityEvent<MailData> selectedMailReplay;
+    public UnityEvent<MailData> selectedMailReplayed;
     public UnityEvent<string> selectedMailLinkClicked;
 
     private void Start() {
@@ -41,7 +41,7 @@ public class MailSelectedController : MonoBehaviour, IInteractable {
                 : SituationManager.SituationStateEnum.Failed;
 
             SituationManager.Instance.SetSituationState(currentSelectedMail.SituationStateEnum, currentSelectedMail);
-            this.selectedMailReplay?.Invoke(currentSelectedMail);
+            this.selectedMailReplayed?.Invoke(currentSelectedMail);
 
             ClearMailUI();
             this.currentSelectedMail = null;
@@ -104,6 +104,5 @@ public class MailSelectedController : MonoBehaviour, IInteractable {
     public void OnReport(bool isSuspiciousLinkReported, bool isUnknownSenderReported, bool isTimePressureReported, bool isSpellingErrorsReported) {
         SituationManager.Instance.ReportScam(this.currentSelectedMail, isSuspiciousLinkReported, isUnknownSenderReported, isTimePressureReported, isSpellingErrorsReported);
         OnDeleteSelectedMail();
-        //currentSelectedMail
     }
 }

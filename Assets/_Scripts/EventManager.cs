@@ -70,12 +70,12 @@ public class EventManager : MonoBehaviour
         if (mailController != null)
         {
             mailController.selectedMailDeleted.AddListener(HandleMailDeleted);
-            mailController.selectedMailReplay.AddListener(HandleMailReplied);
+            mailController.selectedMailReplayed.AddListener(HandleMailReplied);
         }
         if (lindasMailController != null)
         {
             lindasMailController.selectedMailDeleted.AddListener(HandleMailDeleted);
-            lindasMailController.selectedMailReplay.AddListener(HandleMailReplied);
+            lindasMailController.selectedMailReplayed.AddListener(HandleMailReplied);
         }
         if (officeChair != null) officeChair.onPlayerSatDown.AddListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.AddListener(HandlePlayerSatAtLindasDesk);
@@ -95,12 +95,12 @@ public class EventManager : MonoBehaviour
         if (mailController != null)
         {
             mailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
-            mailController.selectedMailReplay.RemoveListener(HandleMailReplied);
+            mailController.selectedMailReplayed.RemoveListener(HandleMailReplied);
         }
         if (lindasMailController != null)
         {
             lindasMailController.selectedMailDeleted.RemoveListener(HandleMailDeleted);
-            lindasMailController.selectedMailReplay.RemoveListener(HandleMailReplied);
+            lindasMailController.selectedMailReplayed.RemoveListener(HandleMailReplied);
         }
         if (officeChair != null) officeChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtOwnDesk);
         if (lindasChair != null) lindasChair.onPlayerSatDown.RemoveListener(HandlePlayerSatAtLindasDesk);
