@@ -17,8 +17,8 @@ public class MailUIController : MonoBehaviour {
     [SerializeField] private GameObject deletedListPanel;
 
     [Header("Buttons")]
-    [SerializeField] private Button inboxButton;
-    [SerializeField] private Button deletedButton;
+    [SerializeField] private Button sidebarInboxButton;
+    [SerializeField] private Button sidebarDeletedButton;
     [SerializeField] private Button backButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button closeTabButton;
@@ -48,8 +48,8 @@ public class MailUIController : MonoBehaviour {
 
     private void OnEnable() {
         // Setup core navigation
-        inboxButton.onClick.AddListener(OpenInbox);
-        deletedButton.onClick.AddListener(OpenDeleted);
+        sidebarInboxButton.onClick.AddListener(OpenInbox);
+        sidebarDeletedButton.onClick.AddListener(OpenDeleted);
         backButton.onClick.AddListener(OnBackButtonClicked); // Now uses dynamic logic
         closeTabButton.onClick.AddListener(CloseMailWindow);
         ConditionTracker.Instance.OnConditionStateChanged += OnConditonChanged;
@@ -82,8 +82,8 @@ public class MailUIController : MonoBehaviour {
     }
 
     private void OnDisable() {
-        inboxButton.onClick.RemoveListener(OpenInbox);
-        deletedButton.onClick.RemoveListener(OpenDeleted);
+        sidebarInboxButton.onClick.RemoveListener(OpenInbox);
+        sidebarDeletedButton.onClick.RemoveListener(OpenDeleted);
         backButton.onClick.RemoveListener(OnBackButtonClicked);
         closeTabButton.onClick.RemoveListener(CloseMailWindow);
         settingsButton.onClick.RemoveAllListeners();
@@ -200,6 +200,6 @@ public class MailUIController : MonoBehaviour {
 
     private void CloseMailWindow() {
         // Disables the entire mail window, returning the player to the desktop
-        gameObject.SetActive(false);
+        this.mailSelectedController.ComputerController.OnMailButton();
     }
 }

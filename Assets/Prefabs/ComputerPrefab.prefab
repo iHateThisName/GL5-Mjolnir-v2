@@ -1194,19 +1194,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2857280387547794426}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7115312489780355691}
-        m_TargetAssemblyTypeName: ComputerController, Assembly-CSharp
-        m_MethodName: OnMailButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1121941059531457575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2126,8 +2114,8 @@ MonoBehaviour:
   emailListPanel: {fileID: 2452695274538230215}
   emailPanel: {fileID: 2462998836711529022}
   deletedListPanel: {fileID: 3831204982640611472}
-  inboxButton: {fileID: 5759335945906826034}
-  deletedButton: {fileID: 7779564796730112150}
+  sidebarInboxButton: {fileID: 5759335945906826034}
+  sidebarDeletedButton: {fileID: 7779564796730112150}
   backButton: {fileID: 3465825173091276770}
   settingsButton: {fileID: 7709725660502975964}
   closeTabButton: {fileID: 6407695992326219806}
@@ -6082,6 +6070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6072c12f099efbe4eb8463425f5f018e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  <ComputerController>k__BackingField: {fileID: 7115312489780355691}
   currentSelectedMail: {fileID: 0}
   selectedMailSender: {fileID: 0}
   selectedMailSubject: {fileID: 0}

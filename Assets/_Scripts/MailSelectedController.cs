@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MailSelectedController : MonoBehaviour, IInteractable {
+    [field:SerializeField] public ComputerController ComputerController { get; private set; }
+
     [SerializeField] private MailData currentSelectedMail;
 
     [Header("Main Email Panel UI")]
