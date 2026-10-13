@@ -16,11 +16,14 @@ MonoBehaviour:
   parentSituation: {fileID: 0}
   requiredSituations: []
   requiredConditions: []
-  resultingConditions: []
+  resultingSuccessConditions: []
+  resultingFailedConditions: []
+  initialState: 0
   SituationStateEnum: 0
   Portrait: {fileID: 0}
   Name: Greeb
   Lines:
   - Greeble
-  - Greeb needs your help
-  - Greeb wants you to avoid sketchy links
+  - Greeb has returned
+  - Greeb is furius for being left out of the new build scenes
+  - Greeb will plot revange
