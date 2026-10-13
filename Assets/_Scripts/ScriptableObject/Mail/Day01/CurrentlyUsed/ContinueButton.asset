@@ -22,6 +22,5 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  typeEnum: 0
-  SituationStateEnum: 1
+  SituationStateEnum: 0
   taskType: 0

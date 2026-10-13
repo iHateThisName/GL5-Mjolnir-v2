@@ -72,7 +72,7 @@ public class SummaryUI : MonoBehaviour {
             if (situation is MailData emailSituation) {
 
                 // Check if the email is a scam
-                if (emailSituation.MailType == MailData.MailTypeEnum.Scam) {
+                if (emailSituation.MailType == CommunicationTypeEnum.Scam) {
 
                     if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Success) {
                         successfulScam.Add(situation);

@@ -28,24 +28,6 @@ public class GameManager : Singleton<GameManager> {
         SetLookSensitivity(this.LookSensitivity);
     }
 
-
-
-    //public void OnLoadeLevel() {
-    //    string sceneName = SceneManager.GetActiveScene().name;
-
-    //    if(this.levelDataLookup.TryGetValue(sceneName, out LevelData levelData)) {
-
-    //        foreach (ConditionTracker.ConditionState conditionState in levelData.InitialConditions) {
-    //            ConditionTracker.Instance.SetCondition(conditionState);
-    //        }
-
-    //        foreach (SituationData situationData in levelData.Situations) {
-    //            // Give the situation data to the SituationManager to handle
-    //        }
-    //    }
-
-    //}
-
     public void TeleportPlayer(Vector3 position, Quaternion rotation) {
         // Get the player's CharacterController refrence.
         CharacterController playerController = PlayerRefrenceProvider.Instance.PlayerCharacterController;
@@ -118,3 +100,4 @@ public class GameManager : Singleton<GameManager> {
 
 public enum EnumPlayerState { None = 0, Walking = 1, Sitting = 2, }
 public enum EnumDifficulty { None = 0, Easy = 1, Medium = 2, Hard = 3, };
+[System.Serializable] public enum CommunicationTypeEnum : int { None = 0, Company = 1, Personal = 2, Spam = 3, Scam = 4, }

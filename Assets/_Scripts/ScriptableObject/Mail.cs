@@ -6,5 +6,5 @@ public class Mail : ScriptableObject {
     public string EmailAddress;
     public string EmailSubject;
     public string EmailBody;
-    public MailData.MailTypeEnum EmailType;
+    public CommunicationTypeEnum EmailType;
 }

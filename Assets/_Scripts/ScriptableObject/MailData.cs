@@ -9,7 +9,7 @@ public class MailData : TaskData {
     [SerializeField] private string[] emailBody = new string[0];
 
     [SerializeField] private EnumDifficulty difficulty = EnumDifficulty.None;
-    [SerializeField] private MailTypeEnum mailType = MailTypeEnum.None;
+    [SerializeField] private CommunicationTypeEnum mailType = CommunicationTypeEnum.None;
 
     [Header("Correct Choice")]
     [SerializeField] private bool isReplyCorrect = true;
@@ -27,7 +27,7 @@ public class MailData : TaskData {
     public string EmailHeader => emailHeader;
     public string[] EmailBody => emailBody;
     public EnumDifficulty Difficulty => difficulty;
-    public MailTypeEnum MailType => mailType;
+    public CommunicationTypeEnum MailType => mailType;
 
     public bool IsReplyCorrect => isReplyCorrect;
     public bool IsDeleteCorrect => isDeleteCorrect;
@@ -66,14 +66,13 @@ public class MailData : TaskData {
     public string[] AnnotatedEmailBody => annotatedEmailBody.Length > 0 ? annotatedEmailBody : emailBody;
     public string AnnotatedEmailAddress => string.IsNullOrEmpty(annotatedEmailAddress) ? emailAddress : annotatedEmailAddress;
 
-    public MailData(string emailAddress, string emailHeader, string[] emailBody, MailTypeEnum mailType) {
+    public MailData(string emailAddress, string emailHeader, string[] emailBody, CommunicationTypeEnum mailType) {
         this.emailAddress = emailAddress;
         this.emailHeader = emailHeader;
         this.emailBody = emailBody;
         this.mailType = mailType;
     }
 
-    [System.Serializable]
-    public enum MailTypeEnum : int { None = 0, Company = 1, Personal = 2, Spam = 3, Scam = 4, }
+
 }
 

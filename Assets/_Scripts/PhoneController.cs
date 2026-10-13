@@ -1,9 +1,12 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PhoneController : MonoBehaviour
-{
+public class PhoneController : MonoBehaviour {
+
+    [SerializeField] private List<MailData> mailDataList = new List<MailData>();
+
     [SerializeField] WorldInteractable GreenButton;
     [SerializeField] WorldInteractable RedButton;
     [SerializeField] WorldInteractable PhoneInteractable;
@@ -28,8 +31,7 @@ public class PhoneController : MonoBehaviour
     public UnityEvent onPhoneApproved = new UnityEvent();
     public UnityEvent onPhoneHungUp = new UnityEvent();
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         PhoneInteractable.OnInteract += OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract += EndPhoneCall;
 
@@ -37,8 +39,7 @@ public class PhoneController : MonoBehaviour
         RedButton.OnInteract += EndPhoneCall;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         PhoneInteractable.OnInteract -= OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract -= EndPhoneCall;
 
@@ -46,8 +47,7 @@ public class PhoneController : MonoBehaviour
         RedButton.OnInteract -= EndPhoneCall;
     }
 
-    private void Start()
-    {
+    private void Start() {
         this.phoneVisualTransform = this.transform.GetChild(0);
 
         this.phoneRiningSequence = DOTween.Sequence().SetId(this.phoneModel.transform).Pause();
@@ -56,10 +56,8 @@ public class PhoneController : MonoBehaviour
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchRotation(punch: new Vector3(0, 0, 10), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
     }
 
-    private void OnPhoneInteract()
-    {
-        if (!IsPhoneInHand)
-        {
+    private void OnPhoneInteract() {
+        if (!IsPhoneInHand) {
             this.IsPhoneInHand = true;
             this.phoneModel.transform.SetParent(this.phoneUpPosition);
             this.phoneModel.transform.localPosition = Vector3.zero;
@@ -71,18 +69,14 @@ public class PhoneController : MonoBehaviour
         }
     }
 
-    private void ApproveCall()
-    {
-        if (IsPhoneInHand)
-        {
+    private void ApproveCall() {
+        if (IsPhoneInHand) {
             onPhoneApproved?.Invoke();
         }
     }
 
-    public void EndPhoneCall()
-    {
-        if (IsPhoneInHand)
-        {
+    public void EndPhoneCall() {
+        if (IsPhoneInHand) {
             this.IsPhoneInHand = false;
             this.phoneModel.transform.SetParent(this.phoneVisualTransform);
             this.phoneModel.transform.localPosition = this.phoneDownPosition.localPosition;
@@ -95,32 +89,26 @@ public class PhoneController : MonoBehaviour
         }
     }
 
-    public void OnPhoneCall(Call callData)
-    {
+    public void OnPhoneCall(Call callData) {
         currentCallData = callData;
 
-        if (!IsPhoneInHand)
-        {
+        if (!IsPhoneInHand) {
             this.isPhoneRinging = true;
             this.ringtoneSound.PlaySFX();
             this.phoneRiningSequence.Restart();
-        }
-        else
-        {
+        } else {
             OnPhoneCallAccepted();
         }
     }
 
-    public void OnPhoneCallAccepted()
-    {
+    public void OnPhoneCallAccepted() {
         this.isPhoneRinging = false;
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
         this.phoneModel.transform.localScale = Vector3.one;
 
         // Play the specific audio from the ScriptableObject
-        if (currentCallData != null && currentCallData.CallAudio != null && activeCallAudio != null)
-        {
+        if (currentCallData != null && currentCallData.CallAudio != null && activeCallAudio != null) {
             activeCallAudio.clip = currentCallData.CallAudio;
             activeCallAudio.Play();
         }
