@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MailData
   situationName: Susanne
   parentSituation: {fileID: 0}
-  requiredSituations:
-  - {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
+  requiredSituations: []
   requiredConditions:
-  - Condition: 7
+  - Condition: 8
     ExpectedState: 1
   resultingSuccessConditions:
   - Condition: 6
@@ -26,7 +25,7 @@ MonoBehaviour:
   - Condition: 6
     ExpectedState: 1
   initialState: 0
-  SituationStateEnum: 1
+  SituationStateEnum: 0
   taskType: 0
   emailAddress: susanneighbour@bmail.sum
   emailHeader: About your key
@@ -37,6 +36,10 @@ MonoBehaviour:
   isReplyCorrect: 1
   isDeleteCorrect: 0
   isLinkCorrect: 0
+  isSuspiciousLinkReported: 0
+  isUnknownSenderReported: 0
+  isTimePressureReported: 0
+  isSpellingErrorsReported: 0
   tagCheatSheet: '--- COPY TAGS FROM HERE ---
 
     Spelling Error: <color=red>typo</color>

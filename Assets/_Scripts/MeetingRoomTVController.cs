@@ -1,6 +1,7 @@
 using Assets._Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MeetingRoomTVController : MonoBehaviour {
@@ -15,6 +16,7 @@ public class MeetingRoomTVController : MonoBehaviour {
 
     [SerializeField] private MailData passwordExpiredScamMailData; // Reference to the specific mail data for the password expired scam email
 
+    public UnityEvent OnContinueDay;
     private void OnEnable() {
         ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
     }
@@ -48,9 +50,10 @@ public class MeetingRoomTVController : MonoBehaviour {
     }
 
     public void ContinueDayButton() {
-        ConditionTracker.ConditionState conditionState = new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.hasCompletedMeeting, true);
-        ConditionTracker.Instance.SetCondition(conditionState);
-        Debug.Log("Clicked");
+        // Meeting is completed, set the condition to true
+        OnContinueDay?.Invoke();
         chair.StandUp();
+
+        Debug.Log("Continue button pressed! Continuing the day.");
     }
 }

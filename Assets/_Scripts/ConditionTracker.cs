@@ -16,6 +16,7 @@ using UnityEngine;
 /// This class acts as a shared source of truth for condition-based logic.
 /// </summary>
 
+[DefaultExecutionOrder(-10)]
 public class ConditionTracker : Singleton<ConditionTracker> {
     /// <summary>
     /// Event fired whenever a condition is updated via SetCondition.
@@ -41,6 +42,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     [ContextMenu("Debug true conditions")]
     public void DebugTrueConditions() => Debug.Log($"count: {this.conditions.Count} - {this.conditions.ToString()}");
 
+    public void SetCondition(ConditionStateSO conditionStateSO) => SetCondition(new ConditionState(conditionStateSO.Condition, conditionStateSO.ExpectedState));
 
     /// <summary>
     /// Updates the state of a condition.
@@ -96,10 +98,13 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         HasFailedPhisingEmail = 2,
         IsDayComplete = 6,
 
+        // Emails
+        ShowSusanneKeyEmail = 8,
+
         // Scams
         FailedPasswordExpiredScam = 3,
         SuccededPasswordExpiredScam = 7,
-        hasCompletedMeeting = 4,
+        HasCompletedMeeting = 4,
 
         //Company
         DeletedCompanyMail = 5,
@@ -110,10 +115,10 @@ public class ConditionTracker : Singleton<ConditionTracker> {
     /// This can be build upon to define complex condition requirements or how it interacts with tasks, events, or interactions.
     /// </summary>
     [System.Serializable]
-    public struct ConditionState {
+    public class ConditionState {
         public ConditionEnum Condition; // The condition that this state is about
         public bool ExpectedState; // The expected state of the condition (true for active, false for inactive)
-        public readonly bool IsMet() => ConditionTracker.Instance.HasCondition(this.Condition) == this.ExpectedState;
+        public bool IsMet() => ConditionTracker.Instance.HasCondition(this.Condition) == this.ExpectedState;
         public ConditionState(ConditionEnum condition, bool expectedState) {
             this.Condition = condition;
             this.ExpectedState = expectedState;

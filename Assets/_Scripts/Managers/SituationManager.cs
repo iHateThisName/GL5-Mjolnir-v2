@@ -22,7 +22,7 @@ public class SituationManager : Singleton<SituationManager> {
     }
 
     private void OnDisable() {
-        ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
+        if (ConditionTracker.Instance != null) ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
     }
 
     private async void Start() {
@@ -68,9 +68,18 @@ public class SituationManager : Singleton<SituationManager> {
     }
 
     public void OnCoditionChanged(ConditionTracker.ConditionState changed) {
-        List<SituationData> situationsRelated = this.Situations.FindAll(s => s.RequiredConditions.Contains(changed));
+        HashSet<SituationData> situationsRelated = new HashSet<SituationData>();
 
-        situationsRelated.ForEach(situation => {
+        foreach (SituationData data in Situations) {
+            foreach (ConditionTracker.ConditionState state in data.RequiredConditions) {
+                if (state.Condition == changed.Condition && state.ExpectedState == changed.ExpectedState) {
+                    situationsRelated.Add(data);
+                    break; // No need to check other conditions for this situation, we already found a match.
+                }
+            }
+        }
+
+        foreach (SituationData situation in situationsRelated) {
             if (situation.IsRequiredConditionsMet()) {
 
                 if (situation.SituationStateEnum == SituationStateEnum.Success) {
@@ -94,12 +103,12 @@ public class SituationManager : Singleton<SituationManager> {
                     Debug.Log($"Situation {situation.SituationName} is now active due to condition change: {changed.Condition}");
                 }
             }
-        });
+        }
     }
 
     public void CheckAllSituationState() {
         // Find all situations that are not completed (NOT successful/failed).
-        List<SituationData> NotCompletedSituations = Situations.FindAll(x => x.SituationStateEnum != SituationStateEnum.Success || x.SituationStateEnum != SituationStateEnum.Failed);
+        List<SituationData> NotCompletedSituations = Situations.FindAll(x => x.SituationStateEnum != SituationStateEnum.Success && x.SituationStateEnum != SituationStateEnum.Failed);
 
         foreach (SituationData situation in NotCompletedSituations) {
             CheckSituationState(situation);
@@ -107,7 +116,7 @@ public class SituationManager : Singleton<SituationManager> {
     }
 
     public void CheckSituationState(SituationData situation) {
-        if (situation.SituationStateEnum != SituationStateEnum.Success || situation.SituationStateEnum != SituationStateEnum.Failed) {
+        if (situation.SituationStateEnum != SituationStateEnum.Success && situation.SituationStateEnum != SituationStateEnum.Failed) {
             if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
                 situation.SituationStateEnum = SituationStateEnum.Active;
                 OnSituationStateChange?.Invoke(situation);

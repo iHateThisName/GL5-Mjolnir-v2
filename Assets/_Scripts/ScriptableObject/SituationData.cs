@@ -29,7 +29,7 @@ public abstract class SituationData : ScriptableObject {
     public ConditionTracker.ConditionState[] ResultingSuccessConditions => resultingSuccessConditions; // Optional, Array of conditions that will be set when this situation is completed.
     public ConditionTracker.ConditionState[] ResultingFailedConditions => resultingFailedConditions; // Optional, Array of conditions that will be set when this situation fails.
     // Public field
-    public SituationManager.SituationStateEnum SituationStateEnum = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the current state of the situation
+    [HideInInspector] public SituationManager.SituationStateEnum SituationStateEnum = SituationManager.SituationStateEnum.Inactive; // Situation state enum to represent the current state of the situation
     public bool IsCompleted => this.SituationStateEnum == SituationManager.SituationStateEnum.Success || this.SituationStateEnum == SituationManager.SituationStateEnum.Failed;
     public bool IsRequiredSituationsCompleted() {
         int numberOfSituationsCompleted = 0;
