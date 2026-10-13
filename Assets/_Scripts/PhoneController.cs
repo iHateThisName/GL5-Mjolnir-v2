@@ -1,14 +1,12 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PhoneController : MonoBehaviour {
 
-    [SerializeField] private List<MailData> mailDataList = new List<MailData>();
+    [SerializeField] private List<CallData> callDataList = new List<CallData>();
 
-    [SerializeField] WorldInteractable GreenButton;
-    [SerializeField] WorldInteractable RedButton;
     [SerializeField] WorldInteractable PhoneInteractable;
     [SerializeField] WorldInteractable PhoneBaseInteractable;
     [SerializeField] private GameObject phoneModel;
@@ -18,33 +16,35 @@ public class PhoneController : MonoBehaviour {
 
     [SerializeField] private SFXController ringtoneSound;
 
-    [SerializeField] private AudioSource activeCallAudio;
+    public CallData CurrentActiveCall { get; private set; }
+    public List<CallData> CallQueue = new List<CallData>(); // Calls waiting to be answered
 
     private bool isPhoneRinging = false;
     private Sequence phoneRiningSequence = null;
 
-    private Call currentCallData;
 
     public bool IsPhoneInHand { get; private set; } = false;
-
-    public UnityEvent onPhonePickedUp = new UnityEvent();
-    public UnityEvent onPhoneApproved = new UnityEvent();
-    public UnityEvent onPhoneHungUp = new UnityEvent();
 
     private void OnEnable() {
         PhoneInteractable.OnInteract += OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract += EndPhoneCall;
 
-        GreenButton.OnInteract += ApproveCall;
-        RedButton.OnInteract += EndPhoneCall;
+        //GreenButton.OnInteract += ApproveCall;
+        //RedButton.OnInteract += EndPhoneCall;
+
+        SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
     }
 
     private void OnDisable() {
         PhoneInteractable.OnInteract -= OnPhoneInteract;
         this.PhoneBaseInteractable.OnInteract -= EndPhoneCall;
 
-        GreenButton.OnInteract -= ApproveCall;
-        RedButton.OnInteract -= EndPhoneCall;
+        //GreenButton.OnInteract -= ApproveCall;
+        //RedButton.OnInteract -= EndPhoneCall;
+
+        if (SituationManager.Instance != null) {
+            SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
+        }
     }
 
     private void Start() {
@@ -65,13 +65,33 @@ public class PhoneController : MonoBehaviour {
 
             if (this.isPhoneRinging) OnPhoneCallAccepted();
 
-            onPhonePickedUp?.Invoke();
+        }
+    }
+
+
+    private void OnSituationStateChange(SituationData data) {
+
+        // Check if the situation is a CallData
+        if (data is CallData callData) {
+
+            // Check if this specific phone contains the call data
+            if (callDataList.Contains(callData)) {
+                // If the situation state is Active, trigger the phone call
+                if (data.SituationStateEnum == SituationManager.SituationStateEnum.Active) {
+                    if (this.CurrentActiveCall == null) {
+                        this.CurrentActiveCall = callData;
+                        OnPhoneCall(callData);
+                    } else {
+                        // If there's already an active call, add the new call to the queue
+                        CallQueue.Add(callData);
+                    }
+                }
+            }
         }
     }
 
     private void ApproveCall() {
         if (IsPhoneInHand) {
-            onPhoneApproved?.Invoke();
         }
     }
 
@@ -83,14 +103,14 @@ public class PhoneController : MonoBehaviour {
             this.phoneModel.transform.localRotation = this.phoneDownPosition.localRotation;
 
             // Stop the talking sound if they hang up early
-            if (activeCallAudio != null) activeCallAudio.Stop();
+            //if (activeCallAudio != null) activeCallAudio.Stop();
 
-            onPhoneHungUp?.Invoke();
+            //onPhoneHungUp?.Invoke();
         }
     }
 
-    public void OnPhoneCall(Call callData) {
-        currentCallData = callData;
+    public void OnPhoneCall(CallData callData) {
+        this.CurrentActiveCall = callData;
 
         if (!IsPhoneInHand) {
             this.isPhoneRinging = true;
@@ -101,16 +121,22 @@ public class PhoneController : MonoBehaviour {
         }
     }
 
-    public void OnPhoneCallAccepted() {
+    public async void OnPhoneCallAccepted() {
         this.isPhoneRinging = false;
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
         this.phoneModel.transform.localScale = Vector3.one;
 
-        // Play the specific audio from the ScriptableObject
-        if (currentCallData != null && currentCallData.CallAudio != null && activeCallAudio != null) {
-            activeCallAudio.clip = currentCallData.CallAudio;
-            activeCallAudio.Play();
-        }
+
+        // Play the conversation audio from the current active call and wait for it to finish before proceeding
+        await AudioManager.Instance.PlaySFXAsync(this.CurrentActiveCall.ConversationAudio, 0.5f);
+
+        // Display the Options wait for and answer from the player. For the two buttons.
+        await DisplayCallOptionsAndAwaitAnswear();
+
+    }
+
+    private async Awaitable DisplayCallOptionsAndAwaitAnswear() {
+        throw new NotImplementedException();
     }
 }

@@ -961,6 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d809e93405fdbfe43ab802307a6749dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  callDataList: []
   GreenButton: {fileID: 6337573565896335878}
   RedButton: {fileID: 8718513948805008574}
   PhoneInteractable: {fileID: 6829113017607569980}
@@ -969,7 +970,16 @@ MonoBehaviour:
   phoneDownPosition: {fileID: 5880674338661587566}
   phoneUpPosition: {fileID: 5254151115104842220}
   ringtoneSound: {fileID: 6328107729762946352}
-  scamCallSound: {fileID: 8573192592270556771}
+  activeCallAudio: {fileID: 0}
+  onPhonePickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onPhoneApproved:
+    m_PersistentCalls:
+      m_Calls: []
+  onPhoneHungUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8744302702104538245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,14 +1284,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
   m_PrefabInstance: {fileID: 3455708943996922501}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8573192592270556771 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6417415909729129702, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
-  m_PrefabInstance: {fileID: 3455708943996922501}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef35771475a57d44eada26823c834241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SFXController
