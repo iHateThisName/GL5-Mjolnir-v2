@@ -82,9 +82,9 @@ public class EventManager : MonoBehaviour
 
         if (phoneController != null)
         {
-            phoneController.onPhonePickedUp.AddListener(HandlePhonePickedUp);
-            phoneController.onPhoneApproved.AddListener(HandlePhoneApproved);
-            phoneController.onPhoneHungUp.AddListener(HandlePhoneHungUp);
+            //phoneController.onPhonePickedUp.AddListener(HandlePhonePickedUp);
+            //phoneController.onPhoneApproved.AddListener(HandlePhoneApproved);
+            //phoneController.onPhoneHungUp.AddListener(HandlePhoneHungUp);
         }
         if (npcDialogue != null) npcDialogue.onDialogueFinished.AddListener(HandleNPCInteractionFinished);
     }
@@ -107,9 +107,9 @@ public class EventManager : MonoBehaviour
 
         if (phoneController != null)
         {
-            phoneController.onPhonePickedUp.RemoveListener(HandlePhonePickedUp);
-            phoneController.onPhoneApproved.RemoveListener(HandlePhoneApproved);
-            phoneController.onPhoneHungUp.RemoveListener(HandlePhoneHungUp);
+            //phoneController.onPhonePickedUp.RemoveListener(HandlePhonePickedUp);
+            //phoneController.onPhoneApproved.RemoveListener(HandlePhoneApproved);
+            //phoneController.onPhoneHungUp.RemoveListener(HandlePhoneHungUp);
         }
         if (npcDialogue != null) npcDialogue.onDialogueFinished.RemoveListener(HandleNPCInteractionFinished);
     }
@@ -304,18 +304,18 @@ public class EventManager : MonoBehaviour
                 lindasMailBoxManager.AddMail(thirdMail);
                 break;
 
-            case Day1States.PhoneRinging1:
-                stepText.text = "Task: Your phone is ringing. Pick it up.";
-                phoneController.OnPhoneCall(scamCall); // Pass Scam Call
-                break;
+            //case Day1States.PhoneRinging1:
+            //    stepText.text = "Task: Your phone is ringing. Pick it up.";
+            //    phoneController.OnPhoneCall(scamCall); // Pass Scam Call
+            //    break;
             case Day1States.PhoneActiveCall1:
                 stepText.text = "Task: Listen to the caller. Should you approve their request?";
                 break;
 
-            case Day1States.PhoneRinging2:
-                stepText.text = "Task: Your phone is ringing again. Pick it up.";
-                phoneController.OnPhoneCall(legitCall); // Pass Legit Call
-                break;
+            //case Day1States.PhoneRinging2:
+            //    stepText.text = "Task: Your phone is ringing again. Pick it up.";
+            //    phoneController.OnPhoneCall(legitCall); // Pass Legit Call
+            //    break;
             case Day1States.PhoneActiveCall2:
                 stepText.text = "Task: Listen to the caller. Should you approve their request?";
                 break;
