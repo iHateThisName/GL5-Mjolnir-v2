@@ -199,7 +199,7 @@ public class MailUIController : MonoBehaviour {
     }
 
     private void CloseMailWindow() {
-        // Disables the entire mail window, returning the player to the desktop
+        // Disables the entire mail window, returning the player to the desktop a
         this.mailSelectedController.ComputerController.OnMailButton();
     }
 }
