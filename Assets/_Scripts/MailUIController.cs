@@ -1,12 +1,16 @@
-using System;
-using System.Text;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MailUIController : MonoBehaviour {
-    // Tracks where the player is so the Back button knows what to close
-    private enum MailState { Home, InboxList, DeletedList, ReadingInbox, ReadingDeleted }
-    private MailState currentState = MailState.Home;
+public class MailUIController : MonoBehaviour
+{
+    private enum MailState { Home, InboxList, ReadingInbox }
+
+    private MailState currentState;
+
+    private readonly HashSet<MailRedFlag> selectedFlags =
+        new HashSet<MailRedFlag>();
 
     [SerializeField] private MailSelectedController mailSelectedController;
 
@@ -14,192 +18,337 @@ public class MailUIController : MonoBehaviour {
     [SerializeField] private GameObject leftContainer;
     [SerializeField] private GameObject emailListPanel;
     [SerializeField] private GameObject emailPanel;
-    [SerializeField] private GameObject deletedListPanel;
 
-    [Header("Buttons")]
+    [Header("Navigation")]
     [SerializeField] private Button sidebarInboxButton;
-    [SerializeField] private Button sidebarDeletedButton;
     [SerializeField] private Button backButton;
-    [SerializeField] private Button settingsButton;
     [SerializeField] private Button closeTabButton;
 
-    [Header("Temp, Boss Overlay")]
-    [SerializeField] private Button bossButton;
-    [SerializeField] private GameObject BossCanvasOverlay;
-
     [Header("Report Overlay")]
-    [SerializeField] private Button reportMailButton;
-    [SerializeField] private Button[] cancelButtons;
-    [SerializeField] private GameObject ReportOverlay;
-    [SerializeField] private Button SuspiciousLinkButton;
-    [SerializeField] private GameObject SuspiciousLinkCheckMark;
-    [SerializeField] private Button UnknownSenderButton;
-    [SerializeField] private GameObject UnknownSenderCheckMark;
-    [SerializeField] private Button TimePressureButton;
-    [SerializeField] private GameObject TimePressureCheckMark;
-    [SerializeField] private Button SpellingErrorsButton;
-    [SerializeField] private GameObject SpellingErrorsCheckMark;
+    [SerializeField] private GameObject reportOverlay;
+    [SerializeField] private Button submitReportButton;
+    [SerializeField] private Button cancelReportButton;
 
-    private bool isSuspiciousLinkReported = false;
-    private bool isUnknownSenderReported = false;
-    private bool isTimePressureReported = false;
-    private bool isSpellingErrorsReported = false;
+    [Header("Spoofed Address")]
+    [SerializeField] private Button spoofedAddressButton;
+    [SerializeField] private GameObject spoofedAddressCheckMark;
 
+    [Header("Suspicious Link URL")]
+    [SerializeField] private Button suspiciousLinkButton;
+    [SerializeField] private GameObject suspiciousLinkCheckMark;
 
-    private void OnEnable() {
-        // Setup core navigation
-        sidebarInboxButton.onClick.AddListener(OpenInbox);
-        sidebarDeletedButton.onClick.AddListener(OpenDeleted);
-        backButton.onClick.AddListener(OnBackButtonClicked); // Now uses dynamic logic
-        closeTabButton.onClick.AddListener(CloseMailWindow);
-        ConditionTracker.Instance.OnConditionStateChanged += OnConditonChanged;
+    [Header("Urgency / Fear")]
+    [SerializeField] private Button urgencyFearButton;
+    [SerializeField] private GameObject urgencyFearCheckMark;
 
-        // Setup placeholder buttons
-        settingsButton.onClick.AddListener(() => Debug.Log("Settings button clicked - Not implemented yet"));
+    [Header("Bad File Extension")]
+    [SerializeField] private Button badFileExtensionButton;
+    [SerializeField] private GameObject badFileExtensionCheckMark;
 
-        // Force the app to open just the sidebar by default
-        OpenHome();
+    [Header("Asking for Credentials")]
+    [SerializeField] private Button credentialsButton;
+    [SerializeField] private GameObject credentialsCheckMark;
 
-        // Report buttons
-        this.reportMailButton.onClick.AddListener(OnReportClicked);
-        foreach (Button button in cancelButtons) {
-            button.onClick.AddListener(OnCanceled);
-        }
-        SuspiciousLinkButton.onClick.AddListener(() => OnReportClicked(ref this.isSuspiciousLinkReported, this.SuspiciousLinkCheckMark));
-        UnknownSenderButton.onClick.AddListener(() => OnReportClicked(ref this.isUnknownSenderReported, this.UnknownSenderCheckMark));
-        TimePressureButton.onClick.AddListener(() => OnReportClicked(ref this.isTimePressureReported, this.TimePressureCheckMark));
-        SpellingErrorsButton.onClick.AddListener(() => OnReportClicked(ref this.isSpellingErrorsReported, this.SpellingErrorsCheckMark));
+    private bool Busy =>
+        mailSelectedController != null &&
+        mailSelectedController.IsBusy;
+
+    private bool ReportOpen =>
+        reportOverlay != null &&
+        reportOverlay.activeSelf;
+
+    private void Awake()
+    {
+        ResetChecklist();
+        SetReportVisible(false);
+        Show(MailState.Home);
     }
 
-    private void OnReportClicked(ref bool reportBool, GameObject reportCheckMark) {
-        reportBool = !reportBool;
+    private void OnEnable()
+    {
+        SetButtonListeners(true);
 
-        if (reportBool) {
-            reportCheckMark.SetActive(true);
-        } else {
-            reportCheckMark.SetActive(false);
-        }
-    }
-
-    private void OnDisable() {
-        sidebarInboxButton.onClick.RemoveListener(OpenInbox);
-        sidebarDeletedButton.onClick.RemoveListener(OpenDeleted);
-        backButton.onClick.RemoveListener(OnBackButtonClicked);
-        closeTabButton.onClick.RemoveListener(CloseMailWindow);
-        settingsButton.onClick.RemoveAllListeners();
-        reportMailButton.onClick.RemoveListener(OnReportClicked);
-    }
-
-    private void OnConditonChanged(ConditionTracker.ConditionState state) {
-        if (state.Condition == ConditionTracker.ConditionEnum.DeletedCompanyMail && state.ExpectedState)
-            BossCanvasOverlay.SetActive(true);
-    }
-
-    public void ContinueFromBossOverlay() {
-        BossCanvasOverlay.SetActive(false);
-    }
-
-    /// <summary>
-    /// Default state: Shows only the sidebar. Hides all lists and emails.
-    /// </summary>
-    public void OpenHome() {
-        currentState = MailState.Home;
-
-        leftContainer.SetActive(true);
-        emailListPanel.SetActive(false);
-        if (deletedListPanel != null) deletedListPanel.SetActive(false);
-        emailPanel.SetActive(false);
-
-        backButton.gameObject.SetActive(false); // Hide back button on home screen
-    }
-
-    public void OpenInbox() {
-        currentState = MailState.InboxList;
-
-        leftContainer.SetActive(true);
-        emailListPanel.SetActive(true);
-        if (deletedListPanel != null) deletedListPanel.SetActive(false);
-        emailPanel.SetActive(false);
-
-        backButton.gameObject.SetActive(true); // Show back button to hide the inbox list
-    }
-
-    public void OpenDeleted() {
-        currentState = MailState.DeletedList;
-
-        leftContainer.SetActive(true);
-        emailListPanel.SetActive(false);
-        if (deletedListPanel != null) deletedListPanel.SetActive(true); // Show deleted list
-        emailPanel.SetActive(false);
-
-        backButton.gameObject.SetActive(true); // Show back button to hide the deleted list
-    }
-
-    /// <summary>
-    /// Called when an email is clicked to open the reading view.
-    /// </summary>
-    public void OpenEmailReadView(MailData mailData) {
-        // Track which list we came from so the Back button works correctly later
-        if (currentState == MailState.InboxList) currentState = MailState.ReadingInbox;
-        else if (currentState == MailState.DeletedList) currentState = MailState.ReadingDeleted;
-
-        emailListPanel.SetActive(false);
-        if (deletedListPanel != null) deletedListPanel.SetActive(false);
-
-        emailPanel.SetActive(true);
-        backButton.gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// Evaluates the current state and steps backwards one level.
-    /// </summary>
-    private void OnBackButtonClicked() {
-        switch (currentState) {
-            case MailState.InboxList:
-            case MailState.DeletedList:
-                OpenHome(); // Closes the lists and returns to the Sidebar
-                break;
-            case MailState.ReadingInbox:
-                OpenInbox(); // Closes the email and returns to Inbox list
-                break;
-            case MailState.ReadingDeleted:
-                OpenDeleted(); // Closes the email and returns to Deleted list
-                break;
+        if (mailSelectedController != null)
+        {
+            mailSelectedController.ReportRequested += OpenReport;
+            mailSelectedController.selectedMailOpened.AddListener(
+                OpenEmailReadView);
+            mailSelectedController.selectedMailFinished.AddListener(
+                OnMailFinished);
         }
     }
 
-    private void OnReportClicked() {
-        this.ReportOverlay.SetActive(false);
+    private void OnDisable()
+    {
+        SetButtonListeners(false);
 
-        StringBuilder reportSummary = new StringBuilder("Report Summary:\n");
-        reportSummary.AppendLine($"Suspicious Link: {this.isSuspiciousLinkReported}");
-        reportSummary.AppendLine($"Unknown Sender: {this.isUnknownSenderReported}");
-        reportSummary.AppendLine($"Time Pressure: {this.isTimePressureReported}");
-        reportSummary.AppendLine($"Spelling Errors: {this.isSpellingErrorsReported}");
+        if (mailSelectedController != null)
+        {
+            mailSelectedController.ReportRequested -= OpenReport;
+            mailSelectedController.selectedMailOpened.RemoveListener(
+                OpenEmailReadView);
+            mailSelectedController.selectedMailFinished.RemoveListener(
+                OnMailFinished);
+        }
 
-        Debug.Log(reportSummary.ToString());
-
-        this.mailSelectedController.OnReport(this.isSuspiciousLinkReported, this.isUnknownSenderReported, this.isTimePressureReported, this.isSpellingErrorsReported);
+        CancelReport();
     }
 
-    private void OnCanceled() {
-        this.ReportOverlay.SetActive(false);
+    private void SetButtonListeners(bool subscribe)
+    {
+        Bind(sidebarInboxButton, OpenInbox, subscribe);
+        Bind(backButton, Back, subscribe);
+        Bind(closeTabButton, CloseMailWindow, subscribe);
 
-        //this.isSuspiciousLinkReported = false;
-        //this.SpellingErrorsCheckMark.SetActive(false);
+        Bind(submitReportButton, SubmitReport, subscribe);
+        Bind(cancelReportButton, CancelReport, subscribe);
 
-        //this.isUnknownSenderReported = false;
-        //this.UnknownSenderCheckMark.SetActive(false);
-
-        //this.isTimePressureReported = false;
-        //this.TimePressureCheckMark.SetActive(false);
-
-        //this.isSpellingErrorsReported = false;
-        //this.SpellingErrorsCheckMark.SetActive(false);
+        Bind(spoofedAddressButton, ToggleSpoofedAddress, subscribe);
+        Bind(suspiciousLinkButton, ToggleSuspiciousLink, subscribe);
+        Bind(urgencyFearButton, ToggleUrgencyFear, subscribe);
+        Bind(badFileExtensionButton, ToggleBadFileExtension, subscribe);
+        Bind(credentialsButton, ToggleCredentials, subscribe);
     }
 
-    private void CloseMailWindow() {
-        // Disables the entire mail window, returning the player to the desktop a
-        this.mailSelectedController.ComputerController.OnMailButton();
+    private static void Bind(
+        Button button,
+        UnityAction callback,
+        bool subscribe)
+    {
+        if (button == null)
+            return;
+
+        // Remove only this controller's listener, not unrelated listeners.
+        button.onClick.RemoveListener(callback);
+
+        if (subscribe)
+            button.onClick.AddListener(callback);
+    }
+
+    private void ToggleSpoofedAddress() =>
+        ToggleFlag(MailRedFlag.SpoofedAddress);
+
+    private void ToggleSuspiciousLink() =>
+        ToggleFlag(MailRedFlag.SuspiciousLinkUrl);
+
+    private void ToggleUrgencyFear() =>
+        ToggleFlag(MailRedFlag.UrgencyOrFear);
+
+    private void ToggleBadFileExtension() =>
+        ToggleFlag(MailRedFlag.BadFileExtension);
+
+    private void ToggleCredentials() =>
+        ToggleFlag(MailRedFlag.AskingForCredentials);
+
+    private void ToggleFlag(MailRedFlag flag)
+    {
+        if (!ReportOpen || Busy)
+            return;
+
+        if (!selectedFlags.Add(flag))
+            selectedFlags.Remove(flag);
+
+        RefreshCheckMarks();
+    }
+
+    private void RefreshCheckMarks()
+    {
+        SetCheckMark(
+            spoofedAddressCheckMark,
+            MailRedFlag.SpoofedAddress);
+
+        SetCheckMark(
+            suspiciousLinkCheckMark,
+            MailRedFlag.SuspiciousLinkUrl);
+
+        SetCheckMark(
+            urgencyFearCheckMark,
+            MailRedFlag.UrgencyOrFear);
+
+        SetCheckMark(
+            badFileExtensionCheckMark,
+            MailRedFlag.BadFileExtension);
+
+        SetCheckMark(
+            credentialsCheckMark,
+            MailRedFlag.AskingForCredentials);
+    }
+
+    private void SetCheckMark(GameObject checkMark, MailRedFlag flag)
+    {
+        if (checkMark != null)
+            checkMark.SetActive(selectedFlags.Contains(flag));
+    }
+
+    private void ResetChecklist()
+    {
+        selectedFlags.Clear();
+        RefreshCheckMarks();
+    }
+
+    private bool ReportReferencesAssigned()
+    {
+        return reportOverlay != null &&
+               submitReportButton != null &&
+               cancelReportButton != null &&
+               spoofedAddressButton != null &&
+               spoofedAddressCheckMark != null &&
+               suspiciousLinkButton != null &&
+               suspiciousLinkCheckMark != null &&
+               urgencyFearButton != null &&
+               urgencyFearCheckMark != null &&
+               badFileExtensionButton != null &&
+               badFileExtensionCheckMark != null &&
+               credentialsButton != null &&
+               credentialsCheckMark != null;
+    }
+
+    private void OpenReport()
+    {
+        if (mailSelectedController == null ||
+            !mailSelectedController.CanDecide)
+        {
+            return;
+        }
+
+        if (!ReportReferencesAssigned())
+        {
+            Debug.LogError(
+                "Assign the report overlay, submit/cancel buttons, " +
+                "and all five checklist buttons and checkmarks.",
+                this);
+            return;
+        }
+
+        ResetChecklist();
+        mailSelectedController.SetReportMode(true);
+        SetReportVisible(true);
+    }
+
+    private void SubmitReport()
+    {
+        if (!ReportOpen ||
+            mailSelectedController == null ||
+            !mailSelectedController.CanDecide)
+        {
+            return;
+        }
+
+        // Copy before clearing the UI selection.
+        var flags = new List<MailRedFlag>(selectedFlags);
+
+        SetReportVisible(false);
+
+        bool submitted = mailSelectedController.SubmitReport(flags);
+
+        mailSelectedController.SetReportMode(false);
+        ResetChecklist();
+
+        if (!submitted)
+        {
+            Debug.LogWarning(
+                "Report was not submitted. The email may already be " +
+                "resolved, inactive, or blocked by another sequence.",
+                this);
+        }
+    }
+
+    private void CancelReport()
+    {
+        if (mailSelectedController != null)
+            mailSelectedController.SetReportMode(false);
+
+        ResetChecklist();
+        SetReportVisible(false);
+    }
+
+    private void SetReportVisible(bool visible)
+    {
+        if (reportOverlay != null)
+            reportOverlay.SetActive(visible);
+    }
+
+    public void OpenHome()
+    {
+        if (Busy)
+            return;
+
+        CancelReport();
+
+        if (mailSelectedController != null)
+            mailSelectedController.ClearSelection();
+
+        Show(MailState.Home);
+    }
+
+    public void OpenInbox()
+    {
+        if (Busy)
+            return;
+
+        CancelReport();
+
+        if (mailSelectedController != null)
+            mailSelectedController.ClearSelection();
+
+        Show(MailState.InboxList);
+    }
+
+    public void OpenEmailReadView(MailData mail)
+    {
+        CancelReport();
+        Show(MailState.ReadingInbox);
+    }
+
+    private void OnMailFinished(MailData finished)
+    {
+        OpenInbox();
+    }
+
+    private void Back()
+    {
+        if (Busy)
+            return;
+
+        if (ReportOpen)
+        {
+            CancelReport();
+            return;
+        }
+
+        if (currentState == MailState.ReadingInbox)
+            OpenInbox();
+        else
+            OpenHome();
+    }
+
+    private void Show(MailState state)
+    {
+        currentState = state;
+
+        if (leftContainer != null)
+            leftContainer.SetActive(true);
+
+        if (emailListPanel != null)
+            emailListPanel.SetActive(state == MailState.InboxList);
+
+        if (emailPanel != null)
+            emailPanel.SetActive(state == MailState.ReadingInbox);
+
+        if (backButton != null)
+            backButton.gameObject.SetActive(state != MailState.Home);
+    }
+
+    private void CloseMailWindow()
+    {
+        if (Busy ||
+            mailSelectedController == null ||
+            mailSelectedController.ComputerController == null)
+        {
+            return;
+        }
+
+        CancelReport();
+        mailSelectedController.ComputerController.OnMailButton();
     }
 }

@@ -73,6 +73,21 @@ public class GameManager : Singleton<GameManager> {
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 break;
 
+            case EnumPlayerState.Intro:
+                currentPlayerState = EnumPlayerState.Intro;
+
+                // Allow interacting with the introduction panel.
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
+                // Keep the camera active behind the introduction.
+                PlayerRefrenceProvider.Instance.PlayerWalkCamera
+                    .gameObject.SetActive(true);
+
+                // Hide the crosshair.
+                PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
+                break;
+
             default:
                 Debug.LogError($"Unknown player state: {newState}");
                 break;
@@ -98,6 +113,6 @@ public class GameManager : Singleton<GameManager> {
     }
 }
 
-public enum EnumPlayerState { None = 0, Walking = 1, Sitting = 2, }
+public enum EnumPlayerState { None = 0, Walking = 1, Sitting = 2, Intro = 3 }
 public enum EnumDifficulty { None = 0, Easy = 1, Medium = 2, Hard = 3, };
 [System.Serializable] public enum CommunicationTypeEnum : int { None = 0, Company = 1, Personal = 2, Spam = 3, Scam = 4, }

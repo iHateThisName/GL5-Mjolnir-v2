@@ -1,184 +1,228 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-/// <summary>
-/// Author: https://github.com/iHateThisName
-/// 
-/// The situation manager is responsible for managing and tracking the current situations in the game. 
-/// Situations represent specific scenarios or events that can occur during gameplay, and they may have associated conditions that need to be met for them to be active or resolved.
-/// </summary>
-
 [DefaultExecutionOrder(-9)]
-public class SituationManager : Singleton<SituationManager> {
+public class SituationManager : Singleton<SituationManager>
+{
     [field: SerializeField] public List<SituationData> Situations { get; private set; } = new List<SituationData>();
-    public event System.Action<SituationData> OnSituationStateChange; // When the situation state has changed based on SituationStateEnum
 
-    public int TotalScamReportScore => this.Situations.OfType<MailData>().Where(mail => mail.IsSuspiciousLinkReported || mail.IsUnknownSenderReported || mail.IsTimePressureReported || mail.IsSpellingErrorsReported).Count() * 4;
-    public int currentScamReportsScore = 0;
-    private void OnEnable() {
-        ConditionTracker.Instance.OnConditionStateChanged += OnCoditionChanged;
+    [Header("Provisional Checklist Policy (not specified by the GDD)")]
+    [SerializeField] private bool penalizeIncorrectFlags = true;
+
+    private readonly Dictionary<SituationData, SituationStateEnum> states =
+        new Dictionary<SituationData, SituationStateEnum>();
+    private readonly Dictionary<MailData, MailResolution> mailResults =
+        new Dictionary<MailData, MailResolution>();
+    private readonly HashSet<SituationData> appliedResultConditions = new HashSet<SituationData>();
+    private ConditionTracker conditionTracker;
+    private bool started;
+    private bool ready;
+    private bool evaluating;
+    private bool evaluateAgain;
+
+    public event Action<SituationData> OnSituationStateChange;
+    public event Action RuntimeReady;
+    public bool IsReady => ready;
+    public event Action<MailResolution> OnMailPresentationCompleted;
+
+    // One decision sequence globally, including when several coworker mailboxes exist.
+    public MailResolution PendingMailPresentation { get; private set; }
+    public bool HasPendingMailPresentation => PendingMailPresentation != null;
+    public int TotalScamReportScore => states.Keys.OfType<MailData>()
+        .Sum(MailReportScoring.MaximumFor);
+    public int CurrentScamReportScore => mailResults.Values
+        .Where(result => result.Decision == MailDecision.Report)
+        .Sum(result => result.EvidenceScore.Points);
+    // Read-only compatibility for old score displays.
+    public int currentScamReportsScore => CurrentScamReportScore;
+
+    private void OnEnable()
+    {
+        if (!started) return;
+        SubscribeConditions();
+        CheckAllSituationState();
     }
 
-    private void OnDisable() {
-        if (ConditionTracker.Instance != null) ConditionTracker.Instance.OnConditionStateChanged -= OnCoditionChanged;
+    private System.Collections.IEnumerator Start()
+    {
+        started = true;
+        SubscribeConditions();
+        foreach (SituationData situation in Situations.ToArray()) RegisterSituation(situation);
+        // Let every component's Start initialize its conditions before auto-activation.
+        yield return null;
+        ready = true;
+        CheckAllSituationState();
+        RuntimeReady?.Invoke();
     }
 
-    private async void Start() {
+    private void OnDisable()
+    {
+        if (conditionTracker != null)
+            conditionTracker.OnConditionStateChanged -= OnCoditionChanged;
+        conditionTracker = null;
+    }
 
-        this.Situations.ForEach(situation => {
-            situation.Initialize();
-        });
+    private void SubscribeConditions()
+    {
+        if (conditionTracker != null) return;
+        conditionTracker = ConditionTracker.Instance;
+        if (conditionTracker != null)
+            conditionTracker.OnConditionStateChanged += OnCoditionChanged;
+        else
+            Debug.LogError("SituationManager requires an initialized ConditionTracker.", this);
+    }
 
-        await Awaitable.WaitForSecondsAsync(1);
+    public void RegisterSituation(SituationData situation)
+    {
+        if (situation == null || states.ContainsKey(situation)) return;
+        // Insert first so circular references cannot recurse forever during registration.
+        states.Add(situation, situation.InitialState);
+        foreach (SituationData prerequisite in situation.RequiredSituations)
+            RegisterSituation(prerequisite);
+        if (situation.ParentTask != null) RegisterSituation(situation.ParentTask);
+    }
 
-        this.Situations.ForEach(situation => {
-            CheckSituationState(situation);
-        });
+    public void AddSituation(SituationData situation)
+    {
+        if (situation == null) return;
+        bool isNew = !states.ContainsKey(situation);
+        if (!Situations.Contains(situation)) Situations.Add(situation);
+        RegisterSituation(situation);
+        if (isNew && GetSituationState(situation) != SituationStateEnum.Inactive)
+            OnSituationStateChange?.Invoke(situation);
+        if (ready) CheckAllSituationState();
+    }
+
+    public SituationStateEnum GetSituationState(SituationData situation)
+    {
+        if (situation == null) return SituationStateEnum.Inactive;
+        RegisterSituation(situation);
+        return states[situation];
+    }
+
+    public void OnCoditionChanged(ConditionTracker.ConditionState changed) => CheckAllSituationState();
+
+    public void CheckSituationState(SituationData situation)
+    {
+        RegisterSituation(situation);
+        CheckAllSituationState();
+    }
+
+    public void CheckAllSituationState()
+    {
+        if (!ready) return;
+        // Condition callbacks can reenter evaluation. Queue a second pass instead.
+        if (evaluating) { evaluateAgain = true; return; }
+        evaluating = true;
+        try
+        {
+            do
+            {
+                evaluateAgain = false;
+                foreach (SituationData situation in Situations.ToArray()) RegisterSituation(situation);
+                foreach (SituationData situation in states.Keys.ToArray())
+                {
+                    if (states[situation] == SituationStateEnum.Inactive &&
+                        situation.IsRequiredConditionsMet() && situation.IsRequiredSituationsCompleted())
+                    {
+                        states[situation] = SituationStateEnum.Active;
+                        OnSituationStateChange?.Invoke(situation);
+                        evaluateAgain = true;
+                    }
+                    ApplyResultConditionsOnce(situation);
+                }
+            } while (evaluateAgain);
+        }
+        finally { evaluating = false; }
+    }
+
+    // Keep the familiar API, but only active situations may finish, once.
+    public void SetSituationState(SituationStateEnum newState, SituationData situation)
+    {
+        // Mail outcomes must include a decision record and presentation sequence.
+        if (situation is MailData)
+        {
+            Debug.LogError("Use TryResolveMail for mail decisions, not SetSituationState.", this);
+            return;
+        }
+        TryFinishSituation(newState, situation);
+    }
+
+    private bool TryFinishSituation(SituationStateEnum newState, SituationData situation)
+    {
+        if (situation == null || GetSituationState(situation) != SituationStateEnum.Active) return false;
+        if (newState != SituationStateEnum.Success && newState != SituationStateEnum.Failed) return false;
+        states[situation] = newState;
+        ApplyResultConditionsOnce(situation);
+        OnSituationStateChange?.Invoke(situation);
+        CheckAllSituationState();
+        return true;
+    }
+
+    private void ApplyResultConditionsOnce(SituationData situation)
+    {
+        SituationStateEnum state = states[situation];
+        if (state != SituationStateEnum.Success && state != SituationStateEnum.Failed) return;
+        if (appliedResultConditions.Contains(situation) || !situation.IsRequiredConditionsMet()) return;
+        if (conditionTracker == null) return;
+        // Mark first: SetCondition can synchronously call us again.
+        appliedResultConditions.Add(situation);
+        var conditions = state == SituationStateEnum.Success
+            ? situation.ResultingSuccessConditions : situation.ResultingFailedConditions;
+        foreach (ConditionTracker.ConditionState condition in conditions)
+            conditionTracker.SetCondition(condition);
+    }
+
+    public bool TryResolveMail(MailData mail, MailDecision decision,
+        IEnumerable<MailRedFlag> selectedFlags, out MailResolution resolution)
+    {
+        resolution = null;
+        if (!ready || mail == null || HasPendingMailPresentation || mailResults.ContainsKey(mail)) return false;
+        if (decision != MailDecision.Accept && decision != MailDecision.Report) return false;
+        if (GetSituationState(mail) != SituationStateEnum.Active) return false;
+
+        resolution = new MailResolution(mail, decision, selectedFlags, penalizeIncorrectFlags);
+        // Commit before raising any condition or state-change callback.
+        mailResults.Add(mail, resolution);
+        PendingMailPresentation = resolution;
+        TryFinishSituation(resolution.ClassificationCorrect
+            ? SituationStateEnum.Success : SituationStateEnum.Failed, mail);
+        return true;
+    }
+
+    public bool TryGetMailResolution(MailData mail, out MailResolution resolution)
+    {
+        resolution = null;
+        return mail != null && mailResults.TryGetValue(mail, out resolution);
+    }
+
+    public bool CompleteMailPresentation(MailResolution resolution)
+    {
+        if (resolution == null || !ReferenceEquals(PendingMailPresentation, resolution)) return false;
+        PendingMailPresentation = null;
+        OnMailPresentationCompleted?.Invoke(resolution);
+        return true;
     }
 
     [ContextMenu("Debug Log Active Situations")]
-    public void DebugLogActiveSituations() {
-        List<SituationData> activeSituations = Situations.Where(s => s.SituationStateEnum == SituationStateEnum.Active).ToList();
-        Debug.Log($"Active Situations: {activeSituations.Count}");
-        foreach (SituationData situation in activeSituations) {
+    public void DebugLogActiveSituations()
+    {
+        foreach (SituationData situation in states.Keys.Where(s => states[s] == SituationStateEnum.Active))
             Debug.Log($"Active Situation: {situation.SituationName}");
-        }
     }
 
     [ContextMenu("Debug Log All Situations")]
-    public void DebugLogAllSituations() {
-        StringBuilder sb = new StringBuilder();
-        foreach (SituationData situation in Situations) {
-            sb.AppendLine($"Situation: {situation.SituationName}, State: {situation.SituationStateEnum}");
-        }
-        Debug.Log(sb.ToString());
-    }
-    public void AddSituation(SituationData situationData) {
-        if (!Situations.Contains(situationData)) {
-            Situations.Add(situationData);
-
-            // If a situation gets added that does not start inactive then notify any listner.
-            if (situationData.SituationStateEnum != SituationStateEnum.Inactive) {
-                OnSituationStateChange?.Invoke(situationData);
-                Debug.Log($"Situation {situationData.SituationName} added. Current state: {situationData.SituationStateEnum}");
-            }
-        }
+    public void DebugLogAllSituations()
+    {
+        var text = new StringBuilder();
+        foreach (SituationData situation in states.Keys)
+            text.AppendLine($"{situation.SituationName}: {states[situation]}");
+        Debug.Log(text.ToString());
     }
 
-    public void OnCoditionChanged(ConditionTracker.ConditionState changed) {
-        HashSet<SituationData> situationsRelated = new HashSet<SituationData>();
-
-        foreach (SituationData data in Situations) {
-            foreach (ConditionTracker.ConditionState state in data.RequiredConditions) {
-                if (state.Condition == changed.Condition && state.ExpectedState == changed.ExpectedState) {
-                    situationsRelated.Add(data);
-                    break; // No need to check other conditions for this situation, we already found a match.
-                }
-            }
-        }
-
-        foreach (SituationData situation in situationsRelated) {
-            if (situation.IsRequiredConditionsMet()) {
-
-                if (situation.SituationStateEnum == SituationStateEnum.Success) {
-                    // Raise the resulting conditions associated with that situation.
-                    foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingSuccessConditions) {
-                        ConditionTracker.Instance.SetCondition(raisedCondition);
-                    }
-                } else if (situation.SituationStateEnum == SituationStateEnum.Failed) {
-                    // Raise the resulting conditions associated with that situation.
-                    foreach (ConditionTracker.ConditionState raisedCondition in situation.ResultingFailedConditions) {
-                        ConditionTracker.Instance.SetCondition(raisedCondition);
-                    }
-                }
-
-                // Update the situation state.
-                if (situation.SituationStateEnum == SituationStateEnum.Inactive && situation.IsRequiredSituationsCompleted()) {
-                    situation.SituationStateEnum = SituationStateEnum.Active;
-
-                    // Notify that the state has been changed.
-                    OnSituationStateChange?.Invoke(situation);
-                    Debug.Log($"Situation {situation.SituationName} is now active due to condition change: {changed.Condition}");
-                }
-            }
-        }
-    }
-
-    public void CheckAllSituationState() {
-        // Find all situations that are not completed (NOT successful/failed).
-        List<SituationData> NotCompletedSituations = Situations.FindAll(x => x.SituationStateEnum != SituationStateEnum.Success && x.SituationStateEnum != SituationStateEnum.Failed);
-
-        foreach (SituationData situation in NotCompletedSituations) {
-            CheckSituationState(situation);
-        }
-    }
-
-    public void CheckSituationState(SituationData situation) {
-        if (situation.SituationStateEnum != SituationStateEnum.Success && situation.SituationStateEnum != SituationStateEnum.Failed) {
-            if (situation.IsRequiredSituationsCompleted() && situation.IsRequiredConditionsMet()) {
-                situation.SituationStateEnum = SituationStateEnum.Active;
-                OnSituationStateChange?.Invoke(situation);
-                Debug.Log("Situation " + situation.SituationName + " is now active.");
-            }
-        }
-    }
-
-    public void SetSituationState(SituationManager.SituationStateEnum newState, SituationData situation) {
-        if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Inactive) return;
-
-        // State has to be active to change state to success or failed
-
-        if (newState == SituationManager.SituationStateEnum.Success || newState == SituationManager.SituationStateEnum.Failed) {
-            situation.SituationStateEnum = newState;
-
-            if (newState == SituationManager.SituationStateEnum.Success) {
-                // Set the resulting conditions when the situation is completed successfully
-                foreach (ConditionTracker.ConditionState condition in situation.ResultingSuccessConditions) {
-                    ConditionTracker.Instance.SetCondition(condition);
-                }
-            } else if (newState == SituationManager.SituationStateEnum.Failed) {
-                // Set the resulting conditions when the situation fails
-                foreach (ConditionTracker.ConditionState condition in situation.ResultingFailedConditions) {
-                    ConditionTracker.Instance.SetCondition(condition);
-                }
-            }
-
-            // Check if any child situations can now be activated based on the new state of this situation.
-            List<SituationData> childSituations = this.Situations.FindAll(s => s.ParentTask == situation || s.RequiredSituations.Contains(situation));
-            childSituations.ForEach(child => CheckSituationState(child));
-
-            OnSituationStateChange?.Invoke(situation);
-            Debug.Log($"Situation {situation.SituationName} has changed state to {newState}");
-        }
-
-    }
-
-    internal void ReportScam(MailData currentSelectedMail, bool isSuspiciousLinkReported, bool isUnknownSenderReported,
-                             bool isTimePressureReported, bool isSpellingErrorsReported) {
-        
-
-        int correctReports = 0;
-
-        if (currentSelectedMail.IsSuspiciousLinkReported == isSuspiciousLinkReported) {
-            correctReports++;
-        }
-
-        if (currentSelectedMail.IsUnknownSenderReported == isUnknownSenderReported) {
-            correctReports++;
-        }
-
-        if (currentSelectedMail.IsTimePressureReported == isTimePressureReported) {
-            correctReports++;
-        }
-
-        if (currentSelectedMail.IsSpellingErrorsReported == isSpellingErrorsReported) {
-            correctReports++;
-        }
-
-        this.currentScamReportsScore += correctReports;
-    }
-
-    [System.Serializable] public enum SituationStateEnum : int { Inactive = 0, Active = 1, Success = 2, Failed = 3 }
+    [Serializable]
+    public enum SituationStateEnum { Inactive = 0, Active = 1, Success = 2, Failed = 3 }
 }

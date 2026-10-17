@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
+  m_Name: D02_05_SchoolMaliciousLink
+  m_EditorClassIdentifier: Assembly-CSharp::MailData
+  situationName: 
+  parentSituation: {fileID: 0}
+  requiredSituations:
+  - {fileID: 11400000, guid: 8793002c28c9ba64cbae2b5b97419043, type: 2}
+  requiredConditions: []
+  resultingSuccessConditions:
+  - Condition: 6
+    ExpectedState: 1
+  resultingFailedConditions:
+  - Condition: 6
+    ExpectedState: 1
+  initialState: 0
+  taskType: 0
+  displayName: Bifrost High School
+  emailAddress: admin@bifrost-vgs.no
+  emailHeader: Invoice Inquiry
+  emailBody:
+  - Please review our updated school budget before confirming the paper order. The document is available below.
+  difficulty: 0
+  mailType: 0
+  actionButtonLabel: VIEW BUDGET
+  hoverPreviewUrl: http://free-robux-malware-download.net/hack
+  isScam: 1
+  correctRedFlags: 01000000i
+  feedbackReplyText: 'Scammer: Nobody ever hovers over the link! Are you a wizard?!'
+  annotatedEmailBody: []
+  annotatedEmailAddress: 

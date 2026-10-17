@@ -36,15 +36,38 @@ public class MeetingRoomTVController : MonoBehaviour {
     /// <summary>
     /// Displays the mail. Set showAnnotated to true for the TV reveal, false for the normal PC view.
     /// </summary>
-    public void DisplayMail(MailData mail, bool showAnnotated) {
+    public void DisplayMail(MailData mail, bool showAnnotated)
+    {
+        if (mail == null)
+        {
+            Debug.LogWarning(
+                "MeetingRoomTVController received no email to display.",
+                this);
+            return;
+        }
+
         if (tvSenderAddressText != null)
-            tvSenderAddressText.text = showAnnotated ? mail.AnnotatedEmailAddress : mail.EmailAddress;
+        {
+            tvSenderAddressText.richText = showAnnotated;
+            tvSenderAddressText.text = showAnnotated
+                ? mail.AnnotatedEmailAddress
+                : mail.EmailAddress;
+        }
 
         if (tvSubjectText != null)
+        {
+            tvSubjectText.richText = false;
             tvSubjectText.text = mail.EmailHeader;
+        }
 
-        if (tvBodyText != null) {
-            string[] bodyToUse = showAnnotated ? mail.AnnotatedEmailBody : mail.EmailBody;
+        if (tvBodyText != null)
+        {
+            tvBodyText.richText = true;
+
+            var bodyToUse = showAnnotated
+                ? mail.AnnotatedEmailBody
+                : mail.EmailBody;
+
             tvBodyText.text = string.Join("\n", bodyToUse);
         }
     }

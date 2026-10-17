@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
+  m_Name: D02_04_RealPostenReceipt
+  m_EditorClassIdentifier: Assembly-CSharp::MailData
+  situationName: 
+  parentSituation: {fileID: 0}
+  requiredSituations:
+  - {fileID: 11400000, guid: 667689a4c74182e4a925a9925d7de0de, type: 2}
+  requiredConditions: []
+  resultingSuccessConditions: []
+  resultingFailedConditions: []
+  initialState: 0
+  taskType: 0
+  displayName: Posten Logistics
+  emailAddress: no-reply@posten.no
+  emailHeader: "Delivery Confirmation for Bruce \u2014 50kg Whey"
+  emailBody:
+  - "Bruce\u2019s delivery has arrived at reception. Please sign the delivery receipt below."
+  difficulty: 0
+  mailType: 0
+  actionButtonLabel: SIGN RECEIPT
+  hoverPreviewUrl: https://sporing.posten.no/receipt-882
+  isScam: 0
+  correctRedFlags: 
+  feedbackReplyText: "Receipt signed. Bruce\u2019s protein supply is secure. Reception would appreciate help moving it."
+  annotatedEmailBody: []
+  annotatedEmailAddress: 
