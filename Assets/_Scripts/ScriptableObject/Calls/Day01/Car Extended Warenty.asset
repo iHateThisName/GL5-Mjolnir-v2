@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CallData
   situationName: Car Extended Warenty
   parentSituation: {fileID: 0}
-  requiredSituations: []
+  requiredSituations:
+  - {fileID: 11400000, guid: ef4b39d2744a24948934b6bf425b086a, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  SituationStateEnum: 0
   taskType: 0
   calllType: 0
-  conversationAudio: {fileID: 0}
+  conversationAudio: {fileID: 8300000, guid: dbbc602e02074c342a741b6aaee48182, type: 3}
   responesOptionOneAudio: {fileID: 0}
   buttonTextOptionOne: Option 1
   responesOptionTwoAudio: {fileID: 0}

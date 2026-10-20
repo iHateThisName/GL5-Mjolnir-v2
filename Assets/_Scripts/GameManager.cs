@@ -1,13 +1,10 @@
 using Assets._Scripts;
-using Eflatun.SceneReference;
-using System.Collections.Generic;
-using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
     protected override bool IsPersistent => true;
+    [SerializeField] private EnumPlayerState startingPlayerState = EnumPlayerState.Intro;
     private EnumPlayerState currentPlayerState = EnumPlayerState.None;
     public EnumPlayerState CurrentPlayerState {
         get => this.currentPlayerState;
@@ -24,7 +21,7 @@ public class GameManager : Singleton<GameManager> {
     //[SerializeField] private Dictionary<string, LevelData> levelDataLookup = new Dictionary<string, LevelData>();
 
     private void Start() {
-        //this.CurrentPlayerState = EnumPlayerState.Walking;
+        this.CurrentPlayerState = this.startingPlayerState;
         SetLookSensitivity(this.LookSensitivity);
     }
 
@@ -45,6 +42,9 @@ public class GameManager : Singleton<GameManager> {
     public void SetPlayerState(EnumPlayerState newState) {
 
         switch (newState) {
+            case EnumPlayerState.None:
+                break;
+
             case EnumPlayerState.Walking:
                 this.currentPlayerState = EnumPlayerState.Walking;
 

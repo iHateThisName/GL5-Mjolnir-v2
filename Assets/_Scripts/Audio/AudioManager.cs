@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -171,5 +172,9 @@ public class AudioManager : Singleton<AudioManager> {
             await Awaitable.NextFrameAsync();
         }
         this.sfxPool.Release(source);
+    }
+
+    public AudioSource GetAudioSource(AudioClip audioClip) {
+        return this.activeSFXSources.FirstOrDefault(x => x.clip == audioClip);
     }
 }

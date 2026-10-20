@@ -10,11 +10,11 @@ public class PhoneController : MonoBehaviour {
     [SerializeField] WorldInteractable PhoneInteractable;
     [SerializeField] WorldInteractable PhoneBaseInteractable;
     [SerializeField] private GameObject phoneModel;
-    private Transform phoneVisualTransform;
     [SerializeField] private Transform phoneDownPosition;
     [SerializeField] private Transform phoneUpPosition;
 
     [SerializeField] private SFXController ringtoneSound;
+    [SerializeField] private SFXController callSoundController;
 
     public CallData CurrentActiveCall { get; private set; }
     public List<CallData> CallQueue = new List<CallData>(); // Calls waiting to be answered
@@ -48,29 +48,15 @@ public class PhoneController : MonoBehaviour {
     }
 
     private void Start() {
-        this.phoneVisualTransform = this.transform.GetChild(0);
-
         this.phoneRiningSequence = DOTween.Sequence().SetId(this.phoneModel.transform).Pause();
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchScale(punch: new Vector3(0.25f, 0.25f, 0.25f), duration: 2f, vibrato: 5, elasticity: 0).SetLoops(-1, LoopType.Restart));
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchPosition(punch: new Vector3(0.05f, 0, 0), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchRotation(punch: new Vector3(0, 0, 10), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
     }
-
-    private void OnPhoneInteract() {
-        if (!IsPhoneInHand) {
-            this.IsPhoneInHand = true;
-            this.phoneModel.transform.SetParent(this.phoneUpPosition);
-            this.phoneModel.transform.localPosition = Vector3.zero;
-            this.phoneModel.transform.localRotation = Quaternion.identity;
-
-            if (this.isPhoneRinging) OnPhoneCallAccepted();
-
-        }
-    }
+    
 
 
     private void OnSituationStateChange(SituationData data) {
-
         // Check if the situation is a CallData
         if (data is CallData callData) {
 
@@ -90,22 +76,30 @@ public class PhoneController : MonoBehaviour {
         }
     }
 
-    private void ApproveCall() {
-        if (IsPhoneInHand) {
+    private void OnPhoneInteract() {
+        if (!IsPhoneInHand) {
+            this.IsPhoneInHand = true;
+            this.phoneModel.transform.SetParent(this.phoneUpPosition);
+            this.phoneModel.transform.localPosition = Vector3.zero;
+            this.phoneModel.transform.localRotation = Quaternion.identity;
+
+            if (this.isPhoneRinging) OnPhoneCallAccepted();
+
         }
     }
-
     public void EndPhoneCall() {
         if (IsPhoneInHand) {
             this.IsPhoneInHand = false;
-            this.phoneModel.transform.SetParent(this.phoneVisualTransform);
-            this.phoneModel.transform.localPosition = this.phoneDownPosition.localPosition;
-            this.phoneModel.transform.localRotation = this.phoneDownPosition.localRotation;
+            this.phoneModel.transform.SetParent(this.phoneDownPosition);
+            this.phoneModel.transform.localPosition = Vector3.zero;
+            this.phoneModel.transform.localRotation = Quaternion.identity;
 
             // Stop the talking sound if they hang up early
-            //if (activeCallAudio != null) activeCallAudio.Stop();
+            this.callSoundController.StopSFX();
 
-            //onPhoneHungUp?.Invoke();
+            // Flag the call task as completed
+            SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.CurrentActiveCall);
+            
         }
     }
 
@@ -127,16 +121,18 @@ public class PhoneController : MonoBehaviour {
         this.phoneRiningSequence.Pause();
         this.phoneModel.transform.localScale = Vector3.one;
 
+        // Play the phone conversation
 
-        // Play the conversation audio from the current active call and wait for it to finish before proceeding
-        await AudioManager.Instance.PlaySFXAsync(this.CurrentActiveCall.ConversationAudio, 0.5f);
+        this.callSoundController.Initilize(clip: this.CurrentActiveCall.ConversationAudio);
 
-        // Display the Options wait for and answer from the player. For the two buttons.
-        await DisplayCallOptionsAndAwaitAnswear();
+        this.callSoundController.PlaySFX();
 
-    }
 
-    private async Awaitable DisplayCallOptionsAndAwaitAnswear() {
-        throw new NotImplementedException();
+        //// Play the conversation audio from the current active call and wait for it to finish before proceeding
+        //await AudioManager.Instance.PlaySFXAsync(this.CurrentActiveCall.ConversationAudio, 0.5f);
+
+        //// Display the Options wait for and answer from the player. For the two buttons.
+        //await DisplayCallOptionsAndAwaitAnswear();
+
     }
 }

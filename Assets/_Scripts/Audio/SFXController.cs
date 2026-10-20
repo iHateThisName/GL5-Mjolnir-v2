@@ -8,6 +8,11 @@ public class SFXController : MonoBehaviour {
 
     private AudioSource audioSourceRefrence;
 
+    public void Initilize(AudioClip clip, float volume = 0.5f) {
+        this.sfxClip = clip;
+        this.sfxVolume = volume;
+    }
+
     private void Start() {
         if (playOnStart) {
             PlaySFX();
@@ -20,6 +25,12 @@ public class SFXController : MonoBehaviour {
 
     public void StopSFX() {
         if (this.audioSourceRefrence != null) this.audioSourceRefrence.Stop();
+        else {
+            AudioSource audio = AudioManager.Instance.GetAudioSource(this.sfxClip);
+            if (audio != null) {
+                audio.Stop();
+            }
+        }
     }
 
     public async Awaitable PlaySFXInOrderAsync(AudioClip[] clips, float[] volumes = null) {
