@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class IntroController : MonoBehaviour
@@ -5,53 +7,114 @@ public class IntroController : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject introPanel;
 
-    [Tooltip("Drag your 3 text GameObjects here in the order you want them to appear.")]
-    [SerializeField] private GameObject[] introTextObjects;
+    [Tooltip("Assign the text pages in their display order.")]
+    [SerializeField]
+    private GameObject[] introTextObjects =
+        Array.Empty<GameObject>();
 
-    private int currentIndex = 0;
+    [Header("Gameplay During Introduction")]
+    [Tooltip(
+        "Assign LookAtPromptController here. " +
+        "Optionally also assign movement and world-interaction scripts. " +
+        "Do not assign the UI EventSystem or this controller.")]
+    [SerializeField]
+    private Behaviour[] gameplayScriptsToPause =
+        Array.Empty<Behaviour>();
+
+    private readonly Dictionary<Behaviour, bool> previousEnabledStates =
+        new Dictionary<Behaviour, bool>();
+
+    private int currentIndex;
+    private bool finished;
 
     private void Start()
     {
-        if (introPanel != null) introPanel.SetActive(true);
+        currentIndex = 0;
 
-        // Hide all text objects first, then turn on ONLY the first one
+        PauseGameplayScripts();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetPlayerState(
+                EnumPlayerState.Intro);
+        }
+
+        if (introPanel != null)
+            introPanel.SetActive(true);
+
+        ShowCurrentPage();
+    }
+
+    private void PauseGameplayScripts()
+    {
+        foreach (Behaviour script in gameplayScriptsToPause)
+        {
+            if (script == null ||
+                script == this ||
+                previousEnabledStates.ContainsKey(script))
+            {
+                continue;
+            }
+
+            previousEnabledStates.Add(script, script.enabled);
+            script.enabled = false;
+        }
+    }
+
+    private void RestoreGameplayScripts()
+    {
+        foreach (var entry in previousEnabledStates)
+        {
+            if (entry.Key != null)
+                entry.Key.enabled = entry.Value;
+        }
+
+        previousEnabledStates.Clear();
+    }
+
+    private void ShowCurrentPage()
+    {
         for (int i = 0; i < introTextObjects.Length; i++)
         {
             if (introTextObjects[i] != null)
-            {
-                introTextObjects[i].SetActive(i == 0); // True for index 0, False for the rest
-            }
+                introTextObjects[i].SetActive(i == currentIndex);
         }
-
-        currentIndex = 0;
     }
 
-    /// <summary>
-    /// Link this to your "Next" button on the Intro Panel
-    /// </summary>
     public void OnNextButtonClicked()
     {
-        // Hide the text we were just looking at
-        if (currentIndex < introTextObjects.Length && introTextObjects[currentIndex] != null)
-        {
-            introTextObjects[currentIndex].SetActive(false);
-        }
+        if (finished)
+            return;
 
         currentIndex++;
 
-        // Check if there is another text object to show
         if (currentIndex < introTextObjects.Length)
         {
-            if (introTextObjects[currentIndex] != null)
-            {
-                introTextObjects[currentIndex].SetActive(true);
-            }
+            ShowCurrentPage();
+            return;
+        }
+
+        FinishIntro();
+    }
+
+    private void FinishIntro()
+    {
+        finished = true;
+
+        if (introPanel != null)
+            introPanel.SetActive(false);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetPlayerState(EnumPlayerState.Walking);
         }
         else
         {
-            // We have reached the end of the texts, hide the entire panel!
-            if (introPanel != null) introPanel.SetActive(false);
-            GameManager.Instance.SetPlayerState(EnumPlayerState.Walking);
+            Debug.LogError(
+                "Cannot start the workday: GameManager is missing.",
+                this);
         }
+
+        RestoreGameplayScripts();
     }
 }

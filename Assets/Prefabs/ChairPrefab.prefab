@@ -1352,6 +1352,7 @@ GameObject:
   - component: {fileID: 6492406949181211126}
   - component: {fileID: 4165577878890164180}
   - component: {fileID: 1306753063479163555}
+  - component: {fileID: 7000647340970290389}
   m_Layer: 0
   m_Name: ChairPrefab
   m_TagString: Untagged
@@ -1418,6 +1419,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.84, y: 1.37, z: 0.7}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7000647340970290389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378997631282621102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba21222ac4511e3448b00d4e4d520135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTarget
+  displayName: Chair
+  instruction: Press Left Mouse Button to sit down at the computer
 --- !u!1 &4945333507346644304
 GameObject:
   m_ObjectHideFlags: 0

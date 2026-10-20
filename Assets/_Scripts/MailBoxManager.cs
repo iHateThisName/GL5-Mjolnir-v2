@@ -1,141 +1,144 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class MailBoxManager : MonoBehaviour {
-
-    [SerializeField] private Transform deletedMailContainer;
+public class MailBoxManager : MonoBehaviour
+{
     [SerializeField] private List<MailData> mailDataList = new List<MailData>();
-    [field: SerializeField] private Dictionary<MailData, GameObject> mailGameObjects { get; } = new Dictionary<MailData, GameObject>();
     [SerializeField] private Transform mailContainer;
     [SerializeField] private MailSelectedController mailSelectedController;
-
     [Header("SFX References")]
     [SerializeField] private AudioClip mailSuccessSFX;
     [SerializeField] private AudioClip mailFailedSFX;
 
-    private void OnEnable() {
-        this.mailSelectedController.selectedMailReplayed.AddListener(HideMail);
-        this.mailSelectedController.selectedMailDeleted.AddListener(HideMail);
-        SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
+    private readonly Dictionary<MailData, MailController> mailViews = new Dictionary<MailData, MailController>();
+    private SituationManager manager;
+    private bool started;
+
+    private void Awake()
+    {
+        if (mailSelectedController == null && transform.parent != null)
+            mailSelectedController = transform.parent.GetComponentInChildren<MailSelectedController>(true);
     }
 
-    private void OnDisable() {
-        this.mailSelectedController.selectedMailDeleted?.RemoveListener(HideMail);
-        this.mailSelectedController.selectedMailReplayed?.RemoveListener(HideMail);
-        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
+    private void OnEnable()
+    {
+        if (started) SubscribeAndRefresh();
     }
 
-    private void Awake() {
-        if (this.mailSelectedController == null) {
-            this.mailSelectedController = transform.parent.GetComponentInChildren<MailSelectedController>();
+    private void Start()
+    {
+        started = true;
+        if (mailSelectedController == null || mailContainer == null || SituationManager.Instance == null)
+        {
+            Debug.LogError("Mailbox requires its controller, mail container, and SituationManager.", this);
+            enabled = false;
+            return;
+        }
+        SubscribeAndRefresh();
+    }
+
+    private void SubscribeAndRefresh()
+    {
+        manager = SituationManager.Instance;
+        if (manager == null || mailSelectedController == null) return;
+        // Pair and deduplicate only our own listeners.
+        mailSelectedController.selectedMailFinished.RemoveListener(OnMailFinished);
+        mailSelectedController.selectedMailFinished.AddListener(OnMailFinished);
+        manager.OnSituationStateChange -= OnSituationStateChange;
+        manager.OnSituationStateChange += OnSituationStateChange;
+        manager.OnMailPresentationCompleted -= OnPresentationCompleted;
+        manager.OnMailPresentationCompleted += OnPresentationCompleted;
+        manager.RuntimeReady -= RefreshAll;
+        manager.RuntimeReady += RefreshAll;
+        foreach (MailData mail in mailDataList.Where(mail => mail != null).Distinct().ToArray())
+        {
+            manager.AddSituation(mail);
+            EnsureView(mail);
+        }
+        RefreshAll();
+    }
+
+    private void OnDisable()
+    {
+        if (mailSelectedController != null)
+            mailSelectedController.selectedMailFinished.RemoveListener(OnMailFinished);
+        if (manager != null)
+        {
+            manager.OnSituationStateChange -= OnSituationStateChange;
+            manager.OnMailPresentationCompleted -= OnPresentationCompleted;
+            manager.RuntimeReady -= RefreshAll;
         }
     }
 
-    private void Start() {
-        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
-
-        if (this.mailDataList.Count == 0) return;
-
-        foreach (MailData mailData in this.mailDataList) {
-            InstantiateMailUI(mailData);
-        }
-
-        Debug.Log($"MailBoxManager initialized with {this.mailDataList.Count} mails.");
+    public void AddMail(MailData mail)
+    {
+        if (mail == null) return;
+        if (!mailDataList.Contains(mail)) mailDataList.Add(mail);
+        if (!started || manager == null) return;
+        manager.AddSituation(mail);
+        EnsureView(mail);
+        RefreshAll();
     }
 
-    private void OnSituationStateChange(SituationData data) {
-
-        // Check if the sitaution is of type MailData
-        if (data is MailData mailData) {
-
-            // Check if this MailBox containst the mailData
-            if (this.mailDataList.Contains(mailData)) {
-
-                // This mailbox contains this mail, the SituationStateEnum has been changed and needs to be reflected
-
-                switch (data.SituationStateEnum) {
-                    case SituationManager.SituationStateEnum.Inactive:
-                        // The mail is Inactive make it not show up
-                        this.mailGameObjects[mailData].SetActive(false);
-
-                        break;
-                    case SituationManager.SituationStateEnum.Active: {
-                            // The mail have been activated need to display it in the mailbox
-                            GameObject go = this.mailGameObjects[mailData];
-                            go.SetActive(true);
-                            break;
-                        }
-
-                    case SituationManager.SituationStateEnum.Success:
-                        // The mail has been successful
-                        AudioManager.Instance.PlaySFX(mailSuccessSFX);
-                        break;
-                    case SituationManager.SituationStateEnum.Failed:
-                        // The mail has failed
-                        AudioManager.Instance.PlaySFX(mailFailedSFX, 0.25f);
-                        break;
-                }
-
-                Debug.Log($"MailBoxManager: {mailData.SituationName}, Mail is {data.SituationStateEnum}");
-
-            }
-
+    private void EnsureView(MailData mail)
+    {
+        if (mailViews.ContainsKey(mail)) return;
+        MailController prefab = AssetReferencesSO.Instance.GetReference<MailController>();
+        if (prefab == null)
+        {
+            Debug.LogError("AssetReferencesSO has no MailController prefab.", this);
+            return;
         }
+        MailController view = Instantiate(prefab, mailContainer, false);
+        view.transform.localScale = Vector3.one;
+        view.Initialize(mail);
+        if (view.mailButton == null)
+        {
+            Debug.LogError("Mail row prefab needs a Button.", view);
+            Destroy(view.gameObject);
+            return;
+        }
+        view.mailButton.onClick.AddListener(() => mailSelectedController.SelectMail(mail));
+        mailViews.Add(mail, view);
     }
 
-    /// <summary>
-    /// Called by EventManager to deliver a new email to the player.
-    /// </summary>
-    public void AddMail(Mail newMail) {
+    private void OnSituationStateChange(SituationData situation)
+    {
+        if (!(situation is MailData mail)) return;
+        // Refresh every row to apply the global sequence lock, including other mailboxes.
+        RefreshAll();
+        if (!mailDataList.Contains(mail) || AudioManager.Instance == null) return;
+        var state = manager.GetSituationState(mail);
+        if (state == SituationManager.SituationStateEnum.Success && mailSuccessSFX != null)
+            AudioManager.Instance.PlaySFX(mailSuccessSFX);
+        else if (state == SituationManager.SituationStateEnum.Failed && mailFailedSFX != null)
+            AudioManager.Instance.PlaySFX(mailFailedSFX, 0.25f);
+    }
 
-        MailData newMailData = new MailData(newMail.EmailAddress, newMail.EmailSubject, new string[] { newMail.EmailBody }, newMail.EmailType);
+    private void OnPresentationCompleted(MailResolution result) => RefreshAll();
 
-        if (!mailDataList.Contains(newMailData)) {
-            mailDataList.Add(newMailData);
-        }
-
-        if (!mailGameObjects.ContainsKey(newMailData)) {
-            InstantiateMailUI(newMailData);
+    private void RefreshAll()
+    {
+        if (manager == null) return;
+        foreach (var pair in mailViews)
+        {
+            bool pending = manager.PendingMailPresentation != null &&
+                           manager.PendingMailPresentation.Mail == pair.Key;
+            bool active = manager.GetSituationState(pair.Key) == SituationManager.SituationStateEnum.Active;
+            pair.Value.gameObject.SetActive(active || pending);
+            pair.Value.mailButton.interactable = manager.IsReady && active && !manager.HasPendingMailPresentation;
         }
     }
 
-    public void AddMail(MailData newMailData) {
-        if (!mailDataList.Contains(newMailData)) {
-            mailDataList.Add(newMailData);
-        }
-        if (!mailGameObjects.ContainsKey(newMailData)) {
-            InstantiateMailUI(newMailData);
-        }
-    }
+    private void OnMailFinished(MailData finished)
+    {
+        if (!mailDataList.Contains(finished))
+            return;
 
-    private void InstantiateMailUI(MailData mailData) {
-        MailController mailPrefab = AssetReferencesSO.Instance.GetReference<MailController>();
+        RefreshAll();
 
-        MailController mailController = Instantiate(mailPrefab);
-        mailController.gameObject.transform.SetParent(this.mailContainer, false);
-
-        mailController.transform.localScale = Vector3.one;
-
-        mailController.Initilize(mailData);
-        mailController.mailButton.onClick.AddListener(() => OnMailSelected(mailData));
-
-        if (mailData.SituationStateEnum == SituationManager.SituationStateEnum.Inactive) {
-            mailController.gameObject.SetActive(false);
-        }
-
-        this.mailGameObjects.Add(mailData, mailController.gameObject);
-
-        Debug.Log($"{mailData.name} was instantiate and is {mailController.gameObject.activeSelf}");
-    }
-
-    private void OnMailSelected(MailData mailData) {
-        this.mailSelectedController.SelectMail(mailData);
-    }
-
-    private void HideMail(MailData mailData) {
-        if (this.mailGameObjects.TryGetValue(mailData, out GameObject goMail)) {
-            // Simply hide the button from the inbox list
-            goMail.SetActive(false);
-        }
+        // Do not select the next email automatically.
+        // The player chooses it from the inbox.
     }
 }

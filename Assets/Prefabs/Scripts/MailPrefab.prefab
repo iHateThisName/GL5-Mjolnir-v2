@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 2910850506499094169}
   - component: {fileID: 1394537840318939989}
   m_Layer: 0
-  m_Name: MailTitle
+  m_Name: MailAddress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 7381635495019548497}
   - component: {fileID: 5186388034591072096}
   m_Layer: 0
-  m_Name: MailText
+  m_Name: MailSubject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
