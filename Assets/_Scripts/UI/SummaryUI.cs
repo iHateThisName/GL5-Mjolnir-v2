@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TMPro;
@@ -7,91 +6,85 @@ using UnityEngine;
 /// <summary>
 /// Author: https://github.com/iHateThisName
 /// </summary>
-
-public class SummaryUI : MonoBehaviour {
+public class SummaryUI : MonoBehaviour
+{
     [SerializeField] private GameObject summaryContainer;
     [SerializeField] private TMP_Text summaryText;
-    private int totalNumberOfPrimaryTasks = 0;
-    private int totalNumberOfMailTasks = 0;
-    private int completedSituationsCount = 0;
-    private int completedNecessarySituationsCount = 0;
-    private int completedMailCount = 0;
 
-    private void OnEnable() {
-        SituationManager.Instance.OnSituationStateChange += OnSituationStateChanged;
-        ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
-    }
+    private ConditionTracker conditionTracker;
 
-    private void OnDisable() {
-        SituationManager.Instance.OnSituationStateChange -= OnSituationStateChanged;
-        ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
-    }
+    private void OnEnable()
+    {
+        conditionTracker = ConditionTracker.Instance;
 
-
-    private void Start() {
-        List<TaskData> allTasks = SituationManager.Instance.Situations.OfType<TaskData>().ToList();
-        List<MailData> allEmails = SituationManager.Instance.Situations.OfType<MailData>().ToList();
-
-        this.totalNumberOfPrimaryTasks = allTasks.Count(task => task.TaskType == TaskData.TaskTypeEnum.Main);
-        this.totalNumberOfMailTasks = allEmails.Count;
-    }
-
-    private void OnSituationStateChanged(SituationData data) {
-        // Check if the situation is completed;
-        if (data.IsCompleted) {
-            this.completedSituationsCount++;
-
-            // Check if the situation is a of type MailData
-            if (data is MailData mailData) {
-                this.completedMailCount++;
-            }
+        if (conditionTracker != null)
+        {
+            conditionTracker.OnConditionStateChanged += OnConditionStateChanged;
+        }
+        else
+        {
+            Debug.LogError(
+                "SummaryUI requires an initialized ConditionTracker.", this);
         }
     }
-    private void OnConditionStateChanged(ConditionTracker.ConditionState state) {
-        if (state.Condition == ConditionTracker.ConditionEnum.IsDayComplete && state.ExpectedState) {
+
+    private void OnDisable()
+    {
+        if (conditionTracker != null)
+        {
+            conditionTracker.OnConditionStateChanged -= OnConditionStateChanged;
+        }
+
+        conditionTracker = null;
+    }
+
+    private void OnConditionStateChanged(ConditionTracker.ConditionState state)
+    {
+        if (state.Condition == ConditionTracker.ConditionEnum.IsDayComplete &&
+            state.ExpectedState)
+        {
             DisplayEndOfTheDaySummary();
         }
     }
 
     [ContextMenu("Display End of the Day Summary")]
-    public void DisplayEndOfTheDaySummary() {
-        StringBuilder summaryBuilder = new StringBuilder();
+    public void DisplayEndOfTheDaySummary()
+    {
+        var manager = SituationManager.Instance;
 
-        List<SituationData> failedScam = new List<SituationData>();
-        List<SituationData> successfulScam = new List<SituationData>();
-        int totalCompletedSituations = 0;
-        int totalMails = 0;
+        if (manager == null || summaryText == null || summaryContainer == null)
+        {
+            Debug.LogError("SummaryUI is missing a required reference.", this);
+            return;
+        }
 
-        SituationManager.Instance.Situations.ForEach(situation => {
+        var mails = manager.Situations
+            .OfType<MailData>()
+            .Where(mail => mail != null)
+            .Distinct()
+            .ToList();
 
-            if (situation.IsCompleted) {
-                totalCompletedSituations++;
+        int completedEmails = mails.Count(mail => mail.IsCompleted);
+        int correctlyReportedScams = 0;
+
+        foreach (var mail in mails)
+        {
+            if (manager.TryGetMailResolution(mail, out var resolution) &&
+                resolution.Outcome == MailOutcome.ReportedScam)
+            {
+                correctlyReportedScams++;
             }
+        }
 
-            // Check if the situation is a email
-            if (situation is MailData emailSituation) {
+        var summary = new StringBuilder();
+        summary.AppendLine($"Emails Handled: {completedEmails}/{mails.Count}");
+        summary.AppendLine(
+            $"Scams Reported Correctly: {correctlyReportedScams}");
+        summary.AppendLine(
+            $"Evidence Score: {manager.CurrentScamReportScore}/" +
+            $"{manager.TotalScamReportScore}");
 
-                // Check if the email is a scam
-                if (emailSituation.MailType == CommunicationTypeEnum.Scam) {
-
-                    if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Success) {
-                        successfulScam.Add(situation);
-                    } else if (situation.SituationStateEnum == SituationManager.SituationStateEnum.Failed) {
-                        failedScam.Add(situation);
-                    }
-
-                }
-                totalMails++;
-            }
-        });
-
-        summaryBuilder.AppendLine($"Completed Tasks: {this.completedSituationsCount}");
-        summaryBuilder.AppendLine($"Emails: {totalMails}/{this.totalNumberOfMailTasks}");
-        summaryBuilder.AppendLine($"Avoided Scams: {successfulScam.Count}");
-        summaryBuilder.AppendLine($"Scams Reported Correctly: {SituationManager.Instance.currentScamReportsScore}/{SituationManager.Instance.TotalScamReportScore}");
-        //summaryBuilder.AppendLine($"Scams: {failedScam.Count}");
-
-        this.summaryText.text = summaryBuilder.ToString();
-        this.summaryContainer.SetActive(true);
+        summaryText.text = summary.ToString();
+        summaryContainer.SetActive(true);
     }
 }
