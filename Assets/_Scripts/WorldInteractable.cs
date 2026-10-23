@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Author: https://github.com/iHateThisName
+/// </summary>
 public class WorldInteractable : MonoBehaviour, IInteractable {
 
     public event System.Action OnInteract;

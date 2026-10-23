@@ -1,8 +1,9 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+/// <summary>
+/// Author: https://github.com/iHateThisName
+/// </summary>
 public class MovementController : MonoBehaviour {
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Transform playerVisualTransform;

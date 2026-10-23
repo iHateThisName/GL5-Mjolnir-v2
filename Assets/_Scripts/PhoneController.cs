@@ -1,9 +1,10 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Author: https://github.com/iHateThisName
+/// </summary>
 public class PhoneController : MonoBehaviour {
 
     [SerializeField] private List<CallData> callDataList = new List<CallData>();
