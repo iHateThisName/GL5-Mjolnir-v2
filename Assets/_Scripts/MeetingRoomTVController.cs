@@ -22,7 +22,9 @@ public class MeetingRoomTVController : MonoBehaviour {
     }
 
     private void OnDisable() {
-        ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
+        if (ConditionTracker.Instance != null) {
+            ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
+        }
     }
 
     private void OnConditionStateChanged(ConditionTracker.ConditionState state) {

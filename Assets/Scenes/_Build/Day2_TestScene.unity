@@ -16083,10 +16083,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1476294577941843744, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+      propertyPath: m_Height
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476294577941843744, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476294577941843744, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+      propertyPath: m_Center.y
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 4482892191048918187, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
       propertyPath: m_Name
       value: GreebDialogue
       objectReference: {fileID: 0}
+    - target: {fileID: 4544198645391141625, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+      propertyPath: SituationData
+      value: 
+      objectReference: {fileID: 11400000, guid: 62933241776b7ab49b22921087e113a0, type: 2}
+    - target: {fileID: 4544198645391141625, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+      propertyPath: characterPortrait
+      value: 
+      objectReference: {fileID: 1422221577}
     - target: {fileID: 4821798134977203762, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.106
@@ -16135,58 +16155,23 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1563882987589117555, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+    - {fileID: 4985281050876751620, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+    - {fileID: 1126250474835340570, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
     m_RemovedGameObjects:
     - {fileID: 9065464438235876074, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4821798134977203762, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1116033718}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4482892191048918187, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 780694394}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
---- !u!1 &780694391 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4482892191048918187, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
-  m_PrefabInstance: {fileID: 780694390}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &780694392 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8542784563439706199, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
-  m_PrefabInstance: {fileID: 780694390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780694391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 065b6cd52beabb44e9e88a9469437f34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WorldInteractable
 --- !u!4 &780694393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4821798134977203762, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
   m_PrefabInstance: {fileID: 780694390}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &780694394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780694391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 137ccdb7b90361841a492686f5c7f202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystemV0
-  NpcCollider: {fileID: 780694392}
-  dialogue: {fileID: 11400000, guid: 62933241776b7ab49b22921087e113a0, type: 2}
-  dialogueCanvas: {fileID: 1116033717}
-  dialogueText: {fileID: 1966326014}
-  nameText: {fileID: 1982129342}
-  dialoguePanel: {fileID: 467286730}
-  characterPortrait: {fileID: 883799417}
 --- !u!1 &780794527
 GameObject:
   m_ObjectHideFlags: 0
@@ -26100,12 +26085,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSystemV0
   NpcCollider: {fileID: 866457357}
-  dialogue: {fileID: 11400000, guid: a083ab75544c48647bad1856fd90414a, type: 2}
+  SituationData: {fileID: 0}
   dialogueCanvas: {fileID: 762351334}
   dialogueText: {fileID: 661859473}
   nameText: {fileID: 1114548986}
   dialoguePanel: {fileID: 333045574}
   characterPortrait: {fileID: 433269467}
+  DisableInteraction: 0
 --- !u!1 &1254502400
 GameObject:
   m_ObjectHideFlags: 0
@@ -29099,7 +29085,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2040248541658167746, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
       propertyPath: <Situations>k__BackingField.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2040248541658167746, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
       propertyPath: '<Situations>k__BackingField.Array.data[0]'
@@ -29121,6 +29107,10 @@ PrefabInstance:
       propertyPath: '<Situations>k__BackingField.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 133cf58db6385e246a39c4c37f004ee8, type: 2}
+    - target: {fileID: 2040248541658167746, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
+      propertyPath: '<Situations>k__BackingField.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 62933241776b7ab49b22921087e113a0, type: 2}
     - target: {fileID: 2234571117044818708, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -30934,6 +30924,17 @@ MonoBehaviour:
     instruction: Return to your computer.\nReview the school's invoice inquiry.
   waitingText: No active task. Check for new instructions.
   completedText: All listed tasks are finished.
+--- !u!114 &1422221577 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7083531643405786592, guid: 6df3454b4a7ea1047bb2a97172e5a0dc, type: 3}
+  m_PrefabInstance: {fileID: 780694390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1424383903
 GameObject:
   m_ObjectHideFlags: 0

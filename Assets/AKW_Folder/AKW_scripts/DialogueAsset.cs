@@ -1,8 +1,7 @@
-using TMPro;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DialogueAsset", menuName = "Scriptable Objects/DialogueAsset"), System.Serializable]
-public class DialogueAsset : SituationData
+public class DialogueAsset : SituationData, IDialogue
 {
     [Header("Character portrait")]
     public Sprite Portrait;
@@ -13,4 +12,9 @@ public class DialogueAsset : SituationData
     [Header("Dialogue")]
     [TextArea] public string[] Lines;
 
+    string IDialogue.CharacterName => Name;
+
+    Sprite IDialogue.Portrait => Portrait;
+
+    string[] IDialogue.Lines => Lines;
 }

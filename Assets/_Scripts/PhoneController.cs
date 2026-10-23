@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class PhoneController : MonoBehaviour {
 
     [SerializeField] private SFXController ringtoneSound;
     [SerializeField] private SFXController callSoundController;
+    [SerializeField] private DialogueSystem dialogueSystem;
 
     public CallData CurrentActiveCall { get; private set; }
     public List<CallData> CallQueue = new List<CallData>(); // Calls waiting to be answered
@@ -99,8 +101,26 @@ public class PhoneController : MonoBehaviour {
 
             // Flag the call task as completed
             SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.CurrentActiveCall);
-            
+
+            // End the dialog
+            this.dialogueSystem.EndDialogue();
+
+            if (this.CurrentActiveCall != null) {
+                this.CurrentActiveCall = null;
+                StartCoroutine(StartNextQueuedPhoneCall());
+            }
+
         }
+    }
+
+    public IEnumerator StartNextQueuedPhoneCall() {
+        if (CallQueue.Count > 0) {
+            yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(1f, 3f));
+            CallData nextCall = CallQueue[0];
+            CallQueue.RemoveAt(0);
+            OnPhoneCall(nextCall);
+        }
+        yield return null;
     }
 
     public void OnPhoneCall(CallData callData) {
@@ -115,7 +135,7 @@ public class PhoneController : MonoBehaviour {
         }
     }
 
-    public async void OnPhoneCallAccepted() {
+    public void OnPhoneCallAccepted() {
         this.isPhoneRinging = false;
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
@@ -133,6 +153,13 @@ public class PhoneController : MonoBehaviour {
 
         //// Display the Options wait for and answer from the player. For the two buttons.
         //await DisplayCallOptionsAndAwaitAnswear();
+
+        if (this.CurrentActiveCall == null) {
+            Debug.Log("wofmw");
+        }
+
+        // Dialog system
+        this.dialogueSystem.SetDialogue(this.CurrentActiveCall, disableInteraction: true);
 
     }
 }

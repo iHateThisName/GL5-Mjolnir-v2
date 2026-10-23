@@ -55,6 +55,7 @@ MonoBehaviour:
   phoneUpPosition: {fileID: 3364071016981644997}
   ringtoneSound: {fileID: 5681590748865456529}
   callSoundController: {fileID: 211979713216443269}
+  dialogueSystem: {fileID: 1642692744913893963}
   CallQueue: []
 --- !u!1 &2558476836675187046
 GameObject:
@@ -151,6 +152,7 @@ Transform:
   - {fileID: 3030776835149208808}
   - {fileID: 2876252617403549623}
   - {fileID: 7764920741333556643}
+  - {fileID: 3772684477443115377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5649930169262629447
@@ -530,4 +532,85 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3475844258370255552, guid: 8175ba3e61b5b3244be576cd5c045a54, type: 3}
   m_PrefabInstance: {fileID: 6628779311736465251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7507148253162686714
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3670039878972060511}
+    m_Modifications:
+    - target: {fileID: 5705585534285618977, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_Name
+      value: DialogueSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02584
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01909
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.02959
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143076724907504305, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: a083ab75544c48647bad1856fd90414a, type: 2}
+    - target: {fileID: 9143076724907504305, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: NpcCollider
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+--- !u!114 &1642692744913893963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9143076724907504305, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+  m_PrefabInstance: {fileID: 7507148253162686714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137ccdb7b90361841a492686f5c7f202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystemV0
+--- !u!4 &3772684477443115377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6662507222227239307, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+  m_PrefabInstance: {fileID: 7507148253162686714}
   m_PrefabAsset: {fileID: 0}
