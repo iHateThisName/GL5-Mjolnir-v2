@@ -1,9 +1,11 @@
 using Assets._Scripts;
-using System.Diagnostics.Contracts;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+/// <summary>
+/// Author: https://github.com/iHateThisName
+/// </summary>
 public class ComputerController : MonoBehaviour {
 
     [SerializeField] private Chair chair;
@@ -11,13 +13,14 @@ public class ComputerController : MonoBehaviour {
 
     // Screen buttons
     [SerializeField] private Button powerButton;
-    [SerializeField] private Button oldMailButton;
     [SerializeField] private Button mailButton;
+    [SerializeField] private Button calenderButton;
     [SerializeField] private EventSystem computerEventSystem;
 
     [Header("Windows")]
     [SerializeField] private GameObject WindowMailGameobject;
-    [SerializeField] private GameObject NewWindowMailGameobject;
+    [SerializeField] private GameObject WindowCalenderGameobject;
+
     private void Start() {
         // Checking if the scene have a event system.
         if (EventSystem.current == null) {
@@ -25,18 +28,16 @@ public class ComputerController : MonoBehaviour {
         }
     }
 
-    private void OnEnable()
-    {
-        powerButton?.onClick.AddListener(OnPowerButton);
-        oldMailButton?.onClick.AddListener(OnOldMailButton);
-        mailButton?.onClick.AddListener(OnMailButton);
+    private void OnEnable() {
+        this.powerButton.onClick.AddListener(OnPowerButton);
+        this.mailButton.onClick.AddListener(OnMailButton);
+        this.calenderButton.onClick.AddListener(OnCalenderButton);
     }
 
-    private void OnDisable()
-    {
-        powerButton?.onClick.RemoveListener(OnPowerButton);
-        oldMailButton?.onClick.RemoveListener(OnOldMailButton);
-        mailButton?.onClick.RemoveListener(OnMailButton);
+    private void OnDisable() {
+        this.powerButton.onClick.RemoveListener(OnPowerButton);
+        this.mailButton.onClick.RemoveListener(OnMailButton);
+        this.calenderButton.onClick.RemoveListener(OnCalenderButton);
     }
 
     public void OnPowerButton() {
@@ -49,14 +50,14 @@ public class ComputerController : MonoBehaviour {
         Debug.Log("Power button pressed! Leaving the computer.");
     }
 
-    [ContextMenu("Window/Toggle Mail Window")]
-    public void OnOldMailButton() {
+    [ContextMenu("Window/Toggle New Mail Window")]
+    public void OnMailButton() {
         ToggleComputerWindow(this.WindowMailGameobject);
     }
 
-    [ContextMenu("Window/Toggle New Mail Window")]
-    public void OnMailButton() {
-        ToggleComputerWindow(this.NewWindowMailGameobject);
+    [ContextMenu("Window/Toggle Calendar Window")]
+    private void OnCalenderButton() {
+        ToggleComputerWindow(this.WindowCalenderGameobject);
     }
 
     /// <summary>

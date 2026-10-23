@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Author: https://github.com/iHateThisName
+/// </summary>
 public class MailBoxManager : MonoBehaviour
 {
     [SerializeField] private List<MailData> mailDataList = new List<MailData>();
