@@ -19,7 +19,6 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  SituationStateEnum: 0
   Portrait: {fileID: 0}
   Name: Linda
   Lines:
