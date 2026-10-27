@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3656351305996984589}
   - component: {fileID: 8290896713481944569}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: ElevatorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
