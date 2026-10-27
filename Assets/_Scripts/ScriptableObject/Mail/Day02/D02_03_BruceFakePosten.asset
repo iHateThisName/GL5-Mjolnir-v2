@@ -15,7 +15,7 @@ MonoBehaviour:
   situationName: 
   parentSituation: {fileID: 0}
   requiredSituations:
-  - {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
+  - {fileID: 11400000, guid: 2e967578a07142d498d8c8e70f7a39ba, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
   resultingFailedConditions: []

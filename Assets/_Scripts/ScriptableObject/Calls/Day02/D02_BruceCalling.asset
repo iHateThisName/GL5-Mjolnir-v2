@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce89e8457afce24ba367c658513195e, type: 3}
+  m_Name: D02_BruceCalling
+  m_EditorClassIdentifier: Assembly-CSharp::CallData
+  situationName: BruceCalling
+  parentSituation: {fileID: 0}
+  requiredSituations:
+  - {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
+  requiredConditions: []
+  resultingSuccessConditions: []
+  resultingFailedConditions: []
+  initialState: 0
+  taskType: 1
+  calllType: 1
+  conversationAudio: {fileID: 8300000, guid: b26c1db69b15e3a41a276bf8f5e626e6, type: 3}
+  characterName: Bruce
+  portrait: {fileID: 21300000, guid: b298803192f80584697453542add5ae8, type: 3}
+  subtitiles:
+  - "Oy mate! It\u2019s Bruce\r\nCome over here and help a man out, will yah!\r\n"
