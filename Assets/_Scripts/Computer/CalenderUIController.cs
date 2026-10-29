@@ -1,4 +1,4 @@
-using System;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,6 +69,18 @@ public class CalenderUIController : MonoBehaviour {
                 GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelThreeScene);
                 break;
 
+            case 4:
+                Debug.Log("Starting Thursday's level...");
+                // Load Thursday's level here
+                //GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelFourScene);
+                break;
+
+            case 5:
+                Debug.Log("Starting Friday's level...");
+                // Load Friday's level here
+                //GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelFiveScene);
+                break;
+
             default:
                 Debug.LogWarning("No day selected or unknown day. Cannot start the level.");
                 break;
@@ -79,32 +91,35 @@ public class CalenderUIController : MonoBehaviour {
         int dayNumber = GetDayNumberFromButton(dayButton);
         if (dayNumber == -1) return; // Unknown button, do nothing.
 
+        StringBuilder information = new StringBuilder();
         switch (dayNumber) {
             case 1:
                 this.titleTextInformation.text = "Monday";
-                this.descriptionTextInformation.text = "This is the information for Monday.";
+                information.AppendLine("This is the information for Monday.");
                 break;
             case 2:
                 this.titleTextInformation.text = "Tuesday";
-                this.descriptionTextInformation.text = "This is the information for Tuesday.";
+                information.AppendLine("This is the information for Tuesday.");
                 break;
             case 3:
                 this.titleTextInformation.text = "Wednesday";
-                this.descriptionTextInformation.text = "This is the information for Wednesday.";
+                information.AppendLine("This is the information for Wednesday.");
                 break;
             case 4:
                 this.titleTextInformation.text = "Thursday";
-                this.descriptionTextInformation.text = "This is the information for Thursday.";
+                information.AppendLine("This is the information for Thursday.");
                 break;
             case 5:
                 this.titleTextInformation.text = "Friday";
-                this.descriptionTextInformation.text = "This is the information for Friday.";
+                information.AppendLine("This is the information for Friday.");
                 break;
             default:
                 Debug.LogWarning("Unknown day number: " + dayNumber);
                 ResetInformationPanel();
                 return;
         }
+
+        this.descriptionTextInformation.text = information.ToString();
         this.currentSelectedDay = dayNumber;
 
         Debug.Log($"Day button clicked: {dayButton.name}, Day number: {dayNumber}");
