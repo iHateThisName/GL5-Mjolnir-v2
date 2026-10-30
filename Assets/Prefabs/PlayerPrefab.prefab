@@ -9284,8 +9284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookAtPromptController
   viewCamera: {fileID: 0}
-  promptPanel: {fileID: 0}
-  promptText: {fileID: 0}
+  promptPanel: {fileID: 3563676577097890810}
+  promptText: {fileID: 7500548673460625013}
   interactionDistance: 2.5
   raycastLayers:
     serializedVersion: 2

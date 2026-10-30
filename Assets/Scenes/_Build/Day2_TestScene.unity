@@ -2181,11 +2181,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
---- !u!1 &623726491 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3563676577097890810, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
-  m_PrefabInstance: {fileID: 1740685651}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &659505007
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,17 +3433,6 @@ CapsuleCollider:
   m_Height: 25.843752
   m_Direction: 1
   m_Center: {x: -1.25, y: -0.90967715, z: 5.329108e-16}
---- !u!114 &876736024 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7500548673460625013, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
-  m_PrefabInstance: {fileID: 1740685651}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!43 &877015339
 Mesh:
   m_ObjectHideFlags: 0
@@ -9397,7 +9381,7 @@ PrefabInstance:
       objectReference: {fileID: 1519070302}
     - target: {fileID: 1734031023264477392, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 284
+      value: 287
       objectReference: {fileID: 0}
     - target: {fileID: 2308536639862641127, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9413,7 +9397,7 @@ PrefabInstance:
       objectReference: {fileID: 803550573}
     - target: {fileID: 3017687265557728898, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 727
+      value: 730
       objectReference: {fileID: 0}
     - target: {fileID: 3880098410596202016, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9424,17 +9408,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4059363957035130127, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
-      propertyPath: promptText
-      value: 
-      objectReference: {fileID: 876736024}
-    - target: {fileID: 4059363957035130127, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: viewCamera
       value: 
       objectReference: {fileID: 659505011}
-    - target: {fileID: 4059363957035130127, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
-      propertyPath: promptPanel
-      value: 
-      objectReference: {fileID: 623726491}
     - target: {fileID: 4309874675433059896, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -9485,7 +9461,7 @@ PrefabInstance:
       objectReference: {fileID: 1800624514}
     - target: {fileID: 4408753801292550568, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 1418
+      value: 1421
       objectReference: {fileID: 0}
     - target: {fileID: 5107409610833004953, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
@@ -9506,10 +9482,6 @@ PrefabInstance:
     - target: {fileID: 6769770158950150631, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.175
-      objectReference: {fileID: 0}
-    - target: {fileID: 6918566998886697435, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8278183709580805002, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh

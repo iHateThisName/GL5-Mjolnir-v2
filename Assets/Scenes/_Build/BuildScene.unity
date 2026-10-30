@@ -2974,6 +2974,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 468192644445901699, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 553108111434741583, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3164,6 +3168,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4149742788840700844, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222624544553588171, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4385992628481918707, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
@@ -7246,6 +7254,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4059363957035130127, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
+      propertyPath: viewCamera
+      value: 
+      objectReference: {fileID: 659505011}
     - target: {fileID: 4309874675433059896, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
       value: 
