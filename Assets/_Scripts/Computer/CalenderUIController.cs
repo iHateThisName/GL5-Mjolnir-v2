@@ -47,7 +47,7 @@ public class CalenderUIController : MonoBehaviour {
     }
 
     private void Start() {
-        OnDayButtonClicked(dayOneMondayButton); // Default to Monday on start.
+        OnDayButtonClicked(this.dayTwoTuesdayButton); // Default to Monday on start.
     }
     private void OnStartDayClicked() {
         switch (currentSelectedDay) {
