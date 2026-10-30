@@ -2427,6 +2427,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1657429162}
+    - target: {fileID: 1172210483195517689, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      propertyPath: m_VersionIndex
+      value: 171
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731682723142328809, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
     - target: {fileID: 2308427886910097387, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_Name
       value: StaticEnviorment
@@ -2471,6 +2479,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7112687883065710937, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
     - target: {fileID: 7240620091518708854, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2519,6 +2531,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2130268748}
+    - target: {fileID: 7885652527208763916, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      propertyPath: m_VersionIndex
+      value: 171
+      objectReference: {fileID: 0}
     - target: {fileID: 8262957961950589665, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_Mesh
       value: 

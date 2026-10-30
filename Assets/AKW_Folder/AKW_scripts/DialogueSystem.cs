@@ -23,13 +23,18 @@ public class DialogueSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        NpcCollider.OnInteract += OnInteractionShowDialogue;
-
+        if (this.NpcCollider != null)
+        {
+            NpcCollider.OnInteract += OnInteractionShowDialogue;
+        }
     }
 
     private void OnDisable()
     {
-        NpcCollider.OnInteract -= OnInteractionShowDialogue;
+        if (this.NpcCollider != null)
+        {
+            NpcCollider.OnInteract -= OnInteractionShowDialogue;
+        }
 
         nameText.text = null;
         dialogueText.text = null;
