@@ -10,8 +10,7 @@ public abstract class SituationData : ScriptableObject
     [SerializeField] private SituationData parentSituation;
     [SerializeField] private SituationData[] requiredSituations = Array.Empty<SituationData>();
     [SerializeField]
-    private ConditionTracker.ConditionState[] requiredConditions =
-        Array.Empty<ConditionTracker.ConditionState>();
+    private ConditionTracker.ConditionState[] requiredConditions = Array.Empty<ConditionTracker.ConditionState>();
     [SerializeField]
     private ConditionTracker.ConditionState[] resultingSuccessConditions =
         Array.Empty<ConditionTracker.ConditionState>();

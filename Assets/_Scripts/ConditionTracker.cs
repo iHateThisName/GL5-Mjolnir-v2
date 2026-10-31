@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -39,8 +40,33 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         return conditions.Contains(condition);
     }
 
+    public bool HasConditions(ConditionEnum[] conditions) {
+        foreach (ConditionEnum condition in conditions) {
+            if (!HasCondition(condition)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     [ContextMenu("Debug true conditions")]
-    public void DebugTrueConditions() => Debug.Log($"count: {this.conditions.Count} - {this.conditions.ToString()}");
+    public void DebugTrueConditions() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.AppendLine($"True Conditions are in total {this.conditions.Count} and are as followed: ");
+
+        foreach (ConditionEnum condition in conditions) {
+            stringBuilder.AppendLine($"{condition}");
+        }
+
+        Debug.Log(stringBuilder.ToString());
+    }
+
+    [ContextMenu("Debug set test conditon to true")]
+    public void DebugRaiseTestCondtion() => this.SetCondition(new ConditionState(condition: ConditionEnum.TestCondition, expectedState: true));
+
+    [ContextMenu("Debug set test conditon to false")]
+    public void DebugUnRaiseTestCondtion() => this.SetCondition(new ConditionState(condition: ConditionEnum.TestCondition, expectedState: false));
 
     public void SetCondition(ConditionStateSO conditionStateSO) => SetCondition(new ConditionState(conditionStateSO.Condition, conditionStateSO.ExpectedState));
 
@@ -108,6 +134,9 @@ public class ConditionTracker : Singleton<ConditionTracker> {
 
         //Company
         DeletedCompanyMail = 5,
+
+        // test
+        TestCondition = 9,
     }
 
     /// <summary>
