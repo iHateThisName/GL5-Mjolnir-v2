@@ -38,6 +38,8 @@ public class MovementController : MonoBehaviour {
 
 
     private void Update() {
+        if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
+
         // rotate the charater controller y-axis based on the camera's y rotation
         this.characterController.transform.rotation = Quaternion.Euler(
             0f,
@@ -51,12 +53,9 @@ public class MovementController : MonoBehaviour {
             this.playerHeadVisualTransform.rotation.eulerAngles.z
         );
 
-        if (GameManager.Instance.CurrentPlayerState == EnumPlayerState.Walking) {
-            HandleMove(this.moveInput);
-        }
+        HandleMove(this.moveInput);
     }
-    private void OnInteract(InputAction.CallbackContext context)
-    {
+    private void OnInteract(InputAction.CallbackContext context) {
         Debug.Log("Interact action performed");
 
         // (Removed the IsPointerOverGameObject check that was causing the warning and blocking the raycast)
@@ -64,18 +63,14 @@ public class MovementController : MonoBehaviour {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 3f))
-        {
+        if (Physics.Raycast(ray, out RaycastHit hit, 3f)) {
 
             Debug.Log($"Raycast hit: {hit.collider.name}"); //What was clicked
 
-            if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
-            {
+            if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable)) {
                 interactable.Interact(gameObject);
             }
-        }
-        else
-        {
+        } else {
             Debug.Log("Raycast missed everything.");
         }
 

@@ -81,7 +81,12 @@ public class DialogueSystem : MonoBehaviour
             EndDialogue();
             dialogIndex = 0;
             dialogueCanvas.SetActive(false);
+
+            GameManager.Instance.SetPlayerStateToPreviouseState();
         } else {
+            // Tell the GameManager that the player is in dialogue state
+            GameManager.Instance.SetPlayerState(EnumPlayerState.Dialogue);
+
             // Show the dialog line
             string line = dialogue.Lines[dialogIndex];
             ShowDialogue(dialogue: line, name: dialogue.CharacterName);
