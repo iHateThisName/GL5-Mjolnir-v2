@@ -137,6 +137,9 @@ public class ConditionTracker : Singleton<ConditionTracker> {
 
         // test
         TestCondition = 9,
+
+        // Cutscene
+        IsPlayingCutscene = 10,
     }
 
     /// <summary>

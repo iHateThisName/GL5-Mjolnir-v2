@@ -77,6 +77,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1761687651920004379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5396343211013455169}
+  - component: {fileID: 4385389933031676149}
+  m_Layer: 0
+  m_Name: CrosshairController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5396343211013455169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761687651920004379}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4400999431691672399}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4385389933031676149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761687651920004379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a951b3b8580a8d34b90f0aa05e414539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrosshairController
+  crooshairPromtText: {fileID: 0}
 --- !u!1 &2590382752877470641
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3323422479578233290
 RectTransform:
   m_ObjectHideFlags: 0
@@ -421,6 +466,7 @@ Transform:
   - {fileID: 3880098410596202016}
   - {fileID: 8280617847930938782}
   - {fileID: 2308536639862641127}
+  - {fileID: 5396343211013455169}
   - {fileID: 6380576261387492357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9194,7 +9240,6 @@ GameObject:
   - component: {fileID: 6380576261387492357}
   - component: {fileID: 3437528284820580095}
   - component: {fileID: 1784261923608393069}
-  - component: {fileID: 4059363957035130127}
   m_Layer: 0
   m_Name: Player UI, Canvas
   m_TagString: Untagged
@@ -9271,26 +9316,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &4059363957035130127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6918566998886697435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2563e1e3b1baeb04ba1910c23388eeb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LookAtPromptController
-  viewCamera: {fileID: 0}
-  promptPanel: {fileID: 3563676577097890810}
-  promptText: {fileID: 7500548673460625013}
-  interactionDistance: 2.5
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  triggerInteraction: 1
 --- !u!1 &7038998805105556772
 GameObject:
   m_ObjectHideFlags: 0

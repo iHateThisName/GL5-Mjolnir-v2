@@ -321,10 +321,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CutscenePlayer
   director: {fileID: 68347070}
   requiredConditions:
-  - Condition: 9
+  - Condition: 6
     ExpectedState: 1
   raisedFinishConditions:
-  - Condition: 9
+  - Condition: 10
     ExpectedState: 0
 --- !u!4 &68347069
 Transform:
