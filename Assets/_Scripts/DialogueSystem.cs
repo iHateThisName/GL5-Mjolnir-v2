@@ -18,8 +18,9 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private Image characterPortrait;
 
-    public bool DisableInteraction = false;
+    [SerializeField] private Button dialoguePanelButton;
 
+    public bool DisableInteraction = false;
 
     private void OnEnable()
     {
@@ -27,6 +28,8 @@ public class DialogueSystem : MonoBehaviour
         {
             NpcCollider.OnInteract += OnInteractionShowDialogue;
         }
+
+        this.dialoguePanelButton.onClick.AddListener(() => AdvanceDialogue(this.SituationData as IDialogue));
     }
 
     private void OnDisable()
@@ -39,6 +42,12 @@ public class DialogueSystem : MonoBehaviour
         nameText.text = null;
         dialogueText.text = null;
         dialoguePanel.SetActive(false);
+
+        this.dialoguePanelButton.onClick.RemoveAllListeners();
+    }
+
+    private void Awake() {
+        this.dialogueCanvas.SetActive(false);
     }
 
     private void Start() {
