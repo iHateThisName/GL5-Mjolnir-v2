@@ -19,7 +19,7 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  Portrait: {fileID: 21300000, guid: 9cd38246bbf87f24686c9ddef6db8c31, type: 3}
+  Portrait: {fileID: 21300000, guid: e6e45103127c85b4a9ccc6151eac5744, type: 3}
   Name: Roger
   Lines:
   - ...

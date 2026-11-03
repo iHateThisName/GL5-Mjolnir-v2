@@ -8479,6 +8479,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5912358257050112535, guid: 7d1fbcf879d569a4cb11973f4146607d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.31941
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912358257050112535, guid: 7d1fbcf879d569a4cb11973f4146607d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.095
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912358257050112535, guid: 7d1fbcf879d569a4cb11973f4146607d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912358257050112535, guid: 7d1fbcf879d569a4cb11973f4146607d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.8552
+      objectReference: {fileID: 0}
     - target: {fileID: 7052937124569279257, guid: 7d1fbcf879d569a4cb11973f4146607d, type: 3}
       propertyPath: m_Name
       value: Elevator

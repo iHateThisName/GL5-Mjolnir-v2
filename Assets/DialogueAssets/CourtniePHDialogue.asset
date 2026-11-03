@@ -19,7 +19,7 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  Portrait: {fileID: 21300000, guid: 19bbe3f3207920945bbccfdcd5757413, type: 3}
+  Portrait: {fileID: 21300000, guid: f53b34c10b84d8a44bf0b56c41242200, type: 3}
   Name: Courtnie
   Lines:
   - Hiiiiiiiiiiiy!
