@@ -923,7 +923,7 @@ PrefabInstance:
       objectReference: {fileID: 1942067833}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2474
+      value: 2525
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1035,7 +1035,7 @@ PrefabInstance:
       objectReference: {fileID: 1300122904}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 6675
+      value: 6726
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
@@ -2542,7 +2542,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8290638539923276083, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 3805699733054192179, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4898246463048140309, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 3035952949484428564, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 5783783680624603888, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 141215893515704147, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
 --- !u!1001 &780694390
 PrefabInstance:
@@ -4445,7 +4463,7 @@ PrefabInstance:
       objectReference: {fileID: 12138562}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2474
+      value: 2525
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4557,7 +4575,7 @@ PrefabInstance:
       objectReference: {fileID: 1101668504}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 6675
+      value: 6726
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
@@ -5843,6 +5861,7 @@ MonoBehaviour:
   nameText: {fileID: 1114548986}
   dialoguePanel: {fileID: 333045574}
   characterPortrait: {fileID: 433269469}
+  dialoguePanelButton: {fileID: 0}
   DisableInteraction: 0
 --- !u!1001 &1266865539
 PrefabInstance:
@@ -6266,7 +6285,7 @@ PrefabInstance:
       objectReference: {fileID: 196765584}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2960
+      value: 3011
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6370,7 +6389,7 @@ PrefabInstance:
       objectReference: {fileID: 1388741300}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 7161
+      value: 7212
       objectReference: {fileID: 0}
     - target: {fileID: 7674477503906483976, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
