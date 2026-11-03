@@ -12,11 +12,15 @@ namespace Assets._Scripts {
 
         public UnityEvent onPlayerSatDown;
         [SerializeField] private BoxCollider boxCollider;
+        [SerializeField] private BoxCollider boxCollider2;
         public async void Interact(GameObject interactor) {
             if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
 
             //Disable the box collider
             this.boxCollider.enabled = false;
+            if (this.boxCollider2 != null) {
+                this.boxCollider2.enabled = false;
+            }
 
             // refrence to be used later.
             CinemachineBrain cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
@@ -63,6 +67,11 @@ namespace Assets._Scripts {
 
             //Disable the box collider
             this.boxCollider.enabled = true;
+            if (this.boxCollider2 != null) {
+                this.boxCollider2.enabled = true;
+            }
         }
+
+        public string HoverText() => "Sit Down";
     }
 }
