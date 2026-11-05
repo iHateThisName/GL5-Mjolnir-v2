@@ -45,7 +45,18 @@ public class MailOutcomeSequence : MonoBehaviour
     {
         if (!CanBegin || resolution == null)
             throw new InvalidOperationException("Mail outcome sequence is busy or not configured.");
+
         CurrentResolution = resolution;
+
+        // FIX: If it's a scam, hide the UI but DO NOT call Completed!
+        // ScamFailureSequence relies on PendingMailPresentation remaining active to setup the TV.
+        // ScamFailureSequence will complete the presentation at the end of the meeting.
+        if (resolution.Outcome == MailOutcome.AcceptedScam)
+        {
+            if (feedbackPanel != null) feedbackPanel.SetActive(false);
+            return;
+        }
+
         steps.Clear();
         steps.AddRange(MailOutcomeRules.StepsFor(resolution.Outcome));
         stepIndex = 0;
@@ -61,6 +72,7 @@ public class MailOutcomeSequence : MonoBehaviour
         CurrentStepToken = ++tokenCounter;
         stepIndex++;
         if (stepIndex < steps.Count) { ShowStep(); return; }
+
         MailResolution finished = CurrentResolution;
         CurrentResolution = null;
         feedbackPanel.SetActive(false);

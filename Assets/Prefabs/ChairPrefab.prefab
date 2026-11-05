@@ -1398,6 +1398,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   boxCollider: {fileID: 1306753063479163555}
+  boxCollider2: {fileID: 0}
 --- !u!65 &1306753063479163555
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1479,7 +1480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 1
+    m_Value: 20
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001

@@ -46,11 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SituationManager
   AutoUnparentOnAwake: 1
   <Situations>k__BackingField:
-  - {fileID: 11400000, guid: ef4b39d2744a24948934b6bf425b086a, type: 2}
-  - {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
-  - {fileID: 11400000, guid: 7549a3dbee1195d448d632e7cd40e7f4, type: 2}
-  - {fileID: 11400000, guid: a02366dec89b3ad4db9994ad64e32433, type: 2}
-  - {fileID: 11400000, guid: 71f127060230d3e4e929060afce7bb86, type: 2}
+  - {fileID: 11400000, guid: bf30b79f83fcc0a4dae958c8162e010a, type: 2}
+  - {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
+  - {fileID: 11400000, guid: 2e967578a07142d498d8c8e70f7a39ba, type: 2}
+  - {fileID: 11400000, guid: 667689a4c74182e4a925a9925d7de0de, type: 2}
+  - {fileID: 11400000, guid: 8793002c28c9ba64cbae2b5b97419043, type: 2}
+  - {fileID: 11400000, guid: 133cf58db6385e246a39c4c37f004ee8, type: 2}
+  - {fileID: 11400000, guid: 62933241776b7ab49b22921087e113a0, type: 2}
   penalizeIncorrectFlags: 1
 --- !u!1 &1655541618263795761
 GameObject:
@@ -97,6 +99,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConditionTracker
   AutoUnparentOnAwake: 1
+--- !u!1 &1994818277131370636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7283667958588663479}
+  - component: {fileID: 1620115669023795197}
+  m_Layer: 0
+  m_Name: ScamFailureFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7283667958588663479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994818277131370636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5378693964919184788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620115669023795197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994818277131370636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10326c4a975ca06478dc098b3c2665a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScamFailureFeedback
+  failureSfx: {fileID: 8300000, guid: 99035fcd25b990644ac5bd19a2a6c1f4, type: 3}
+  redLightImage: {fileID: 0}
+  blinkDuration: 0.2
+  totalBlinks: 3
 --- !u!1 &2234571117044818708
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,8 +181,147 @@ Transform:
   - {fileID: 1945252541876418653}
   - {fileID: 7569827033233606038}
   - {fileID: 3147097546578095308}
+  - {fileID: 7912279439863735546}
+  - {fileID: 4314132584974822173}
+  - {fileID: 7283667958588663479}
+  - {fileID: 7939746608337354126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4659503129076203540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7939746608337354126}
+  - component: {fileID: 5450049161257297814}
+  m_Layer: 0
+  m_Name: MeetingSequenceManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7939746608337354126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4659503129076203540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 139981380945133024}
+  m_Father: {fileID: 5378693964919184788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5450049161257297814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4659503129076203540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1973919a6f07441872b329997b4390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequenceController
+  triggerCondition: 0
+  fadeCanvas: {fileID: 0}
+  npcDialogue: {fileID: 0}
+  targetChair: {fileID: 0}
+  workStationChair: {fileID: 0}
+  dialogueData: {fileID: 0}
+  optionalTvController: {fileID: 0}
+  optionalMailData: {fileID: 0}
+  showAnnotatedMail: 1
+  continueButton: {fileID: 0}
+  onScreenFadedOut:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &5176972292198744017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 139981380945133024}
+  m_Layer: 0
+  m_Name: Scam1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &139981380945133024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176972292198744017}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7939746608337354126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5589349916491448567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4314132584974822173}
+  - component: {fileID: 6263246321255769546}
+  m_Layer: 0
+  m_Name: SummaryUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4314132584974822173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589349916491448567}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 5.4218707, y: 1.3771, z: -4.2050514}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5378693964919184788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6263246321255769546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589349916491448567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2704baf3dff76a649821a782d3ba0506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SummaryUI
+  summaryContainer: {fileID: 0}
+  summaryText: {fileID: 0}
 --- !u!1 &6292833388505480733
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +431,168 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4699249837897171292, guid: c2550e3896cb7e448a0a031d5e47ed78, type: 3}
   m_PrefabInstance: {fileID: 2898764825203410122}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4453021789158378961
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5378693964919184788}
+    m_Modifications:
+    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_text
+      value: 'WELCOME TO MJOLNIR
+
+
+
+        Welcome to Mjolnir Paper & Office Supplies AS.
+
+
+
+        Your job is simple: handle company emails, help your coworkers,
+
+        and keep the office running.
+
+
+
+        Unfortunately, not every message in your inbox can be trusted.
+
+
+
+        Spot the scams, complete the real work, and try to keep
+
+        the Boss happy.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_fontSize
+      value: 48.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531706414739232020, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_text
+      value: 'GETTING STARTED
+
+
+
+        Move with WASD and look around with the mouse.
+
+
+
+        Use the Left Mouse Button to interact with objects
+
+        and sit at a workstation.
+
+
+
+        Check the sticky note in your cubicle for your current task.
+
+        It will tell you when a coworker needs help.
+
+
+
+        Start by checking your computer.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531706414739232020, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186594780654169119, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_text
+      value: 'LOOK BEFORE YOU CLICK
+
+
+
+        Check the sender''s actual email address.
+
+        Use the Directory to compare it with trusted contacts.
+
+
+
+        Hover over the email''s action button to inspect
+
+        where it really leads.
+
+
+
+        Trust the message? Use its action button.
+
+        Think it''s a scam? Choose REPORT SCAM and select the evidence.
+
+
+
+        Made the wrong call? Review the feedback, learn from it,
+
+        and get back to work.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186594780654169119, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1659
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3830404
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.3899
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.1738186
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8242351820273393526, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: m_Name
+      value: IntroController
+      objectReference: {fileID: 0}
+    - target: {fileID: 8707548556070852101, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+      propertyPath: gameplayScriptsToPause.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+--- !u!4 &7912279439863735546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
+  m_PrefabInstance: {fileID: 4453021789158378961}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5945788020710773542
 PrefabInstance:

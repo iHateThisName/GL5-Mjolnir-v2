@@ -18,7 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf30b79f83fcc0a4dae958c8162e010a, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
-  resultingFailedConditions: []
+  resultingFailedConditions:
+  - Condition: 11
+    ExpectedState: 1
   initialState: 0
   taskType: 0
   displayName: The Boss (CEO)
@@ -36,3 +38,5 @@ MonoBehaviour:
   annotatedEmailBody:
   - Your Q3 bonus is ready. <color=#FF5050>Log in with your corporate credentials</color> using the link below to claim it.
   annotatedEmailAddress: boss@<color=#FF5050>mj0lnir-office.no</color>
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 11400000, guid: a993eaf3c36a4e44d9b233dc5ef2f470, type: 2}

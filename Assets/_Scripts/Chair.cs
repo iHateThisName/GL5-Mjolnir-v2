@@ -13,9 +13,12 @@ namespace Assets._Scripts {
         public UnityEvent onPlayerSatDown;
         [SerializeField] private BoxCollider boxCollider;
         [SerializeField] private BoxCollider boxCollider2;
-        public async void Interact(GameObject interactor) {
-            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
 
+        public static Chair ActiveChair { get; private set; }
+        public async void Interact(GameObject interactor)
+        {
+            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
+            Chair.ActiveChair = this;
             //Disable the box collider
             this.boxCollider.enabled = false;
             if (this.boxCollider2 != null) {
@@ -58,8 +61,11 @@ namespace Assets._Scripts {
             }
         }
 
-        public void StandUp() {
+        public void StandUp()
+        {
             if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Sitting) return;
+
+            if (Chair.ActiveChair == this) Chair.ActiveChair = null;
 
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
             this.lockedCamera.gameObject.SetActive(false);

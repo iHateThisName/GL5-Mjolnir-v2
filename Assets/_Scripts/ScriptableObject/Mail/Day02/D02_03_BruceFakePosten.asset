@@ -18,7 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e967578a07142d498d8c8e70f7a39ba, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
-  resultingFailedConditions: []
+  resultingFailedConditions:
+  - Condition: 11
+    ExpectedState: 1
   initialState: 0
   taskType: 0
   displayName: Posten
@@ -33,5 +35,8 @@ MonoBehaviour:
   isScam: 1
   correctRedFlags: 0000000001000000i
   feedbackReplyText: 'Bruce: Whoa, almost lost my gains, bro! Thanks for checking that link.'
-  annotatedEmailBody: []
-  annotatedEmailAddress: 
+  annotatedEmailBody:
+  - Your gym equipment shipment is awaiting release. Pay the 49 NOK customs fee using the payment link below.
+  annotatedEmailAddress: support@posten-tracking-no.xyz
+  ruinedCoworkerPrefab: {fileID: 1089576341827334125, guid: a36255803617bda40a3542b98726bc15, type: 3}
+  scoldingDialogue: {fileID: 11400000, guid: 7e0faa9ec4aeb294f814846194c59f8d, type: 2}

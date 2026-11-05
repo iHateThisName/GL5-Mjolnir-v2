@@ -4,13 +4,16 @@ using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
+    public event System.Action OnDialogueEnded;
+
     [Header("")]
-    [SerializeField] WorldInteractable NpcCollider;
+    [SerializeField] private WorldInteractable npcCollider;
 
     [Header("Dialogue stuff")]
     public SituationData SituationData;
     private IDialogue dialogue;
     private int dialogIndex = 0;
+
     [Header("")]
     [SerializeField] private GameObject dialogueCanvas;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -24,99 +27,107 @@ public class DialogueSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.NpcCollider != null)
+        if (this.npcCollider != null)
         {
-            NpcCollider.OnInteract += OnInteractionShowDialogue;
+            this.npcCollider.OnInteract += this.OnInteractionShowDialogue;
         }
 
-        this.dialoguePanelButton.onClick.AddListener(() => AdvanceDialogue(this.SituationData as IDialogue));
+        this.dialoguePanelButton.onClick.AddListener(() => this.AdvanceDialogue(this.SituationData as IDialogue));
     }
 
     private void OnDisable()
     {
-        if (this.NpcCollider != null)
+        if (this.npcCollider != null)
         {
-            NpcCollider.OnInteract -= OnInteractionShowDialogue;
+            this.npcCollider.OnInteract -= this.OnInteractionShowDialogue;
         }
 
-        nameText.text = null;
-        dialogueText.text = null;
-        dialoguePanel.SetActive(false);
+        this.nameText.text = null;
+        this.dialogueText.text = null;
+        this.dialoguePanel.SetActive(false);
 
         this.dialoguePanelButton.onClick.RemoveAllListeners();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         this.dialogueCanvas.SetActive(false);
     }
 
-    private void Start() {
-        Initlize();
+    private void Start()
+    {
+        this.Initlize();
     }
 
-    public void Initlize(bool disableInteraction = false) {
+    public void Initlize(bool disableInteraction = false)
+    {
         if (this.SituationData == null) return;
         this.dialogue = this.SituationData as IDialogue;
-        nameText.text = this.dialogue.CharacterName;
-        dialogueText.text = this.dialogue.Lines[dialogIndex];
-        dialoguePanel.SetActive(true);
-        DisableInteraction = disableInteraction;
+        this.nameText.text = this.dialogue.CharacterName;
+        this.dialogueText.text = this.dialogue.Lines[this.dialogIndex];
+        this.dialoguePanel.SetActive(true);
+        this.DisableInteraction = disableInteraction;
 
         if (this.dialogue.Portrait != null) this.characterPortrait.sprite = this.dialogue.Portrait;
-
     }
 
-    private void OnInteractionShowDialogue() {
-
-        if (DisableInteraction) return;
-        else AdvanceDialogue(this.SituationData as IDialogue);
+    private void OnInteractionShowDialogue()
+    {
+        if (this.DisableInteraction) return;
+        else this.AdvanceDialogue(this.SituationData as IDialogue);
     }
 
-    public void SetDialogue(SituationData situationData, bool disableInteraction = false) {
+    public void SetDialogue(SituationData situationData, bool disableInteraction = false)
+    {
         this.SituationData = situationData;
-        dialogIndex = 0;
-        Initlize(disableInteraction: disableInteraction);
-        AdvanceDialogue(this.SituationData as IDialogue);
+        this.dialogIndex = 0;
+        this.Initlize(disableInteraction: disableInteraction);
+        this.AdvanceDialogue(this.SituationData as IDialogue);
     }
 
-    public void AdvanceDialogue(IDialogue dialogue) {
-        if (dialogue == null) {
-            if (this.SituationData == null) Debug.LogError($"No situation data available for {gameObject.name}");
+    public void AdvanceDialogue(IDialogue dialogue)
+    {
+        if (dialogue == null)
+        {
+            if (this.SituationData == null) Debug.LogError($"No situation data available for {this.gameObject.name}");
             this.dialogue = this.SituationData as IDialogue;
             dialogue = this.dialogue;
         }
-        // Check if the dialog is finished
-        if (dialogIndex >= dialogue.Lines.Length) {
-            EndDialogue();
-            dialogIndex = 0;
-            dialogueCanvas.SetActive(false);
+
+        if (this.dialogIndex >= dialogue.Lines.Length)
+        {
+            this.EndDialogue();
+            this.dialogIndex = 0;
+            this.dialogueCanvas.SetActive(false);
 
             GameManager.Instance.SetPlayerStateToPreviouseState();
-        } else {
-            // Tell the GameManager that the player is in dialogue state
+        }
+        else
+        {
             GameManager.Instance.SetPlayerState(EnumPlayerState.Dialogue);
 
-            // Show the dialog line
-            string line = dialogue.Lines[dialogIndex];
-            ShowDialogue(dialogue: line, name: dialogue.CharacterName);
-            dialogueCanvas.SetActive(true);
+            string line = dialogue.Lines[this.dialogIndex];
+            this.ShowDialogue(dialogue: line, name: dialogue.CharacterName);
+            this.dialogueCanvas.SetActive(true);
 
-            dialogIndex++; // tell it to go to next line 
+            this.dialogIndex++;
         }
     }
 
     public void ShowDialogue(string dialogue, string name)
     {
-        nameText.text = name;
-        dialogueText.text = dialogue;
-        dialoguePanel.SetActive(true);
+        this.nameText.text = name;
+        this.dialogueText.text = dialogue;
+        this.dialoguePanel.SetActive(true);
     }
 
-    public void EndDialogue() // to reset the dialogue box for the next?
+    public void EndDialogue()
     {
-        nameText.text = null;
-        dialogueText.text = null; ;
-        dialoguePanel.SetActive(false);
+        this.nameText.text = null;
+        this.dialogueText.text = null;
+        this.dialoguePanel.SetActive(false);
         this.dialogueCanvas.SetActive(false);
+
+        this.OnDialogueEnded?.Invoke();
     }
 }

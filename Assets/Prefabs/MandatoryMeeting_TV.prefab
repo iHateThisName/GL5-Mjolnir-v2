@@ -123,7 +123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7772199155331163396}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MeetingRoomTVController, Assembly-CSharp
         m_MethodName: ContinueDayButton
         m_Mode: 1
@@ -180,7 +180,6 @@ GameObject:
   - component: {fileID: 3836642874772469918}
   - component: {fileID: 8536977903398352269}
   - component: {fileID: 6764604761115847514}
-  - component: {fileID: 7772199155331163396}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -273,24 +272,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7772199155331163396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4300473026661360612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae4a01f0cddc004da87caa15202751b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeetingRoomTVController
-  tvSenderAddressText: {fileID: 8257285448250169219}
-  tvSubjectText: {fileID: 6094938431689263236}
-  tvBodyText: {fileID: 5310234436575266703}
-  ContinueButton: {fileID: 2511124368853297387}
-  chair: {fileID: 0}
-  passwordExpiredScamMailData: {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
 --- !u!1 &5523428238353292421
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
       propertyPath: m_Name
-      value: wall_tv_Presentation
+      value: MandatoryMeeting_TV
       objectReference: {fileID: 0}
     - target: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
       propertyPath: m_IsActive
@@ -1002,8 +983,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8207737922192430328, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2570059737816247707}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3453667198753478763}
   m_SourcePrefab: {fileID: 100100000, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
+--- !u!1 &7979056116475240009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7579493446111446874, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}
+  m_PrefabInstance: {fileID: 546211413496289555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3453667198753478763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979056116475240009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae4a01f0cddc004da87caa15202751b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeetingRoomTVController
+  tvSenderAddressText: {fileID: 8257285448250169219}
+  tvSubjectText: {fileID: 6094938431689263236}
+  tvBodyText: {fileID: 5310234436575266703}
+  passwordExpiredScamMailData: {fileID: 11400000, guid: 0a4901dfd7d514143b316310bea4823d, type: 2}
 --- !u!4 &8535225391537556971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8207737922192430328, guid: 500e25948fbfa3c4a9bf620c6601bde6, type: 3}

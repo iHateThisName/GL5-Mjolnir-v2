@@ -128,6 +128,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         ShowSusanneKeyEmail = 8,
 
         // Scams
+        HasBeenScammed = 11,
         FailedPasswordExpiredScam = 3,
         SuccededPasswordExpiredScam = 7,
         HasCompletedMeeting = 4,

@@ -35,6 +35,15 @@ public class MailData : TaskData
     [SerializeField] private string[] annotatedEmailBody = Array.Empty<string>();
     [SerializeField] private string annotatedEmailAddress = string.Empty;
 
+    [Header("Meeting Reveal (Scams Only)")]
+    [Tooltip("Leave empty if this is a legitimate email.")]
+
+    [SerializeField] private GameObject ruinedCoworkerPrefab;
+    [Tooltip("The specific dialogue the Boss says when this scam is failed.")]
+    [SerializeField] private SituationData scoldingDialogue;
+    public GameObject RuinedCoworkerPrefab => this.ruinedCoworkerPrefab;
+    public SituationData ScoldingDialogue => this.scoldingDialogue;
+
     public string DisplayName => displayName;
     public string EmailAddress => emailAddress;
     public string EmailHeader => emailHeader;
