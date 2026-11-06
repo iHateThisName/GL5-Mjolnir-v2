@@ -103,17 +103,24 @@ public class CalenderUIController : MonoBehaviour {
         switch (dayNumber) {
             case 1:
                 this.titleTextInformation.text = "Monday";
-                information.AppendLine("The monday where it all began.");
-                information.AppendLine("Yes, this is the day to start.");
+                information.AppendLine("The first day of work after...");
+                information.AppendLine("The incedent...");
+                information.AppendLine("...");
+                information.AppendLine("...");
+                information.AppendLine("Well, gotta work");
                 break;
             case 2:
                 this.titleTextInformation.text = "Tuesday";
                 information.AppendLine("What is realy tuesday,");
                 information.AppendLine("if not a lesser monday.");
+                information.AppendLine("");
+                information.AppendLine("...");
+                information.AppendLine("");
+                information.AppendLine("Anyways, tacos after works?");
                 break;
             case 3:
                 this.titleTextInformation.text = "Wednesday";
-                information.AppendLine("My dudes.");
+                information.AppendLine("My dudes...");
                 break;
             case 4:
                 this.titleTextInformation.text = "Thursday";
