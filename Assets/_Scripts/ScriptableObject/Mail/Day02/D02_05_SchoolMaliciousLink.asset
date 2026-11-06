@@ -20,6 +20,8 @@ MonoBehaviour:
   resultingSuccessConditions:
   - Condition: 6
     ExpectedState: 1
+  - Condition: 13
+    ExpectedState: 1
   resultingFailedConditions:
   - Condition: 11
     ExpectedState: 1
@@ -45,5 +47,5 @@ MonoBehaviour:
   ruinedCoworkerPrefab: {fileID: 0}
   scoldingDialogue: {fileID: 11400000, guid: 4ca638372a08ed6419c75a8a63c56d78, type: 2}
   falseReportDialogue: {fileID: 0}
-  successDialogue: {fileID: 0}
-  rewardPrefab: {fileID: 0}
+  successDialogue: {fileID: 11400000, guid: 0825787a6b0f4434b8fe773f7b1b51d3, type: 2}
+  rewardPrefab: {fileID: 1702479794741513693, guid: eaed4327c06bbb64db4339760574bb04, type: 3}

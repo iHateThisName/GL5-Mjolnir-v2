@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce89e8457afce24ba367c658513195e, type: 3}
-  m_Name: D02_BruceCalling
+  m_Name: D02_C_BruceCalling
   m_EditorClassIdentifier: Assembly-CSharp::CallData
   situationName: BruceCalling
   parentSituation: {fileID: 0}

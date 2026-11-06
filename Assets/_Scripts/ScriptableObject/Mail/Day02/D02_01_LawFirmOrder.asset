@@ -42,4 +42,4 @@ MonoBehaviour:
   scoldingDialogue: {fileID: 0}
   falseReportDialogue: {fileID: 11400000, guid: 5754ef7281afa61449345d63b0d1021f, type: 2}
   successDialogue: {fileID: 11400000, guid: 6b9ddcece1c862543b0ab70c5745a80a, type: 2}
-  rewardPrefab: {fileID: 1929323652270254930, guid: 93e95a25893f69d46aba08851115522c, type: 3}
+  rewardPrefab: {fileID: 3013054809460894873, guid: 408ee3231697877478ceaaf37b79225b, type: 3}

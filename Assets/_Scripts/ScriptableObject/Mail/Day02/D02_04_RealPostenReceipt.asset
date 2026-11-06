@@ -17,7 +17,9 @@ MonoBehaviour:
   requiredSituations:
   - {fileID: 11400000, guid: 667689a4c74182e4a925a9925d7de0de, type: 2}
   requiredConditions: []
-  resultingSuccessConditions: []
+  resultingSuccessConditions:
+  - Condition: 13
+    ExpectedState: 1
   resultingFailedConditions:
   - Condition: 12
     ExpectedState: 1
@@ -40,3 +42,5 @@ MonoBehaviour:
   ruinedCoworkerPrefab: {fileID: 0}
   scoldingDialogue: {fileID: 0}
   falseReportDialogue: {fileID: 11400000, guid: 8b9095072ecdf1846b46e4126942408a, type: 2}
+  successDialogue: {fileID: 11400000, guid: 10a5427745d9a564e88d60f81b782e0b, type: 2}
+  rewardPrefab: {fileID: 6444497440012931615, guid: 8c6a74858b05d5a43b3cec9a031c4ae1, type: 3}

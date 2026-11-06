@@ -17,7 +17,9 @@ MonoBehaviour:
   requiredSituations:
   - {fileID: 11400000, guid: 2e967578a07142d498d8c8e70f7a39ba, type: 2}
   requiredConditions: []
-  resultingSuccessConditions: []
+  resultingSuccessConditions:
+  - Condition: 13
+    ExpectedState: 1
   resultingFailedConditions:
   - Condition: 11
     ExpectedState: 1
@@ -40,3 +42,6 @@ MonoBehaviour:
   annotatedEmailAddress: support@<color=#FF5050>posten-tracking-no.xyz</color>
   ruinedCoworkerPrefab: {fileID: 1089576341827334125, guid: a36255803617bda40a3542b98726bc15, type: 3}
   scoldingDialogue: {fileID: 11400000, guid: 7e0faa9ec4aeb294f814846194c59f8d, type: 2}
+  falseReportDialogue: {fileID: 0}
+  successDialogue: {fileID: 11400000, guid: f90615ba319182d4e9d967d4e3e00b32, type: 2}
+  rewardPrefab: {fileID: 6271714171335282787, guid: 88db849bc2ab1ca48943376b890ff965, type: 3}

@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 812a06c0293c5a3488cae37e5ce047d0, type: 3}
-  m_Name: D02_02PlayerScamDialogue 1
+  m_Name: D02_04_RealPostenSuccess
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAsset
   situationName: 
   parentSituation: {fileID: 0}
   requiredSituations:
-  - {fileID: 11400000, guid: 667689a4c74182e4a925a9925d7de0de, type: 2}
+  - {fileID: 11400000, guid: 8793002c28c9ba64cbae2b5b97419043, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  Portrait: {fileID: 0}
+  Portrait: {fileID: 21300000, guid: 1b5c7174d266d2c47b818dabe931f69f, type: 3}
   Name: 
   Lines:
-  - This address = bad
-  - Asking for credentials
-  - Bad link
+  - Thanks bro!
+  - Gotta get those gains!!
