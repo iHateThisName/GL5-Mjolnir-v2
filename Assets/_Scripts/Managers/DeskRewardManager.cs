@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ public class DeskRewardManager : Singleton<DeskRewardManager>
     {
         if (prefab == null || this.spawnPoints.Count == 0) return;
 
-        // Loop back to the first spot if the desk is completely full (overwrites oldest item)
         if (this.currentSpawnIndex >= this.spawnPoints.Count)
         {
             this.currentSpawnIndex = 0;
@@ -20,15 +20,25 @@ public class DeskRewardManager : Singleton<DeskRewardManager>
 
         Transform targetPoint = this.spawnPoints[this.currentSpawnIndex];
 
-        // Destroy whatever is currently sitting on this specific spawn point
         foreach (Transform child in targetPoint)
         {
+            child.DOKill();
             Destroy(child.gameObject);
         }
 
-        // Spawn the new item and parent it to the spawn point
-        GameObject newReward = Instantiate(prefab, targetPoint.position, targetPoint.rotation);
-        newReward.transform.SetParent(targetPoint);
+        // Spawn DIRECTLY as a child of the target point. This prevents weird scale recalculations.
+        GameObject newReward = Instantiate(prefab, targetPoint);
+
+        // Force the position/rotation to be perfectly zeroed out on the spawn slot
+        newReward.transform.localPosition = Vector3.zero;
+        newReward.transform.localRotation = Quaternion.identity;
+
+        // Grab the scale, crush it, and tween it
+        Vector3 targetScale = newReward.transform.localScale;
+        newReward.transform.localScale = Vector3.zero;
+
+        // .SetUpdate(true) forces the animation to play even if the game is paused!
+        newReward.transform.DOScale(targetScale, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
 
         this.currentSpawnIndex++;
 
