@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
     {
         this.CurrentPlayerState = this.startingPlayerState;
         SetLookSensitivity(this.LookSensitivity);
+        Cursor.visible = false;
     }
 
     public void TeleportPlayer(Vector3 position, Quaternion rotation)
@@ -54,7 +55,7 @@ public class GameManager : Singleton<GameManager>
 
             case EnumPlayerState.Walking:
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                //Cursor.visible = false;
                 PlayerRefrenceProvider.Instance.PlayerWalkCamera.gameObject.SetActive(true);
                 Helper.EnableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = true;
@@ -62,28 +63,28 @@ public class GameManager : Singleton<GameManager>
 
             case EnumPlayerState.Sitting:
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                //Cursor.visible = true;
                 PlayerRefrenceProvider.Instance.PlayerWalkCamera.gameObject.SetActive(false);
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 break;
 
             case EnumPlayerState.Dialogue:
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                //Cursor.visible = true;
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 Helper.DisableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
                 break;
 
             case EnumPlayerState.Cutscene:
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                //Cursor.visible = false;
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 Helper.DisableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
                 break;
 
             case EnumPlayerState.Intro:
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                //Cursor.visible = true;
                 PlayerRefrenceProvider.Instance.PlayerWalkCamera.gameObject.SetActive(true);
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 break;

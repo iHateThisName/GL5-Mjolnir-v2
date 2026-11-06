@@ -15,6 +15,9 @@ namespace Assets._Scripts {
         [SerializeField] private BoxCollider boxCollider2;
 
         public static Chair ActiveChair { get; private set; }
+
+        [SerializeField] private string hoverText = "Sit Down";
+        public string HoverText() => this.hoverText;
         public async void Interact(GameObject interactor)
         {
             if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
@@ -78,6 +81,5 @@ namespace Assets._Scripts {
             }
         }
 
-        public string HoverText() => "Sit Down";
     }
 }

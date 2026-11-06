@@ -395,6 +395,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4765935327772748054}
     m_Modifications:
+    - target: {fileID: 1202079286388554807, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
+      propertyPath: hoverText
+      value: Hang Up
+      objectReference: {fileID: 0}
     - target: {fileID: 1434052900285286483, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -491,6 +495,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
+    - target: {fileID: 8378868503117307197, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
+      propertyPath: hoverText
+      value: Pick Up
+      objectReference: {fileID: 0}
     - target: {fileID: 8847610035382962567, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

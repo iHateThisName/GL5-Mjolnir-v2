@@ -1081,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChairPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4165577878890164180, guid: fd8f6cd9b40e162478c08d4aad8fbd9f, type: 3}
+      propertyPath: hoverText
+      value: View
+      objectReference: {fileID: 0}
     - target: {fileID: 4945333507346644304, guid: fd8f6cd9b40e162478c08d4aad8fbd9f, type: 3}
       propertyPath: m_IsActive
       value: 0

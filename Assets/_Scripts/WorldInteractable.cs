@@ -8,6 +8,8 @@ public class WorldInteractable : MonoBehaviour, IInteractable {
     public event System.Action OnInteract;
     private static bool isInteractable = true;
     private const float interactionCooldown = 0.5f; // Cooldown duration in seconds
+    [SerializeField] private string hoverText = string.Empty;
+    public string HoverText() => this.hoverText;
     public void Interact(GameObject interactor) {
         if (!isInteractable) return;
 
