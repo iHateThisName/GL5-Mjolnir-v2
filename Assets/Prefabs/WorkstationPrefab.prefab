@@ -733,6 +733,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3670039878972060511, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
   m_PrefabInstance: {fileID: 2413835827258934360}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7378053401935104715 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5123889795781955219, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
+  m_PrefabInstance: {fileID: 2413835827258934360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d809e93405fdbfe43ab802307a6749dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhoneController
 --- !u!1001 &6429181596465052345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2003,6 +2014,10 @@ PrefabInstance:
       propertyPath: chair
       value: 
       objectReference: {fileID: 6986791233603376493}
+    - target: {fileID: 7115312489780355691, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: phoneController
+      value: 
+      objectReference: {fileID: 7378053401935104715}
     - target: {fileID: 7132564847602927452, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.05
