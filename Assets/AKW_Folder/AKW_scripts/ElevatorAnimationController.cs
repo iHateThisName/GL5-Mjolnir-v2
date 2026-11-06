@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class ElevatorAnimationController : MonoBehaviour
 {
+    [Header("stuff")]
     public GameObject Doors2Animate;
     public GameObject ElevatorButtonInside;
     public GameObject DoorBlock;
-
+    [Header("Buttons")]
     public WorldInteractable insideButton;
     public WorldInteractable outsideButton;
-
+    [Header("Animator")]
     public Animator Animator;
 
     private void OnEnable()
@@ -27,7 +28,7 @@ public class ElevatorAnimationController : MonoBehaviour
     private void OnElevatorButtonPressed()
     {
         Debug.Log("Button Pressed");
-        Animator.Play("ElevatorDoorsOpen");
+        Animator.SetTrigger("OpenDoor");
     }
 
     void Start()
