@@ -48,12 +48,14 @@ public class MailOutcomeSequence : MonoBehaviour
 
         CurrentResolution = resolution;
 
-        // FIX: If it's a scam, hide the UI but DO NOT call Completed!
-        // ScamFailureSequence relies on PendingMailPresentation remaining active to setup the TV.
-        // ScamFailureSequence will complete the presentation at the end of the meeting.
         if (resolution.Outcome == MailOutcome.AcceptedScam)
         {
+            MailResolution finished = CurrentResolution;
+            CurrentResolution = null;
             if (feedbackPanel != null) feedbackPanel.SetActive(false);
+
+            // This instantly tells MailSelectedController to wipe the PC screen!
+            Completed?.Invoke(finished);
             return;
         }
 

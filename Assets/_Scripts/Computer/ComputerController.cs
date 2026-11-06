@@ -40,12 +40,22 @@ public class ComputerController : MonoBehaviour {
         this.calenderButton.onClick.RemoveListener(OnCalenderButton);
     }
 
-    public void OnPowerButton() {
+    public void OnPowerButton()
+    {
+        if (this.phoneController != null)
+        {
+            this.phoneController.EndPhoneCall();
+        }
 
-        // Leveing the computer
-        //isActive = false;
-        this.chair.StandUp();
-        if (this.phoneController != null) this.phoneController.EndPhoneCall();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Sitting;
+        }
+
+        if (this.chair != null)
+        {
+            this.chair.StandUp();
+        }
 
         Debug.Log("Power button pressed! Leaving the computer.");
     }

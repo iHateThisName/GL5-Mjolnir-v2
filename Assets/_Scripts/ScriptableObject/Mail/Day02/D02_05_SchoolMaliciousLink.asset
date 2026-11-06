@@ -17,11 +17,9 @@ MonoBehaviour:
   requiredSituations:
   - {fileID: 11400000, guid: 8793002c28c9ba64cbae2b5b97419043, type: 2}
   requiredConditions: []
-  resultingSuccessConditions:
-  - Condition: 6
-    ExpectedState: 1
+  resultingSuccessConditions: []
   resultingFailedConditions:
-  - Condition: 6
+  - Condition: 11
     ExpectedState: 1
   initialState: 0
   taskType: 0
@@ -37,5 +35,8 @@ MonoBehaviour:
   isScam: 1
   correctRedFlags: 01000000i
   feedbackReplyText: 'Scammer: Nobody ever hovers over the link! Are you a wizard?!'
-  annotatedEmailBody: []
-  annotatedEmailAddress: 
+  annotatedEmailBody:
+  - Please review our updated school budget before confirming the paper order. The document is available below.
+  annotatedEmailAddress: admin@bifrost-vgs.no
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 11400000, guid: 4ca638372a08ed6419c75a8a63c56d78, type: 2}
