@@ -45,9 +45,18 @@ public class MailData : TaskData
     [Header("Boss Meeting (False Reports)")]
     [Tooltip("Dialogue when player falsely reports this legitimate email.")]
     [SerializeField] private SituationData falseReportDialogue;
+
+    [Header("Success Rewards")]
+    [Tooltip("What the Boss says when you handle this correctly.")]
+    [SerializeField] private SituationData successDialogue;
+
+    [Tooltip("The prefab to spawn on your desk (e.g., a plant, a mug).")]
+    [SerializeField] private GameObject rewardPrefab;
     public GameObject RuinedCoworkerPrefab => this.ruinedCoworkerPrefab;
     public SituationData ScoldingDialogue => this.scoldingDialogue;
     public SituationData FalseReportDialogue => this.falseReportDialogue;
+    public SituationData SuccessDialogue => this.successDialogue;
+    public GameObject RewardPrefab => this.rewardPrefab;
 
     public string DisplayName => displayName;
     public string EmailAddress => emailAddress;

@@ -48,17 +48,30 @@ public class MailOutcomeSequence : MonoBehaviour
 
         CurrentResolution = resolution;
 
-        // Skip placeholder UI for Accepted Scams OR Reported Legitimate
+        // Intercept FAILURES (Trigger the 3D cinematic cuts)
         if (resolution.Outcome == MailOutcome.AcceptedScam || resolution.Outcome == MailOutcome.ReportedLegitimate)
         {
             MailResolution finished = CurrentResolution;
             CurrentResolution = null;
             if (feedbackPanel != null) feedbackPanel.SetActive(false);
-
             Completed?.Invoke(finished);
             return;
         }
 
+        // Intercept SUCCESSES (Trigger the frictionless dialogue + plant spawn)
+        if (resolution.Outcome == MailOutcome.ReportedScam || resolution.Outcome == MailOutcome.AcceptedLegitimate)
+        {
+            MailResolution finished = CurrentResolution;
+            CurrentResolution = null;
+            if (feedbackPanel != null) feedbackPanel.SetActive(false);
+            Completed?.Invoke(finished);
+
+            // Tell the new script we did a good job!
+            ConditionTracker.Instance.SetCondition(new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.HasHandledMailCorrectly, true));
+            return;
+        }
+
+        // The fallback UI is now essentially retired unless you add more outcomes!
         steps.Clear();
         steps.AddRange(MailOutcomeRules.StepsFor(resolution.Outcome));
         stepIndex = 0;
