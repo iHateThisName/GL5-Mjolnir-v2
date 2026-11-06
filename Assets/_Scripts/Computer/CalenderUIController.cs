@@ -1,7 +1,6 @@
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>
@@ -52,7 +51,6 @@ public class CalenderUIController : MonoBehaviour {
 
     private void Start() {
         OnDayButtonClicked(this.dayTwoTuesdayButton, false); // Default to Monday on start.
-        Cursor.visible = false;
     }
     private void OnStartDayClicked() {
         this.selectUISoundController?.PlaySFX();
@@ -105,11 +103,9 @@ public class CalenderUIController : MonoBehaviour {
         switch (dayNumber) {
             case 1:
                 this.titleTextInformation.text = "Monday";
-                information.AppendLine("The first day of work after...");
-                information.AppendLine("The incedent...");
-                information.AppendLine("...");
-                information.AppendLine("...");
-                information.AppendLine("Well, gotta work");
+                information.AppendLine("The first day of work after the inccident");
+                information.AppendLine("");
+                information.AppendLine("");
                 break;
             case 2:
                 this.titleTextInformation.text = "Tuesday";
