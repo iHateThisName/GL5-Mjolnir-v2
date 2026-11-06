@@ -58,7 +58,7 @@ public class CalenderUIController : MonoBehaviour {
             case 1:
                 Debug.Log("Starting Monday's level...");
                 // Load Monday's level here
-                GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelOneScene);
+                //GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelOneScene);
                 break;
 
             case 2:
@@ -103,9 +103,13 @@ public class CalenderUIController : MonoBehaviour {
         switch (dayNumber) {
             case 1:
                 this.titleTextInformation.text = "Monday";
-                information.AppendLine("The first day of work after the inccident");
+                information.AppendLine("The first day of work after the inccident.");
+                information.AppendLine("I hope Gerald will be ok.");
+                information.AppendLine("...");
                 information.AppendLine("");
-                information.AppendLine("");
+                information.AppendLine("Well, back to work after the weekend.");
+                information.AppendLine("Everyone is probobly a bit slow today.");
+                information.AppendLine("So not much stress today, i hope.");
                 break;
             case 2:
                 this.titleTextInformation.text = "Tuesday";

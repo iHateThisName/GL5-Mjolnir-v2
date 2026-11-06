@@ -408,6 +408,8 @@ MonoBehaviour:
   - {fileID: 6606418064743508229}
   - {fileID: 4650282162777677247}
   - {fileID: 8961678869001561554}
+  popSoundEffect: {fileID: 0}
+  popVolume: 0.8
 --- !u!1 &1664122905267456195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,10 +1172,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1530618013204141256, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1655202793932577701, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_Name
       value: Spoofed Address, Text (TMP)
@@ -1370,10 +1368,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2629797504498040937, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
-      propertyPath: selectUISoundController
-      value: 
-      objectReference: {fileID: 4981168303278807629, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
     - target: {fileID: 2876884068467111610, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_Name
       value: Urgency Fear, Text (TMP)
@@ -1778,10 +1772,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5711465836518615543, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5723499293840806983, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1881,10 +1871,6 @@ PrefabInstance:
     - target: {fileID: 5858280395173794907, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 5859316921730268356, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
-      propertyPath: m_Interactable
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6022212759425550297, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_Name
