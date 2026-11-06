@@ -18,8 +18,12 @@ namespace Assets._Scripts {
 
         [SerializeField] private string hoverText = "Sit Down";
         public string HoverText() => this.hoverText;
-        public async void Interact(GameObject interactor)
-        {
+
+        private void Start() {
+
+            ActiveChair = null;
+        }
+        public async void Interact(GameObject interactor) {
             if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Walking) return;
             Chair.ActiveChair = this;
             //Disable the box collider
@@ -64,17 +68,19 @@ namespace Assets._Scripts {
             }
         }
 
-        public void StandUp()
-        {
-            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Sitting) return;
+        public void StandUp() {
+            if (GameManager.Instance.CurrentPlayerState != EnumPlayerState.Sitting) return; // Can only stand up if the player is currently sitting
+            if (Chair.ActiveChair != this) return; // Ensure that only the chair the player is currently sitting on can trigger the stand-up action
 
-            if (Chair.ActiveChair == this) Chair.ActiveChair = null;
+            // Reset the active chair reference
+            Chair.ActiveChair = null;
 
+            // Perfome the stand-up action
             GameManager.Instance.TeleportPlayer(this.playerStandPosition, this.playerRotation);
             this.lockedCamera.gameObject.SetActive(false);
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
+            GameManager.Instance.SetPlayerState(EnumPlayerState.Walking);
 
-            //Disable the box collider
+            // Enable the box collider again
             this.boxCollider.enabled = true;
             if (this.boxCollider2 != null) {
                 this.boxCollider2.enabled = true;

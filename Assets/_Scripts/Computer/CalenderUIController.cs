@@ -1,6 +1,7 @@
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /// <summary>
@@ -51,6 +52,7 @@ public class CalenderUIController : MonoBehaviour {
 
     private void Start() {
         OnDayButtonClicked(this.dayTwoTuesdayButton, false); // Default to Monday on start.
+        Cursor.visible = false;
     }
     private void OnStartDayClicked() {
         this.selectUISoundController?.PlaySFX();
