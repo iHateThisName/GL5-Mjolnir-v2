@@ -40,7 +40,7 @@ public class SummaryUI : MonoBehaviour
 
     private void OnConditionStateChanged(ConditionTracker.ConditionState state)
     {
-        if (state.Condition == ConditionTracker.ConditionEnum.IsDayComplete &&
+        if (state.Condition == ConditionTracker.ConditionEnum.ShowSummary &&
             state.ExpectedState)
         {
             DisplayEndOfTheDaySummary();

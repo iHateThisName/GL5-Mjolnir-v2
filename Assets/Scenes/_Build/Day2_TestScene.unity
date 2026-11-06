@@ -4683,20 +4683,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: 'mailDataList.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: bf30b79f83fcc0a4dae958c8162e010a, type: 2}
+      objectReference: {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: 'mailDataList.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
+      objectReference: {fileID: 11400000, guid: 133cf58db6385e246a39c4c37f004ee8, type: 2}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: 'mailDataList.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 133cf58db6385e246a39c4c37f004ee8, type: 2}
+      objectReference: {fileID: 11400000, guid: bf30b79f83fcc0a4dae958c8162e010a, type: 2}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: 'mailDataList.Array.data[3]'
       value: 

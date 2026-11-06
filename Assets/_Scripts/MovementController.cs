@@ -56,7 +56,7 @@ public class MovementController : MonoBehaviour {
         HandleMove(this.moveInput);
     }
     private void OnInteract(InputAction.CallbackContext context) {
-        Debug.Log("Interact action performed");
+        //Debug.Log("Interact action performed");
 
         // (Removed the IsPointerOverGameObject check that was causing the warning and blocking the raycast)
 
@@ -65,13 +65,13 @@ public class MovementController : MonoBehaviour {
 
         if (Physics.Raycast(ray, out RaycastHit hit, 3f)) {
 
-            Debug.Log($"Raycast hit: {hit.collider.name}"); //What was clicked
+            //Debug.Log($"Raycast hit: {hit.collider.name}"); //What was clicked
 
             if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable)) {
                 interactable.Interact(gameObject);
             }
         } else {
-            Debug.Log("Raycast missed everything.");
+            //Debug.Log("Raycast missed everything.");
         }
 
         Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red, 5f);

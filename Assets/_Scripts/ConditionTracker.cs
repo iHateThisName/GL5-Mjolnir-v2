@@ -123,7 +123,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         HasCompletedTutorial = 1,
         HasFailedPhisingEmail = 2,
         IsDayComplete = 6,
-        ShowSummary = 13,
+        ShowSummary = 14,
 
         // Emails
         ShowSusanneKeyEmail = 8,
