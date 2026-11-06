@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static ConditionTracker;
 
@@ -14,6 +15,7 @@ public class ElevatorAnimationController : MonoBehaviour
     public WorldInteractable outsideButton;
     [Header("Animator")]
     public Animator Animator;
+
 
     void Start()
     {
@@ -57,8 +59,7 @@ public class ElevatorAnimationController : MonoBehaviour
         {
             if (this.TheEndOfDay)
             {
-                ConditionState conditionState = new(condition: ConditionEnum.ShowSummary, expectedState: true);
-                ConditionTracker.Instance.SetCondition(conditionState);
+                StartCoroutine(DelayedShowSummary());
             }
             else
             {
@@ -71,6 +72,14 @@ public class ElevatorAnimationController : MonoBehaviour
         {
             EndOfDay();
         }
+    }
+
+    private IEnumerator DelayedShowSummary()
+    {
+        this.insideButton.OnInteract -= () => OnElevatorButtonPressed(true);
+        yield return new WaitForSecondsRealtime(5f);
+        ConditionState conditionState = new(condition: ConditionEnum.ShowSummary, expectedState: true);
+        ConditionTracker.Instance.SetCondition(conditionState);
     }
 
     private void EndOfDay()
