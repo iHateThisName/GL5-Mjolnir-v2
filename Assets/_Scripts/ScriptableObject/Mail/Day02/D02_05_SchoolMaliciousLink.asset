@@ -17,9 +17,13 @@ MonoBehaviour:
   requiredSituations:
   - {fileID: 11400000, guid: 8793002c28c9ba64cbae2b5b97419043, type: 2}
   requiredConditions: []
-  resultingSuccessConditions: []
+  resultingSuccessConditions:
+  - Condition: 6
+    ExpectedState: 1
   resultingFailedConditions:
   - Condition: 11
+    ExpectedState: 1
+  - Condition: 6
     ExpectedState: 1
   initialState: 0
   taskType: 0
@@ -40,3 +44,6 @@ MonoBehaviour:
   annotatedEmailAddress: admin@bifrost-vgs.no
   ruinedCoworkerPrefab: {fileID: 0}
   scoldingDialogue: {fileID: 11400000, guid: 4ca638372a08ed6419c75a8a63c56d78, type: 2}
+  falseReportDialogue: {fileID: 0}
+  successDialogue: {fileID: 0}
+  rewardPrefab: {fileID: 0}
