@@ -4082,7 +4082,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 234248256032443412}
   m_Father: {fileID: 2485510122705587941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2629797504498040937
@@ -4105,6 +4106,7 @@ MonoBehaviour:
   titleTextInformation: {fileID: 1032539660705463932}
   descriptionTextInformation: {fileID: 4493462763624774642}
   startDayButton: {fileID: 2379824677082599665}
+  selectUISoundController: {fileID: 7670658926244045362}
 --- !u!1 &2205958874196808289
 GameObject:
   m_ObjectHideFlags: 0
@@ -16189,3 +16191,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fe661a2482e0bf04687175977c080339, type: 3}
   m_PrefabInstance: {fileID: 2286520235665115705}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3410084225862006911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 107767762827558427}
+    m_Modifications:
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6989198
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.30469477
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1297152
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859960565254719887, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+      propertyPath: m_Name
+      value: Select UI Sound, SFXControllerPrefab Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+--- !u!4 &234248256032443412 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3175945955421418603, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+  m_PrefabInstance: {fileID: 3410084225862006911}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7670658926244045362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4981168303278807629, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
+  m_PrefabInstance: {fileID: 3410084225862006911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef35771475a57d44eada26823c834241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXController

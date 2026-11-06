@@ -22,6 +22,9 @@ public class CalenderUIController : MonoBehaviour {
     [SerializeField] private TMP_Text descriptionTextInformation;
     [SerializeField] private Button startDayButton;
 
+    [Header("Sound")]
+    [SerializeField] private SFXController selectUISoundController;
+
     private int currentSelectedDay = 0; // 0 means no day selected, 1-5 correspond to Monday-Friday, and -1 means an unknown button was pressed.
 
     private void OnEnable() {
@@ -47,9 +50,10 @@ public class CalenderUIController : MonoBehaviour {
     }
 
     private void Start() {
-        OnDayButtonClicked(this.dayTwoTuesdayButton); // Default to Monday on start.
+        OnDayButtonClicked(this.dayTwoTuesdayButton, false); // Default to Monday on start.
     }
     private void OnStartDayClicked() {
+        this.selectUISoundController?.PlaySFX();
         switch (currentSelectedDay) {
             case 1:
                 Debug.Log("Starting Monday's level...");
@@ -87,9 +91,13 @@ public class CalenderUIController : MonoBehaviour {
         }
     }
 
-    private void OnDayButtonClicked(Button dayButton) {
+    private void OnDayButtonClicked(Button dayButton, bool playSound = true) {
         int dayNumber = GetDayNumberFromButton(dayButton);
         if (dayNumber == -1) return; // Unknown button, do nothing.
+
+        if (playSound) {
+            this.selectUISoundController?.PlaySFX();
+        }
 
         StringBuilder information = new StringBuilder();
         switch (dayNumber) {

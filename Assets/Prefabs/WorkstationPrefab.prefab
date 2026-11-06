@@ -1359,6 +1359,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2629797504498040937, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
+      propertyPath: selectUISoundController
+      value: 
+      objectReference: {fileID: 4981168303278807629, guid: c4369803d25dcb54e9d3dc6cc61bd4df, type: 3}
     - target: {fileID: 2876884068467111610, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_Name
       value: Urgency Fear, Text (TMP)
