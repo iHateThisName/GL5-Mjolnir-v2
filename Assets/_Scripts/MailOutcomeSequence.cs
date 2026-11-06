@@ -48,13 +48,13 @@ public class MailOutcomeSequence : MonoBehaviour
 
         CurrentResolution = resolution;
 
-        if (resolution.Outcome == MailOutcome.AcceptedScam)
+        // Skip placeholder UI for Accepted Scams OR Reported Legitimate
+        if (resolution.Outcome == MailOutcome.AcceptedScam || resolution.Outcome == MailOutcome.ReportedLegitimate)
         {
             MailResolution finished = CurrentResolution;
             CurrentResolution = null;
             if (feedbackPanel != null) feedbackPanel.SetActive(false);
 
-            // This instantly tells MailSelectedController to wipe the PC screen!
             Completed?.Invoke(finished);
             return;
         }

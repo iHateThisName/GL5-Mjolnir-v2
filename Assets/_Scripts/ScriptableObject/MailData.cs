@@ -41,8 +41,13 @@ public class MailData : TaskData
     [SerializeField] private GameObject ruinedCoworkerPrefab;
     [Tooltip("The specific dialogue the Boss says when this scam is failed.")]
     [SerializeField] private SituationData scoldingDialogue;
+
+    [Header("Boss Meeting (False Reports)")]
+    [Tooltip("Dialogue when player falsely reports this legitimate email.")]
+    [SerializeField] private SituationData falseReportDialogue;
     public GameObject RuinedCoworkerPrefab => this.ruinedCoworkerPrefab;
     public SituationData ScoldingDialogue => this.scoldingDialogue;
+    public SituationData FalseReportDialogue => this.falseReportDialogue;
 
     public string DisplayName => displayName;
     public string EmailAddress => emailAddress;

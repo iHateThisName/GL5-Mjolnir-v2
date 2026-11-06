@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2855887567022679162}
   - component: {fileID: 2204787817966154592}
   m_Layer: 5
-  m_Name: FadeOverlay
+  m_Name: RedBlinkOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3011275059624340051}
   - component: {fileID: 8300094506478856638}
   m_Layer: 5
-  m_Name: Image
+  m_Name: RedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

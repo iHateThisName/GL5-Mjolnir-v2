@@ -31,8 +31,13 @@ public class ScamFailureFeedback : MonoBehaviour
 
     private void OnConditionStateChanged(ConditionTracker.ConditionState state)
     {
-        if (state.Condition == ConditionTracker.ConditionEnum.HasBeenScammed && state.ExpectedState)
+        // Check for either the Scam condition OR the False Report condition!
+        bool isScam = state.Condition == ConditionTracker.ConditionEnum.HasBeenScammed;
+        bool isFalseReport = state.Condition == ConditionTracker.ConditionEnum.HasFalselyReported;
+
+        if ((isScam || isFalseReport) && state.ExpectedState)
         {
+            Debug.Log("RED BLINK TRIGGERED!");
             this.PlayFeedback();
         }
     }
@@ -49,6 +54,7 @@ public class ScamFailureFeedback : MonoBehaviour
 
         if (this.redLightImage != null)
         {
+            Debug.Log("BLINK BLINK BLINK");
             int loops = this.totalBlinks * 2;
 
             this.redLightImage.gameObject.SetActive(true);

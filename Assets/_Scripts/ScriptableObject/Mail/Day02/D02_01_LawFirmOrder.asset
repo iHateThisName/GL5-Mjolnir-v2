@@ -17,7 +17,9 @@ MonoBehaviour:
   requiredSituations: []
   requiredConditions: []
   resultingSuccessConditions: []
-  resultingFailedConditions: []
+  resultingFailedConditions:
+  - Condition: 12
+    ExpectedState: 1
   initialState: 1
   taskType: 0
   displayName: Valhall Law Firm
@@ -34,3 +36,6 @@ MonoBehaviour:
   feedbackReplyText: Order #510 approved. Our legal team thanks you. Our furniture does not.
   annotatedEmailBody: []
   annotatedEmailAddress: 
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 0}
+  falseReportDialogue: {fileID: 11400000, guid: 5754ef7281afa61449345d63b0d1021f, type: 2}

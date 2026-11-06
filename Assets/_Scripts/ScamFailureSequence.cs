@@ -56,6 +56,11 @@ public class ScamFailureSequence : MonoBehaviour
         }
     }
 
+    private void OnDialogueEnded()
+    {
+        this.hasFinishedDialogue = true;
+    }
+
     private async Awaitable RunFailureSequenceAsync(MailData failedMail)
     {
         if (this.isSequenceRunning) return;
@@ -75,6 +80,8 @@ public class ScamFailureSequence : MonoBehaviour
             await Awaitable.WaitForSecondsAsync(this.standUpDelay);
 
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
+
+            // Wait for the red lights
             await Awaitable.WaitForSecondsAsync(this.delayBeforeFade);
 
             this.fadeCanvas.gameObject.SetActive(true);
@@ -93,6 +100,16 @@ public class ScamFailureSequence : MonoBehaviour
             if (this.meetingWideCamera != null) this.meetingWideCamera.Priority = 50;
             if (this.meetingNpcsContainer != null) this.meetingNpcsContainer.SetActive(true);
 
+            CinemachineBrain cameraBrain = Camera.main.GetComponent<CinemachineBrain>();
+            if (cameraBrain != null)
+            {
+                await Awaitable.WaitForSecondsAsync(0.1f);
+                while (cameraBrain.IsBlending)
+                {
+                    await Awaitable.NextFrameAsync();
+                }
+            }
+
             await this.fadeCanvas.DOFade(0f, 1f).AsyncWaitForCompletion();
             this.fadeCanvas.gameObject.SetActive(false);
 
@@ -133,114 +150,13 @@ public class ScamFailureSequence : MonoBehaviour
                 chairToReturnTo.Interact(PlayerRefrenceProvider.Instance.PlayerMovementController.gameObject);
             }
 
-            // We deleted the SituationManager.CompleteMailPresentation code here 
-            // because MailSelectedController already did it for us!
-
-            ConditionTracker.Instance.SetCondition(new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.HasBeenScammed, false));
-
-            await this.fadeCanvas.DOFade(0f, 1f).AsyncWaitForCompletion();
-            this.fadeCanvas.gameObject.SetActive(false);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"CRITICAL ERROR in ScamSequence: {e.Message}\n{e.StackTrace}");
-        }
-        finally
-        {
-            this.isSequenceRunning = false;
-        }
-    }
-
-    private void OnDialogueEnded()
-    {
-        this.hasFinishedDialogue = true;
-    }
-
-    private async Awaitable RunFailureSequenceAsync()
-    {
-        if (this.isSequenceRunning) return;
-
-        this.isSequenceRunning = true;
-        this.hasFinishedDialogue = false;
-
-        try
-        {
-            Chair chairToReturnTo = Chair.ActiveChair;
-
-            if (chairToReturnTo != null)
+            if (cameraBrain != null)
             {
-                chairToReturnTo.StandUp();
-            }
-
-            await Awaitable.WaitForSecondsAsync(this.standUpDelay);
-
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
-            await Awaitable.WaitForSecondsAsync(this.delayBeforeFade);
-
-            this.fadeCanvas.gameObject.SetActive(true);
-            this.fadeCanvas.alpha = 0f;
-            await this.fadeCanvas.DOFade(1f, 1f).AsyncWaitForCompletion();
-
-            // We will store the dialogue here when we grab the mail
-            SituationData activeDialogue = null;
-
-            if (SituationManager.Instance != null && SituationManager.Instance.HasPendingMailPresentation)
-            {
-                MailData failedMail = SituationManager.Instance.PendingMailPresentation.Mail;
-                if (this.tvController != null) this.tvController.DisplayMail(failedMail, true);
-
-                // Grab the specific dialogue for this scam!
-                activeDialogue = failedMail.ScoldingDialogue;
-            }
-
-            if (this.meetingWideCamera != null) this.meetingWideCamera.Priority = 50;
-            if (this.meetingNpcsContainer != null) this.meetingNpcsContainer.SetActive(true);
-
-            await this.fadeCanvas.DOFade(0f, 1f).AsyncWaitForCompletion();
-            this.fadeCanvas.gameObject.SetActive(false);
-
-            await Awaitable.WaitForSecondsAsync(this.stareDuration);
-
-            if (this.tvZoomCamera != null) this.tvZoomCamera.Priority = 100;
-
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Dialogue;
-
-            // Play the dynamic dialogue
-            if (activeDialogue != null)
-            {
-                if (this.npcDialogue != null) this.npcDialogue.OnDialogueEnded += this.OnDialogueEnded;
-                this.npcDialogue.SetDialogue(activeDialogue, false);
-            }
-            else
-            {
-                Debug.LogWarning("No scolding dialogue data assigned to this email, skipping dialogue wait.");
-                this.hasFinishedDialogue = true;
-            }
-
-            while (!this.hasFinishedDialogue)
-            {
-                await Awaitable.NextFrameAsync();
-            }
-            if (this.npcDialogue != null) this.npcDialogue.OnDialogueEnded -= this.OnDialogueEnded;
-
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
-            this.fadeCanvas.gameObject.SetActive(true);
-            await this.fadeCanvas.DOFade(1f, 1f).AsyncWaitForCompletion();
-
-            if (this.meetingWideCamera != null) this.meetingWideCamera.Priority = 0;
-            if (this.tvZoomCamera != null) this.tvZoomCamera.Priority = 0;
-            if (this.meetingNpcsContainer != null) this.meetingNpcsContainer.SetActive(false);
-
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Walking;
-
-            if (chairToReturnTo != null)
-            {
-                chairToReturnTo.Interact(PlayerRefrenceProvider.Instance.PlayerMovementController.gameObject);
-            }
-
-            if (SituationManager.Instance != null && SituationManager.Instance.HasPendingMailPresentation)
-            {
-                SituationManager.Instance.CompleteMailPresentation(SituationManager.Instance.PendingMailPresentation);
+                await Awaitable.WaitForSecondsAsync(0.1f);
+                while (cameraBrain.IsBlending)
+                {
+                    await Awaitable.NextFrameAsync();
+                }
             }
 
             ConditionTracker.Instance.SetCondition(new ConditionTracker.ConditionState(ConditionTracker.ConditionEnum.HasBeenScammed, false));

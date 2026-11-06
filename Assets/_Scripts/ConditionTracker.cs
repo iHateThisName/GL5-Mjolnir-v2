@@ -126,6 +126,7 @@ public class ConditionTracker : Singleton<ConditionTracker> {
 
         // Emails
         ShowSusanneKeyEmail = 8,
+        HasFalselyReported = 12,
 
         // Scams
         HasBeenScammed = 11,
