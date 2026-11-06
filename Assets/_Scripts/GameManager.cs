@@ -89,6 +89,13 @@ public class GameManager : Singleton<GameManager>
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 break;
 
+            case EnumPlayerState.Summary:
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
+                Helper.DisableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
+                break;
+
             default:
                 Debug.LogError($"Unknown player state: {newState}");
                 break;
@@ -135,6 +142,6 @@ public class GameManager : Singleton<GameManager>
     }
 }
 
-public enum EnumPlayerState { None = 0, Walking = 1, Sitting = 2, Intro = 3, Dialogue = 4, Cutscene = 5 }
+public enum EnumPlayerState { None = 0, Walking = 1, Sitting = 2, Intro = 3, Dialogue = 4, Cutscene = 5, Summary = 6 }
 public enum EnumDifficulty { None = 0, Easy = 1, Medium = 2, Hard = 3, };
 [System.Serializable] public enum CommunicationTypeEnum : int { None = 0, Company = 1, Personal = 2, Spam = 3, Scam = 4, }

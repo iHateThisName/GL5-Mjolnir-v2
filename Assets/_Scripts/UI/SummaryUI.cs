@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI; // Added for the Button
 
 /// <summary>
 /// Author: https://github.com/iHateThisName
@@ -10,6 +11,9 @@ public class SummaryUI : MonoBehaviour
 {
     [SerializeField] private GameObject summaryContainer;
     [SerializeField] private TMP_Text summaryText;
+
+    [Header("Navigation")]
+    [SerializeField] private Button mainMenuButton; // Drag your UI Button here in the Inspector
 
     private ConditionTracker conditionTracker;
 
@@ -26,6 +30,12 @@ public class SummaryUI : MonoBehaviour
             Debug.LogError(
                 "SummaryUI requires an initialized ConditionTracker.", this);
         }
+
+        // Subscribe to the button click
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.AddListener(GoToMainMenu);
+        }
     }
 
     private void OnDisable()
@@ -36,6 +46,12 @@ public class SummaryUI : MonoBehaviour
         }
 
         conditionTracker = null;
+
+        // Unsubscribe to prevent memory leaks
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.RemoveListener(GoToMainMenu);
+        }
     }
 
     private void OnConditionStateChanged(ConditionTracker.ConditionState state)
@@ -86,5 +102,22 @@ public class SummaryUI : MonoBehaviour
 
         summaryText.text = summary.ToString();
         summaryContainer.SetActive(true);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Summary;
+        }
+    }
+
+    public void GoToMainMenu()
+    {
+        if (GameSceneManager.Instance != null)
+        {
+            GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.mainMenuScene);
+        }
+        else
+        {
+            Debug.LogError("GameSceneManager is missing!", this);
+        }
     }
 }
