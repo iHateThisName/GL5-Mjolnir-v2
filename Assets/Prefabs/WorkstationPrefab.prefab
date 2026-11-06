@@ -408,7 +408,7 @@ MonoBehaviour:
   - {fileID: 6606418064743508229}
   - {fileID: 4650282162777677247}
   - {fileID: 8961678869001561554}
-  popSoundEffect: {fileID: 0}
+  popSoundEffect: {fileID: 8300000, guid: f9da6ca598e2c784aa24cb37bb20380e, type: 3}
   popVolume: 0.8
 --- !u!1 &1664122905267456195
 GameObject:
