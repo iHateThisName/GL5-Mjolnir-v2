@@ -1,11 +1,16 @@
-using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DeskRewardManager : Singleton<DeskRewardManager>
 {
     [Tooltip("Drag up to 5 empty GameObjects positioned around the player's desk here.")]
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
+
+    [Header("Audio")]
+    [Tooltip("The sound effect to play when a reward pops onto the desk.")]
+    [SerializeField] private AudioClip popSoundEffect;
+    [SerializeField, Range(0f, 1f)] private float popVolume = 0.8f;
 
     private int currentSpawnIndex = 0;
 
@@ -26,18 +31,21 @@ public class DeskRewardManager : Singleton<DeskRewardManager>
             Destroy(child.gameObject);
         }
 
-        // Spawn DIRECTLY as a child of the target point. This prevents weird scale recalculations.
+        // Spawn DIRECTLY as a child of the target point.
         GameObject newReward = Instantiate(prefab, targetPoint);
 
-        // Force the position/rotation to be perfectly zeroed out on the spawn slot
         newReward.transform.localPosition = Vector3.zero;
         newReward.transform.localRotation = Quaternion.identity;
 
-        // Grab the scale, crush it, and tween it
         Vector3 targetScale = newReward.transform.localScale;
         newReward.transform.localScale = Vector3.zero;
 
-        // .SetUpdate(true) forces the animation to play even if the game is paused!
+        // Play the pop sound effect using the AudioManager pool
+        if (AudioManager.Instance != null && this.popSoundEffect != null)
+        {
+            AudioManager.Instance.PlaySFX(this.popSoundEffect, this.popVolume);
+        }
+
         newReward.transform.DOScale(targetScale, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
 
         this.currentSpawnIndex++;
@@ -45,7 +53,6 @@ public class DeskRewardManager : Singleton<DeskRewardManager>
         Debug.Log($"Spawned reward at desk position {this.currentSpawnIndex} / {this.spawnPoints.Count}");
     }
 
-    // You can call this from your GameManager or DayManager at the start of a new work week/level!
     public void ClearAllRewards()
     {
         this.currentSpawnIndex = 0;
@@ -53,6 +60,7 @@ public class DeskRewardManager : Singleton<DeskRewardManager>
         {
             foreach (Transform child in point)
             {
+                child.DOKill();
                 Destroy(child.gameObject);
             }
         }

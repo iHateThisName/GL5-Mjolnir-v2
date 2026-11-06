@@ -1117,7 +1117,7 @@ PrefabInstance:
       objectReference: {fileID: 1942067833}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2804
+      value: 2810
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1229,7 +1229,7 @@ PrefabInstance:
       objectReference: {fileID: 1300122904}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 7005
+      value: 7011
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
@@ -4028,6 +4028,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1103382676820880221, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
+      propertyPath: popSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: f9da6ca598e2c784aa24cb37bb20380e, type: 3}
     - target: {fileID: 1123340565798001904, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4186,7 +4190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586504674704842386, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 1562
+      value: 1568
       objectReference: {fileID: 0}
     - target: {fileID: 2652184637171393002, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_Enabled
@@ -4354,7 +4358,7 @@ PrefabInstance:
       objectReference: {fileID: 12138562}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 2804
+      value: 2810
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4466,7 +4470,7 @@ PrefabInstance:
       objectReference: {fileID: 1101668504}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 7005
+      value: 7011
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
@@ -6114,7 +6118,7 @@ PrefabInstance:
       objectReference: {fileID: 196765584}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 3290
+      value: 3296
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6218,7 +6222,7 @@ PrefabInstance:
       objectReference: {fileID: 1388741300}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 7491
+      value: 7497
       objectReference: {fileID: 0}
     - target: {fileID: 7674477503906483976, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
