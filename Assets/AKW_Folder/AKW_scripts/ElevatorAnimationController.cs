@@ -1,8 +1,10 @@
-using System;
 using UnityEngine;
+using static ConditionTracker;
 
 public class ElevatorAnimationController : MonoBehaviour
 {
+    [Header("EndOfDay")]
+    public bool TheEndOfDay = false;
     [Header("stuff")]
     public GameObject Doors2Animate;
     public GameObject ElevatorButtonInside;
@@ -13,24 +15,6 @@ public class ElevatorAnimationController : MonoBehaviour
     [Header("Animator")]
     public Animator Animator;
 
-    private void OnEnable()
-    {
-        this.insideButton.OnInteract += OnElevatorButtonPressed;
-        this.outsideButton.OnInteract += OnElevatorButtonPressed;
-    }
-
-    private void OnDisable()
-    {
-        this.insideButton.OnInteract -= OnElevatorButtonPressed;
-        this.outsideButton.OnInteract -= OnElevatorButtonPressed;
-    }
-
-    private void OnElevatorButtonPressed()
-    {
-        Debug.Log("Button Pressed");
-        Animator.SetTrigger("OpenDoor");
-    }
-
     void Start()
     {
         DoorBlock.SetActive(false);
@@ -40,6 +24,58 @@ public class ElevatorAnimationController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         DoorBlock.SetActive(true);
-        Animator.Play("ElevatorDoorClose");
+        Animator.SetTrigger("CloseDoor");
+    }
+
+    private void OnEnable()
+    {
+        this.insideButton.OnInteract += () => OnElevatorButtonPressed(true);
+        this.outsideButton.OnInteract += () => OnElevatorButtonPressed(false);
+
+        ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        this.insideButton.OnInteract -= () => OnElevatorButtonPressed(true);
+        this.outsideButton.OnInteract -= () => OnElevatorButtonPressed(false);
+
+        if (ConditionTracker.Instance != null) ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
+    }
+
+    private void OnConditionStateChanged(ConditionTracker.ConditionState state)
+    {
+        if (state.Condition == ConditionTracker.ConditionEnum.IsDayComplete)
+        {
+            this.TheEndOfDay = state.ExpectedState;
+        }
+    }
+
+    private void OnElevatorButtonPressed(bool isInnsideButton)
+    {
+        if (isInnsideButton)
+        {
+            if (this.TheEndOfDay)
+            {
+                ConditionState conditionState = new(condition: ConditionEnum.ShowSummary, expectedState: true);
+                ConditionTracker.Instance.SetCondition(conditionState);
+            }
+            else
+            {
+                Debug.Log("Button Pressed");
+                Animator.SetTrigger("OpenDoor");
+            }
+
+        }
+        else if (TheEndOfDay)
+        {
+            EndOfDay();
+        }
+    }
+
+    private void EndOfDay()
+    {
+        DoorBlock.SetActive(false);
+        Animator.SetTrigger("OpenDoor");
     }
 }
