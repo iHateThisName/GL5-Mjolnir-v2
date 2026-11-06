@@ -18,7 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 667689a4c74182e4a925a9925d7de0de, type: 2}
   requiredConditions: []
   resultingSuccessConditions: []
-  resultingFailedConditions: []
+  resultingFailedConditions:
+  - Condition: 12
+    ExpectedState: 1
   initialState: 0
   taskType: 0
   displayName: Posten Logistics
@@ -35,3 +37,6 @@ MonoBehaviour:
   feedbackReplyText: "Receipt signed. Bruce\u2019s protein supply is secure. Reception would appreciate help moving it."
   annotatedEmailBody: []
   annotatedEmailAddress: 
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 0}
+  falseReportDialogue: {fileID: 11400000, guid: 8b9095072ecdf1846b46e4126942408a, type: 2}
