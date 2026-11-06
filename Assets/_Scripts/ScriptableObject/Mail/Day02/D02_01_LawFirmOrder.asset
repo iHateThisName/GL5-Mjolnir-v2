@@ -18,7 +18,7 @@ MonoBehaviour:
   requiredConditions: []
   resultingSuccessConditions:
   - Condition: 13
-    ExpectedState: 1
+    ExpectedState: 0
   resultingFailedConditions:
   - Condition: 12
     ExpectedState: 1
