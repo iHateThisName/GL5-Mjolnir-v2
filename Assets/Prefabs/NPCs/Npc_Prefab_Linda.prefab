@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3999822149468689679}
   - component: {fileID: 8484409460191448725}
-  - component: {fileID: 414544181510653542}
   m_Layer: 0
   m_Name: LindaFromYourCompany_0
   m_TagString: Untagged
@@ -93,27 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!114 &414544181510653542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678506779717626360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 137ccdb7b90361841a492686f5c7f202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystemV0
-  npcCollider: {fileID: 7762491411508763303}
-  SituationData: {fileID: 11400000, guid: a083ab75544c48647bad1856fd90414a, type: 2}
-  dialogueCanvas: {fileID: 0}
-  dialogueText: {fileID: 0}
-  nameText: {fileID: 0}
-  dialoguePanel: {fileID: 0}
-  characterPortrait: {fileID: 0}
-  dialoguePanelButton: {fileID: 0}
-  DisableInteraction: 0
 --- !u!1 &5583761562695902450
 GameObject:
   m_ObjectHideFlags: 0
