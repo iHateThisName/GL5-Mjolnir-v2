@@ -83,4 +83,12 @@ public class ComputerController : MonoBehaviour {
 
         Debug.Log($"{window.name} pressed. Toffling the window");
     }
+
+    public void CloseCurrentOpenComputerWindow() {
+        if (this.WindowMailGameobject.activeSelf) {
+            this.WindowMailGameobject.SetActive(false);
+        } else if (this.WindowCalenderGameobject.activeSelf) {
+            this.WindowCalenderGameobject.SetActive(false);
+        }
+    }
 }

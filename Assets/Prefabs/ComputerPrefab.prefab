@@ -5523,7 +5523,7 @@ GameObject:
   - component: {fileID: 6683410280098996331}
   - component: {fileID: 7116865357864672674}
   m_Layer: 0
-  m_Name: CloseTab, Button
+  m_Name: Calender, CloseTab, Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11843,7 +11843,9 @@ MonoBehaviour:
   emailPanel: {fileID: 2462998836711529022}
   sidebarInboxButton: {fileID: 5759335945906826034}
   backButton: {fileID: 3465825173091276770}
-  closeTabButton: {fileID: 6407695992326219806}
+  closeCurrentWindowButton:
+  - {fileID: 6602405698220732498}
+  - {fileID: 7116865357864672674}
   reportOverlay: {fileID: 7577103109620242586}
   submitReportButton: {fileID: 8383230463362229643}
   cancelReportButton: {fileID: 3043001405702946559}

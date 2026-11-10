@@ -22,7 +22,7 @@ public class MailUIController : MonoBehaviour
     [Header("Navigation")]
     [SerializeField] private Button sidebarInboxButton;
     [SerializeField] private Button backButton;
-    [SerializeField] private Button closeTabButton;
+    [SerializeField] private Button[] closeCurrentWindowButton;
 
     [Header("Report Overlay")]
     [SerializeField] private GameObject reportOverlay;
@@ -98,7 +98,12 @@ public class MailUIController : MonoBehaviour
     {
         Bind(sidebarInboxButton, OpenInbox, subscribe);
         Bind(backButton, Back, subscribe);
-        Bind(closeTabButton, CloseMailWindow, subscribe);
+
+        foreach (Button button in closeCurrentWindowButton) {
+            Bind(button, () => this.mailSelectedController.ComputerController.CloseCurrentOpenComputerWindow(), subscribe);
+        }
+
+
 
         Bind(submitReportButton, SubmitReport, subscribe);
         Bind(cancelReportButton, CancelReport, subscribe);
