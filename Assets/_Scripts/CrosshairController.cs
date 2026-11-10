@@ -38,6 +38,12 @@ public class CrosshairController : MonoBehaviour {
                 this.isHoveringInteractable = true;
                 this.crosshairFillImage.enabled = true;
                 this.crooshairPromtText.text = hoverText;
+
+                int numberOfCharacters = hoverText.Length;
+                Debug.Log($"Number of characters in the prompt text: {numberOfCharacters}");
+
+                RectTransform rectTransform = crosshairTextCanvasGroup.GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(85 + (numberOfCharacters > 10 ? (numberOfCharacters * 9) : 0), rectTransform.sizeDelta.y); // Adjust the width based on character count
             }
 
             if (this.crosshairTextCanvasGroup.alpha < 1f && !string.IsNullOrEmpty(hoverText)) {
@@ -120,19 +126,21 @@ public class CrosshairController : MonoBehaviour {
         List<RaycastResult> results = new();
 
         EventSystem.current.RaycastAll(pointerData, results);
-
+        bool isPointerOverButton = false;
         foreach (RaycastResult result in results) {
             Button button = result.gameObject.GetComponentInParent<Button>();
 
             if (button == null) {
                 button = result.gameObject.GetComponent<Button>();
+                if (button != null) isPointerOverButton = true; // If the button is found, return true
             }
 
-            if (button != null) {
+            TextLinkHandler textLinkHandler = result.gameObject.GetComponent<TextLinkHandler>();
+            if (textLinkHandler != null && textLinkHandler.IsHoveringLink(out hoverText)) {
                 return true;
             }
         }
 
-        return false;
+        return isPointerOverButton;
     }
 }
