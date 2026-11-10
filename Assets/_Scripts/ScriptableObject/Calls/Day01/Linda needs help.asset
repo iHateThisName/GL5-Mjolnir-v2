@@ -16,7 +16,9 @@ MonoBehaviour:
   parentSituation: {fileID: 0}
   requiredSituations: []
   requiredConditions: []
-  resultingSuccessConditions: []
+  resultingSuccessConditions:
+  - Condition: 9
+    ExpectedState: 1
   resultingFailedConditions: []
   initialState: 0
   taskType: 0

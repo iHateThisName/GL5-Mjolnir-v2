@@ -103,8 +103,6 @@ public class MailUIController : MonoBehaviour
             Bind(button, () => this.mailSelectedController.ComputerController.CloseCurrentOpenComputerWindow(), subscribe);
         }
 
-
-
         Bind(submitReportButton, SubmitReport, subscribe);
         Bind(cancelReportButton, CancelReport, subscribe);
 

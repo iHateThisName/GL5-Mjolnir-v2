@@ -24,9 +24,9 @@ public class PhoneController : MonoBehaviour {
 
     private bool isPhoneRinging = false;
     private Sequence phoneRiningSequence = null;
-
-
     public bool IsPhoneInHand { get; private set; } = false;
+
+    public static PhoneController ActivePhone { get; private set; }
 
     private void OnEnable() {
         PhoneInteractable.OnInteract += OnPhoneInteract;
@@ -36,6 +36,8 @@ public class PhoneController : MonoBehaviour {
         //RedButton.OnInteract += EndPhoneCall;
 
         SituationManager.Instance.OnSituationStateChange += OnSituationStateChange;
+
+        this.dialogueSystem.OnDialogueEnded += EndPhoneCall;
     }
 
     private void OnDisable() {
@@ -48,6 +50,8 @@ public class PhoneController : MonoBehaviour {
         if (SituationManager.Instance != null) {
             SituationManager.Instance.OnSituationStateChange -= OnSituationStateChange;
         }
+
+        this.dialogueSystem.OnDialogueEnded -= EndPhoneCall;
     }
 
     private void Start() {
@@ -56,7 +60,7 @@ public class PhoneController : MonoBehaviour {
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchPosition(punch: new Vector3(0.05f, 0, 0), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchRotation(punch: new Vector3(0, 0, 10), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
     }
-    
+
 
 
     private void OnSituationStateChange(SituationData data) {
@@ -80,7 +84,7 @@ public class PhoneController : MonoBehaviour {
     }
 
     private void OnPhoneInteract() {
-        if (!IsPhoneInHand) {
+        if (!IsPhoneInHand && GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
             this.IsPhoneInHand = true;
             this.phoneModel.transform.SetParent(this.phoneUpPosition);
             this.phoneModel.transform.localPosition = Vector3.zero;
@@ -88,14 +92,17 @@ public class PhoneController : MonoBehaviour {
 
             if (this.isPhoneRinging) OnPhoneCallAccepted();
 
+        } else if (this.isPhoneRinging && GameManager.Instance.CurrentPlayerState == EnumPlayerState.Walking) {
+            OnPhoneCallAccepted();
         }
     }
     public void EndPhoneCall() {
         if (IsPhoneInHand) {
-            this.IsPhoneInHand = false;
-            this.phoneModel.transform.SetParent(this.phoneDownPosition);
-            this.phoneModel.transform.localPosition = Vector3.zero;
-            this.phoneModel.transform.localRotation = Quaternion.identity;
+            PlacePhoneDown();
+        }
+
+        if (ActivePhone == this) {
+            ActivePhone = null;
 
             // Stop the talking sound if they hang up early
             this.callSoundController.StopSFX();
@@ -112,6 +119,14 @@ public class PhoneController : MonoBehaviour {
             }
 
         }
+
+    }
+
+    private void PlacePhoneDown() {
+        this.IsPhoneInHand = false;
+        this.phoneModel.transform.SetParent(this.phoneDownPosition);
+        this.phoneModel.transform.localPosition = Vector3.zero;
+        this.phoneModel.transform.localRotation = Quaternion.identity;
     }
 
     public IEnumerator StartNextQueuedPhoneCall() {
@@ -137,9 +152,12 @@ public class PhoneController : MonoBehaviour {
     }
 
     public void OnPhoneCallAccepted() {
+        ActivePhone = this;
+
         this.isPhoneRinging = false;
         this.ringtoneSound.StopSFX();
         this.phoneRiningSequence.Pause();
+
         this.phoneModel.transform.localScale = Vector3.one;
 
         // Play the phone conversation
@@ -154,10 +172,6 @@ public class PhoneController : MonoBehaviour {
 
         //// Display the Options wait for and answer from the player. For the two buttons.
         //await DisplayCallOptionsAndAwaitAnswear();
-
-        if (this.CurrentActiveCall == null) {
-            Debug.Log("wofmw");
-        }
 
         // Dialog system
         this.dialogueSystem.SetDialogue(this.CurrentActiveCall, disableInteraction: true);
