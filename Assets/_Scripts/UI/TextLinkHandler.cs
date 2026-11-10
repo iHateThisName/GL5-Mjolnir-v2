@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 public class TextLinkHandler : MonoBehaviour, IPointerClickHandler {
 
     private TMP_Text text;
+    private Camera mainCamera;
 
     // Link Ids
     private const string RICK_ROLL_LINK_ID = "RickRoll";
@@ -17,6 +18,7 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler {
 
     private void Start() {
         this.text = this.GetComponent<TMP_Text>();
+        this.mainCamera = Camera.main;
     }
     public void OnPointerClick(PointerEventData eventData) {
         int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, eventData.position, null);
@@ -71,7 +73,7 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler {
 
     public bool IsHoveringLink(out string hoverText) {
         hoverText = string.Empty;
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, Mouse.current.position.ReadValue(), null);
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, Mouse.current.position.ReadValue(), this.mainCamera);
         if (linkIndex == -1) return false;
 
         hoverText = GetHoverText(linkIndex);

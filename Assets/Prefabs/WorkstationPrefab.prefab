@@ -1372,10 +1372,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Urgency Fear, Text (TMP)
       objectReference: {fileID: 0}
-    - target: {fileID: 2926907484169199287, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
-      propertyPath: m_margin.y
-      value: 0.12024176
-      objectReference: {fileID: 0}
     - target: {fileID: 3073582259588227178, guid: d44ea11222ff9d1409eee23947228a07, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -133,6 +133,8 @@ public class CrosshairController : MonoBehaviour {
             if (button == null) {
                 button = result.gameObject.GetComponent<Button>();
                 if (button != null) isPointerOverButton = true; // If the button is found, return true
+            } else {
+                isPointerOverButton = true; // If the button is found, return true
             }
 
             TextLinkHandler textLinkHandler = result.gameObject.GetComponent<TextLinkHandler>();
