@@ -77,7 +77,7 @@ public class ElevatorAnimationController : MonoBehaviour
     private IEnumerator DelayedShowSummary()
     {
         this.insideButton.OnInteract -= () => OnElevatorButtonPressed(true);
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(1f);
         ConditionState conditionState = new(condition: ConditionEnum.ShowSummary, expectedState: true);
         ConditionTracker.Instance.SetCondition(conditionState);
     }

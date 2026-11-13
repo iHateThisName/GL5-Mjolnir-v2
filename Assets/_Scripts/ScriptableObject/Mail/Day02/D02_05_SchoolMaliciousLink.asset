@@ -33,16 +33,25 @@ MonoBehaviour:
   emailAddress: admin@bifrost-vgs.no
   emailHeader: Invoice Inquiry
   emailBody:
-  - Please review our updated school budget before confirming the paper order. The document is available below.
+  - 'Please review our updated school budget before confirming the paper order. The document is available below.
+
+    
+
+    <u><color=#0645AD><link="BifrostBudget">https://bifrost-vgs.no/documents/budget-Q4-2026.pdf</link></color></u>'
   difficulty: 0
   mailType: 0
+  attachmentFiles: []
   actionButtonLabel: VIEW BUDGET
   hoverPreviewUrl: http://free-robux-malware-download.net/hack
   isScam: 1
   correctRedFlags: 01000000i
   feedbackReplyText: 'Scammer: Nobody ever hovers over the link! Are you a wizard?!'
   annotatedEmailBody:
-  - Please review our updated school budget before confirming the paper order. The document is available below.
+  - 'Please review our updated school budget before confirming the paper order. The document is available below.
+
+    
+
+    <u><color=#0645AD><link="BifrostBudget"><mark=#ff000066>http://free-robux-malware-download.net/hack</mark></link></color></u>'
   annotatedEmailAddress: admin@bifrost-vgs.no
   ruinedCoworkerPrefab: {fileID: 0}
   scoldingDialogue: {fileID: 11400000, guid: 4ca638372a08ed6419c75a8a63c56d78, type: 2}
