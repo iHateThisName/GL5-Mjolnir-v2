@@ -7292,6 +7292,7 @@ GameObject:
   - component: {fileID: 6318247368166547156}
   - component: {fileID: 9161193688705865687}
   - component: {fileID: 952295858178287813}
+  - component: {fileID: 6624969477350976793}
   m_Layer: 0
   m_Name: MailAddress
   m_TagString: Untagged
@@ -7418,6 +7419,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6624969477350976793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694727611738797329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2703b52697bc0f4f9fe08d20d7cbadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLinkHandler
 --- !u!1 &3831204982640611472
 GameObject:
   m_ObjectHideFlags: 0
