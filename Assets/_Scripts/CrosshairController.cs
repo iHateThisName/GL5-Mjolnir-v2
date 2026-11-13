@@ -108,6 +108,10 @@ public class CrosshairController : MonoBehaviour {
 
         if (Physics.Raycast(ray, out RaycastHit hit, 3f)) {
             if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable)) {
+                // check if the interactable is enabled and active.
+                if (interactable is WorldInteractable worldInteractable && !worldInteractable.isActiveAndEnabled) {
+                    return false;
+                }
                 hoverText = interactable.HoverText();
                 return true;
             }
@@ -132,9 +136,17 @@ public class CrosshairController : MonoBehaviour {
 
             if (button == null) {
                 button = result.gameObject.GetComponent<Button>();
-                if (button != null) isPointerOverButton = true; // If the button is found, return true
-            } else {
-                isPointerOverButton = true; // If the button is found, return true
+            }
+            
+            if (button != null) {
+                if (DialogueSystem.IsDialogueActive) {
+                    // Do not allow a button interaction when the dialog is happening on the dialog button is allow to interact with
+                    if (button == DialogueSystem.CurrentDialogueButton) {
+                        isPointerOverButton = true; // If the button is found, return true
+                    }
+                } else {
+                    isPointerOverButton = true; // If the button is found and not in a dialogue, return true
+                }
             }
 
             TextLinkHandler textLinkHandler = result.gameObject.GetComponent<TextLinkHandler>();

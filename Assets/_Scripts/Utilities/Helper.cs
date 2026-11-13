@@ -6,6 +6,7 @@ using UnityEngine;
 
 public static class Helper {
 
+    public const float InteractionCooldown = 0.5f; // Cooldown duration in seconds
     public static void DisableCameraRotation(Unity.Cinemachine.CinemachineCamera camera) {
         camera.GetComponent<Unity.Cinemachine.CinemachineInputAxisController>().enabled = false;
     }

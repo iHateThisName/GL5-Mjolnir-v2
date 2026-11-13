@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,8 @@ public class DialogueSystem : MonoBehaviour {
     public bool DisableInteraction = false;
 
     private static IDialogue CurrentDialogue;
+    public static bool IsDialogueActive => CurrentDialogue != null;
+    public static Button CurrentDialogueButton { get; private set; }
 
     private void OnEnable() {
         if (this.npcCollider != null) {
@@ -48,6 +51,8 @@ public class DialogueSystem : MonoBehaviour {
 
     private void Awake() {
         this.dialogueCanvas.SetActive(false);
+        CurrentDialogue = null;
+        CurrentDialogueButton = null;
     }
 
     private void Start() {
@@ -67,7 +72,10 @@ public class DialogueSystem : MonoBehaviour {
 
     private void OnInteractionShowDialogue() {
         if (this.DisableInteraction) return;
-        else this.AdvanceDialogue(this.SituationData as IDialogue);
+        else if (npcCollider.isActiveAndEnabled) {
+            npcCollider.enabled = false; // Disable the collider to prevent further interactions during dialogue
+            this.AdvanceDialogue(this.SituationData as IDialogue);
+        }
     }
 
     public void SetDialogue(SituationData situationData, bool disableInteraction = false) {
@@ -93,6 +101,7 @@ public class DialogueSystem : MonoBehaviour {
 
         if (CurrentDialogue == null) {
             CurrentDialogue = dialogue;
+            CurrentDialogueButton = this.dialoguePanelButton;
         } else if (CurrentDialogue != dialogue) {
             Debug.LogWarning($"Trying to advance dialogue for {dialogue.CharacterName} while another dialogue is active.");
             return;
@@ -127,7 +136,11 @@ public class DialogueSystem : MonoBehaviour {
         this.dialoguePanel.SetActive(false);
         this.dialogueCanvas.SetActive(false);
         CurrentDialogue = null;
+        CurrentDialogueButton = null;
 
+        if (this.npcCollider != null) {
+            this.npcCollider.enabled = true;
+        }
         this.OnDialogueEnded?.Invoke();
     }
 }

@@ -7,11 +7,11 @@ public class WorldInteractable : MonoBehaviour, IInteractable {
 
     public event System.Action OnInteract;
     private static bool isInteractable = true;
-    private const float interactionCooldown = 0.5f; // Cooldown duration in seconds
     [SerializeField] private string hoverText = string.Empty;
+
     public string HoverText() => this.hoverText;
     public void Interact(GameObject interactor) {
-        if (!isInteractable) return;
+        if (!isInteractable || !isActiveAndEnabled) return;
 
         OnInteract?.Invoke();
         StartCoroutine(Cooldown());
@@ -22,7 +22,7 @@ public class WorldInteractable : MonoBehaviour, IInteractable {
 
     private IEnumerator Cooldown() {
         isInteractable = false;
-        yield return new WaitForSeconds(interactionCooldown);
+        yield return new WaitForSeconds(Helper.InteractionCooldown);
         isInteractable = true;
     }
 }
