@@ -356,10 +356,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 517928494761731503, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -2403772195646356379, guid: 970fe96d2b24e4a3ea7cef118f0e05b3, type: 3}
     - target: {fileID: 919132149155446097, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
       propertyPath: m_Name
       value: SM_OfficePhone
       objectReference: {fileID: 0}
+    - target: {fileID: 5809526920081073680, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -2403772195646356379, guid: 970fe96d2b24e4a3ea7cef118f0e05b3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
