@@ -29,9 +29,10 @@ MonoBehaviour:
   emailAddress: no-reply@posten.no
   emailHeader: "Delivery Confirmation for Bruce \u2014 50kg Whey"
   emailBody:
-  - "Bruce\u2019s delivery has arrived at reception. Please sign the delivery receipt below."
+  - "Bruce\u2019s delivery has arrived at reception. Please sign the delivery receipt below.\r\n\r\n<u><color=#0645AD><link=\"BruceReceipt\">Sign Delivery Receipt</link></color></u>"
   difficulty: 0
   mailType: 0
+  attachmentFiles: []
   actionButtonLabel: SIGN RECEIPT
   hoverPreviewUrl: https://sporing.posten.no/receipt-882
   isScam: 0

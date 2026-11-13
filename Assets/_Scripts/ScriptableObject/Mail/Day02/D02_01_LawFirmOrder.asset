@@ -33,28 +33,10 @@ MonoBehaviour:
 
     <u><color=#0645AD><link="LawFirmOrder">https://intranet.mjolnir-office.no/ord510</link></color></u>
 
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK
-
-    OK'
+'
   difficulty: 0
   mailType: 0
+  attachmentFiles: []
   actionButtonLabel: APPROVE ORDER
   hoverPreviewUrl: https://intranet.mjolnir-office.no/ord510
   isScam: 0

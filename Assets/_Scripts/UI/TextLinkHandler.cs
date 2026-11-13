@@ -21,9 +21,12 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
     private const string RICK_ROLL_UNDERSTAND_LINK_ID = "RickRollUnderstand";
 
     //Day2
+    //Day2
     private const string LAW_FIRM_ORDER_LINK_ID = "LawFirmOrder";
     private const string FAKE_BOSS_BONUS_LINK_ID = "FakeBossBonus";
     private const string CUSTOMS_FEE_SCAM_LINK_ID = "CustomsFeeScam";
+    private const string BRUCE_RECEIPT_LINK_ID = "BruceReceipt";
+    private const string BIFROST_BUDGET_LINK_ID = "BifrostBudget";
 
     private void Start()
     {
@@ -66,6 +69,12 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
             case CUSTOMS_FEE_SCAM_LINK_ID:
                 Debug.Log("http://steal-credit-card.ru/pay");
                 break;
+            case BRUCE_RECEIPT_LINK_ID:
+                Debug.Log("https://sporing.posten.no/receipt-882");
+                break;
+            case BIFROST_BUDGET_LINK_ID:
+                Debug.Log("http://free-robux-malware-download.net/hack");
+                break;
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {linkInfo.GetLinkText()}");
                 break;
@@ -90,6 +99,10 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
                 return "http://mj0lnir-login-steal.xyz/auth";
             case CUSTOMS_FEE_SCAM_LINK_ID:
                 return "http://steal-credit-card.ru/pay";
+            case BRUCE_RECEIPT_LINK_ID:
+                return "https://sporing.posten.no/receipt-882";
+            case BIFROST_BUDGET_LINK_ID:
+                return "http://free-robux-malware-download.net/hack";
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {this.text.textInfo.linkInfo[linkIndex].GetLinkText()}");
                 break;
