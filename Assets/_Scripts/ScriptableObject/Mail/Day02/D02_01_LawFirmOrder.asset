@@ -28,7 +28,31 @@ MonoBehaviour:
   emailAddress: purchasing@valhall-law.no
   emailHeader: 'Urgent Order: 200 Heavy Duty Staplers'
   emailBody:
-  - Our lawyers keep throwing staplers at each other. Please approve an order for 200 heavy-duty replacements.
+  - 'Our lawyers keep throwing staplers at each other. Please approve an order for 200 heavy-duty replacements.
+
+
+    <u><color=#0645AD><link="LawFirmOrder">https://intranet.mjolnir-office.no/ord510</link></color></u>
+
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK
+
+    OK'
   difficulty: 0
   mailType: 0
   actionButtonLabel: APPROVE ORDER

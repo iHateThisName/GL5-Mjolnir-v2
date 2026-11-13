@@ -29,9 +29,14 @@ MonoBehaviour:
   emailAddress: support@posten-tracking-no.xyz
   emailHeader: 'Customs Fee Required: Gym Equipment'
   emailBody:
-  - Your gym equipment shipment is awaiting release. Pay the 49 NOK customs fee using the payment link below.
+  - 'Your gym equipment shipment is awaiting release. Pay the 49 NOK customs fee using the payment link below.
+
+    
+
+    <u><color=#0645AD><link="CustomsFeeScam">https://posten-toll-delivery.no/release-package</link></color></u>'
   difficulty: 0
   mailType: 0
+  attachmentFiles: []
   actionButtonLabel: PAY 49 NOK
   hoverPreviewUrl: http://steal-credit-card.ru/pay
   isScam: 1

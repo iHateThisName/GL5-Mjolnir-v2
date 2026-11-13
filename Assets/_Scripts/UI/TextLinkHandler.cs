@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,8 +7,11 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Author: https://github.com/iHateThisName
 /// </summary>
+public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
+{
 
-public class TextLinkHandler : MonoBehaviour, IPointerClickHandler {
+    // Added event for the MailSelectedController to listen to
+    public event Action<string> OnLinkClickedEvent;
 
     private TMP_Text text;
     private Camera mainCamera;
@@ -16,63 +20,88 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler {
     private const string RICK_ROLL_LINK_ID = "RickRoll";
     private const string RICK_ROLL_UNDERSTAND_LINK_ID = "RickRollUnderstand";
 
-    private void Start() {
+    //Day2
+    private const string LAW_FIRM_ORDER_LINK_ID = "LawFirmOrder";
+    private const string FAKE_BOSS_BONUS_LINK_ID = "FakeBossBonus";
+    private const string CUSTOMS_FEE_SCAM_LINK_ID = "CustomsFeeScam";
+
+    private void Start()
+    {
         this.text = this.GetComponent<TMP_Text>();
         this.mainCamera = Camera.main;
     }
-    public void OnPointerClick(PointerEventData eventData) {
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, eventData.position, null);
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Camera eventCamera = eventData.pressEventCamera ?? mainCamera;
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, eventData.position, eventCamera);
 
         if (linkIndex == -1) return;
 
-        TMP_LinkInfo linkInfo = this.text.textInfo.linkInfo[linkIndex];
-        string linkId = linkInfo.GetLinkID();
-
         OnLinkPressed(linkIndex);
-
     }
 
-    private void OnLinkPressed(int linkIndex) {
+    private void OnLinkPressed(int linkIndex)
+    {
         TMP_LinkInfo linkInfo = this.text.textInfo.linkInfo[linkIndex];
         string linkId = linkInfo.GetLinkID();
 
-        switch (linkId) {
+        // Broadcast the click to the MailSelectedController
+        OnLinkClickedEvent?.Invoke(linkId);
+
+        switch (linkId)
+        {
             case RICK_ROLL_LINK_ID:
                 Application.OpenURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
                 break;
-
             case RICK_ROLL_UNDERSTAND_LINK_ID:
                 Debug.Log("I understand");
                 break;
-
+            case LAW_FIRM_ORDER_LINK_ID:
+                Debug.Log("https://intranet.mjolnir-office.no/ord510");
+                break;
+            case FAKE_BOSS_BONUS_LINK_ID:
+                Debug.Log("http://mj0lnir-login-steal.xyz/auth");
+                break;
+            case CUSTOMS_FEE_SCAM_LINK_ID:
+                Debug.Log("http://steal-credit-card.ru/pay");
+                break;
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {linkInfo.GetLinkText()}");
                 break;
-
         }
     }
-    private string GetHoverText(int linkIndex) {
+
+    private string GetHoverText(int linkIndex)
+    {
         if (linkIndex == -1) return string.Empty;
 
         string linkId = this.text.textInfo.linkInfo[linkIndex].GetLinkID();
 
-        switch (linkId) {
+        switch (linkId)
+        {
             case RICK_ROLL_LINK_ID:
                 return "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             case RICK_ROLL_UNDERSTAND_LINK_ID:
                 return "I understand";
-
+            case LAW_FIRM_ORDER_LINK_ID:
+                return "https://intranet.mjolnir-office.no/ord510";
+            case FAKE_BOSS_BONUS_LINK_ID:
+                return "http://mj0lnir-login-steal.xyz/auth";
+            case CUSTOMS_FEE_SCAM_LINK_ID:
+                return "http://steal-credit-card.ru/pay";
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {this.text.textInfo.linkInfo[linkIndex].GetLinkText()}");
                 break;
-
         }
         return string.Empty;
-
     }
 
-    public bool IsHoveringLink(out string hoverText) {
+    public bool IsHoveringLink(out string hoverText)
+    {
         hoverText = string.Empty;
+        if (Mouse.current == null) return false;
+
         int linkIndex = TMP_TextUtilities.FindIntersectingLink(this.text, Mouse.current.position.ReadValue(), this.mainCamera);
         if (linkIndex == -1) return false;
 

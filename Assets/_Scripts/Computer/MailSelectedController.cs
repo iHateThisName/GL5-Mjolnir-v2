@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MailSelectedController : MonoBehaviour, IInteractable
+public class MailSelectedController : MonoBehaviour
 {
     [field: SerializeField]
     public ComputerController ComputerController { get; private set; }
@@ -18,16 +17,21 @@ public class MailSelectedController : MonoBehaviour, IInteractable
     [SerializeField] private TMP_Text selectedMailSubject;
     [SerializeField] private TMP_Text selectedMailBody;
 
+    [Header("Link Handling")]
+    [Tooltip("Attach the TextLinkHandler that sits on the selectedMailBody TMP_Text component.")]
+    [SerializeField] private TextLinkHandler bodyLinkHandler;
+
+    [Header("Attachment UI")]
+    [Tooltip("The static button sitting at the bottom of the email content.")]
+    [SerializeField] private Button attachmentButton;
+    [SerializeField] private TMP_Text attachmentButtonText;
+
     [Header("Primary Decisions")]
-    [SerializeField] private Button actionButton;
-    [SerializeField] private TMP_Text actionButtonText;
     [SerializeField] private Button reportButton;
+    [SerializeField] private UnityEngine.UI.ScrollRect emailScrollView;
 
-    public UnityEvent<MailData> selectedMailOpened =
-        new UnityEvent<MailData>();
-
-    public UnityEvent<MailData> selectedMailFinished =
-        new UnityEvent<MailData>();
+    public UnityEvent<MailData> selectedMailOpened = new UnityEvent<MailData>();
+    public UnityEvent<MailData> selectedMailFinished = new UnityEvent<MailData>();
 
     public event Action ReportRequested;
 
@@ -46,29 +50,25 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         outcomeSequence.CanBegin &&
         SituationManager.Instance != null &&
         SituationManager.Instance.IsReady &&
-        SituationManager.Instance.GetSituationState(CurrentMail) ==
-            SituationManager.SituationStateEnum.Active;
+        SituationManager.Instance.GetSituationState(CurrentMail) == SituationManager.SituationStateEnum.Active;
 
     private void Awake()
     {
-        if (actionButton != null)
-            actionButton.onClick.AddListener(AcceptCurrentMail);
-
         if (reportButton != null)
             reportButton.onClick.AddListener(RequestReport);
+
+        if (attachmentButton != null)
+            attachmentButton.onClick.AddListener(AcceptCurrentMail);
 
         if (outcomeSequence != null)
             outcomeSequence.Completed += OnSequenceCompleted;
 
-        if (outcomeSequence == null ||
-            !outcomeSequence.IsConfigured ||
-            actionButton == null ||
-            reportButton == null)
+        if (bodyLinkHandler != null)
+            bodyLinkHandler.OnLinkClickedEvent += HandleBodyLinkClicked;
+
+        if (outcomeSequence == null || !outcomeSequence.IsConfigured || reportButton == null)
         {
-            Debug.LogError(
-                "MailSelectedController requires both decision buttons " +
-                "and a fully configured MailOutcomeSequence.",
-                this);
+            Debug.LogError("MailSelectedController requires report button and a fully configured MailOutcomeSequence.", this);
         }
 
         RenderMail();
@@ -76,14 +76,17 @@ public class MailSelectedController : MonoBehaviour, IInteractable
 
     private void OnDestroy()
     {
-        if (actionButton != null)
-            actionButton.onClick.RemoveListener(AcceptCurrentMail);
-
         if (reportButton != null)
             reportButton.onClick.RemoveListener(RequestReport);
 
+        if (attachmentButton != null)
+            attachmentButton.onClick.RemoveListener(AcceptCurrentMail);
+
         if (outcomeSequence != null)
             outcomeSequence.Completed -= OnSequenceCompleted;
+
+        if (bodyLinkHandler != null)
+            bodyLinkHandler.OnLinkClickedEvent -= HandleBodyLinkClicked;
     }
 
     public void SelectMail(MailData mail)
@@ -93,8 +96,7 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         if (IsBusy || mail == null || manager == null || !manager.IsReady)
             return;
 
-        if (manager.GetSituationState(mail) !=
-            SituationManager.SituationStateEnum.Active)
+        if (manager.GetSituationState(mail) != SituationManager.SituationStateEnum.Active)
         {
             return;
         }
@@ -123,9 +125,14 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         RenderMail();
     }
 
+    private void HandleBodyLinkClicked(string linkId)
+    {
+        // Clicking ANY valid body link registers as an action/acceptance
+        AcceptCurrentMail();
+    }
+
     public void AcceptCurrentMail()
     {
-        // Prevent accepting through the checklist overlay.
         if (reportMode)
             return;
 
@@ -143,25 +150,18 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         return reportMode && Resolve(MailDecision.Report, flags);
     }
 
-    private bool Resolve(
-        MailDecision decision,
-        IEnumerable<MailRedFlag> flags)
+    private bool Resolve(MailDecision decision, IEnumerable<MailRedFlag> flags)
     {
         if (!CanDecide)
             return false;
 
         SituationManager manager = SituationManager.Instance;
 
-        if (!manager.TryResolveMail(
-                CurrentMail,
-                decision,
-                flags,
-                out MailResolution result))
+        if (!manager.TryResolveMail(CurrentMail, decision, flags, out MailResolution result))
         {
             return false;
         }
 
-        // The manager has committed the result and locked further decisions.
         RenderMail();
         outcomeSequence.Begin(result);
 
@@ -172,8 +172,7 @@ public class MailSelectedController : MonoBehaviour, IInteractable
     {
         SituationManager manager = SituationManager.Instance;
 
-        if (manager == null ||
-            !manager.CompleteMailPresentation(resolution))
+        if (manager == null || !manager.CompleteMailPresentation(resolution))
         {
             return;
         }
@@ -182,88 +181,59 @@ public class MailSelectedController : MonoBehaviour, IInteractable
         reportMode = false;
 
         RenderMail();
-
-        // Only now may the mailbox hide this email and select the next one.
         selectedMailFinished?.Invoke(resolution.Mail);
     }
 
     private void RenderMail()
     {
+        if (emailScrollView != null)
+        {
+            emailScrollView.normalizedPosition = new Vector2(0, 1);
+        }
+
         if (selectedMailSender != null)
         {
             selectedMailSender.richText = false;
-
-            selectedMailSender.text = CurrentMail == null
-                ? string.Empty
-                : string.IsNullOrWhiteSpace(CurrentMail.DisplayName)
-                    ? CurrentMail.EmailAddress
-                    : $"{CurrentMail.DisplayName} <{CurrentMail.EmailAddress}>";
+            selectedMailSender.text = CurrentMail == null ? string.Empty :
+                string.IsNullOrWhiteSpace(CurrentMail.DisplayName) ? CurrentMail.EmailAddress : $"{CurrentMail.DisplayName} <{CurrentMail.EmailAddress}>";
         }
 
         if (selectedMailSubject != null)
         {
             selectedMailSubject.richText = false;
-            selectedMailSubject.text = CurrentMail != null
-                ? CurrentMail.EmailHeader
-                : string.Empty;
+            selectedMailSubject.text = CurrentMail != null ? CurrentMail.EmailHeader : string.Empty;
         }
 
         if (selectedMailBody != null)
         {
-            selectedMailBody.text = CurrentMail != null
-                ? string.Join("\n", CurrentMail.EmailBody)
-                : string.Empty;
-        }
-
-        if (actionButtonText != null)
-        {
-            actionButtonText.text = CurrentMail != null
-                ? CurrentMail.ActionButtonLabel
-                : "ACTION";
+            selectedMailBody.text = CurrentMail != null ? string.Join("\n", CurrentMail.EmailBody) : string.Empty;
         }
 
         bool buttonsEnabled = CanDecide && !reportMode;
 
-        if (actionButton != null)
-            actionButton.interactable = buttonsEnabled;
-
         if (reportButton != null)
             reportButton.interactable = buttonsEnabled;
+
+        RenderAttachment(buttonsEnabled);
     }
 
-    public void Interact(GameObject interactor)
+    private void RenderAttachment(bool buttonsEnabled)
     {
-        if (reportMode ||
-            !CanDecide ||
-            selectedMailBody == null ||
-            !selectedMailBody.gameObject.activeInHierarchy ||
-            Mouse.current == null)
+        if (attachmentButton == null) return;
+
+        bool hasAttachment = CurrentMail != null &&
+                             CurrentMail.AttachmentFiles != null &&
+                             CurrentMail.AttachmentFiles.Count > 0;
+
+        attachmentButton.gameObject.SetActive(hasAttachment);
+
+        if (hasAttachment)
         {
-            return;
-        }
-
-        Canvas canvas = selectedMailBody.canvas;
-
-        Camera uiCamera = null;
-
-        if (canvas == null ||
-            canvas.renderMode != RenderMode.ScreenSpaceOverlay)
-        {
-            uiCamera = canvas != null && canvas.worldCamera != null
-                ? canvas.worldCamera
-                : Camera.main;
-        }
-
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(
-            selectedMailBody,
-            Mouse.current.position.ReadValue(),
-            uiCamera);
-
-        if (linkIndex >= 0)
-        {
-            // In-body links use the same guarded Accept decision.
-            // Never open a real browser or execute an attachment.
-            AcceptCurrentMail();
+            if (attachmentButtonText != null)
+            {
+                attachmentButtonText.text = CurrentMail.AttachmentFiles[0];
+            }
+            attachmentButton.interactable = buttonsEnabled;
         }
     }
 }
