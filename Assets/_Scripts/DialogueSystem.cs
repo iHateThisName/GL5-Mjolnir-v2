@@ -80,16 +80,6 @@ public class DialogueSystem : MonoBehaviour {
     }
 
     public void SetDialogue(SituationData situationData, bool disableInteraction = false) {
-        this.SituationData = situationData;
-        this.dialogIndex = 0;
-        this.Initlize(disableInteraction: disableInteraction);
-    }
-
-    public void StartDialogue() {
-        this.AdvanceDialogue(this.dialogue);
-    }
-
-    public void ChangeDialogoue (SituationData situationData) {
         if (situationData == null) {
             Debug.LogWarning($"The new situation data is null.");
             return;
@@ -100,12 +90,13 @@ public class DialogueSystem : MonoBehaviour {
             return;
         }
 
-        // Change the dialogue to a new situation data and reset the dialogue index
         this.SituationData = situationData;
-        this.dialogue = this.SituationData as IDialogue;
         this.dialogIndex = 0;
-        this.Initlize();
-        this.AdvanceDialogue(this.SituationData as IDialogue);
+        this.Initlize(disableInteraction: disableInteraction);
+    }
+
+    public void StartDialogue() {
+        this.AdvanceDialogue(this.dialogue);
     }
 
     public void AdvanceDialogue(IDialogue dialogue) {

@@ -103,6 +103,7 @@ public class DialogueSequenceController : MonoBehaviour
 
         // 4. Start Dialogue
         this.npcDialogue.SetDialogue(this.dialogueData, false);
+        this.npcDialogue.StartDialogue();
 
         // 5. Wait for the player to click through the dialogue
         while (!this.hasFinishedDialogue)

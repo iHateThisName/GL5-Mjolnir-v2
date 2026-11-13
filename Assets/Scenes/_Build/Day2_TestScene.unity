@@ -5060,6 +5060,10 @@ PrefabInstance:
       propertyPath: '<Situations>k__BackingField.Array.data[6]'
       value: 
       objectReference: {fileID: 11400000, guid: 62933241776b7ab49b22921087e113a0, type: 2}
+    - target: {fileID: 2104683156142954997, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
+      propertyPath: SituationData
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2234571117044818708, guid: 84bb5581a1e5a1b47af11370f8f4604a, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -8128,6 +8132,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2443040304451217943, guid: 05b3e11dea3c79a45b70a0dc88f1f47d, type: 3}
+      propertyPath: SituationData
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7227402640393969096, guid: 05b3e11dea3c79a45b70a0dc88f1f47d, type: 3}
       propertyPath: m_Name
       value: BossMeetingRoom
@@ -8270,6 +8278,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 651296058}
+    - target: {fileID: 2828856159966773281, guid: 83eddcb92504eb94bb1639639d77f31c, type: 3}
+      propertyPath: SituationData
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2936039355369266424, guid: 83eddcb92504eb94bb1639639d77f31c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

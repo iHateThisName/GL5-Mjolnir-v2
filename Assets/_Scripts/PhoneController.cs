@@ -175,6 +175,7 @@ public class PhoneController : MonoBehaviour {
 
         // Dialog system
         this.dialogueSystem.SetDialogue(this.CurrentActiveCall, disableInteraction: true);
+        this.dialogueSystem.StartDialogue();
 
     }
 }

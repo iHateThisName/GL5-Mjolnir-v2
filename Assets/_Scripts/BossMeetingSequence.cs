@@ -114,6 +114,7 @@ public class BossMeetingSequence : MonoBehaviour
             {
                 if (this.npcDialogue != null) this.npcDialogue.OnDialogueEnded += this.OnDialogueEnded;
                 this.npcDialogue.SetDialogue(activeDialogue, false);
+                this.npcDialogue.StartDialogue();
             }
             else
             {
