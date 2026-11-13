@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
+  m_Name: D03_01_Mail_Skatteetaten
+  m_EditorClassIdentifier: Assembly-CSharp::MailData
+  situationName: 
+  parentSituation: {fileID: 0}
+  requiredSituations: []
+  requiredConditions: []
+  resultingSuccessConditions:
+  - Condition: 13
+    ExpectedState: 1
+  resultingFailedConditions:
+  - Condition: 12
+    ExpectedState: 1
+  initialState: 1
+  taskType: 0
+  displayName: Norwegian Tax Administration
+  emailAddress: varsel@skatteetaten-innlogging.no
+  emailHeader: 'Action Required: Discrepancy in Q3 VAT Return (Mjolnir AS)'
+  emailBody:
+  - "Dear Courtnie,\r\n\r\nDuring our automated review of the Q3 2026 VAT filings, a discrepancy of 42,500 NOK was identified for Mjolnir AS. \r\n\r\nTo avoid daily penalty fees or a formal corporate audit, please log in to the enterprise portal using the secure link below to review the flagged invoices and amend the filing within 3 business days.\r\n\r\n<u><color=#0645AD><link=\"SkatteetatenVAT\">Log in to Enterprise Portal</link></color></u>\r\n\r\nMed vennlig hilsen,\r\nSkatteetaten"
+  difficulty: 0
+  mailType: 4
+  attachmentFiles: []
+  actionButtonLabel: APPROVE ORDER
+  hoverPreviewUrl: https://intranet.mjolnir-office.no/ord510
+  isScam: 1
+  correctRedFlags: 020000000000000001000000i
+  feedbackReplyText: 
+  annotatedEmailBody:
+  - "Dear Courtnie,\r\n\r\nDuring our automated review of the Q3 2026 VAT filings, a discrepancy of 42,500 NOK was identified for Mjolnir AS. \r\n\r\n<mark=#ff000066>To avoid daily penalty fees or a formal corporate audit</mark>, please log in to the enterprise portal using the secure link below to review the flagged invoices and amend the filing <mark=#ff000066>within 3 business days.</mark>\r\n\r\n<u><color=#0645AD><link=\"SkatteetatenVAT\"><mark=#ff000066>https://altinn.skatteetaten-innlogging.no/auth</mark></link></color></u>\r\n\r\nMed vennlig hilsen,\r\nSkatteetaten"
+  annotatedEmailAddress: 
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 11400000, guid: fbe44e6303533a9468faf9fd9b605c12, type: 2}
+  falseReportDialogue: {fileID: 0}
+  successDialogue: {fileID: 11400000, guid: 6b9ddcece1c862543b0ab70c5745a80a, type: 2}
+  rewardPrefab: {fileID: 3013054809460894873, guid: 408ee3231697877478ceaaf37b79225b, type: 3}

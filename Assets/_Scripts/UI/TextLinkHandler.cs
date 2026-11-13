@@ -4,23 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Author: https://github.com/iHateThisName
-/// </summary>
 public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
 {
 
-    // Added event for the MailSelectedController to listen to
     public event Action<string> OnLinkClickedEvent;
 
     private TMP_Text text;
     private Camera mainCamera;
 
-    // Link Ids
+    // Dynamic Hover Prefix (New)
+    private const string HOVER_PREFIX = "Hover_";
+
+    // Standard Link Ids
     private const string RICK_ROLL_LINK_ID = "RickRoll";
     private const string RICK_ROLL_UNDERSTAND_LINK_ID = "RickRollUnderstand";
 
-    //Day2
     //Day2
     private const string LAW_FIRM_ORDER_LINK_ID = "LawFirmOrder";
     private const string FAKE_BOSS_BONUS_LINK_ID = "FakeBossBonus";
@@ -28,7 +26,10 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
     private const string BRUCE_RECEIPT_LINK_ID = "BruceReceipt";
     private const string BIFROST_BUDGET_LINK_ID = "BifrostBudget";
 
-    private void Start()
+    // Day 3
+    private const string SKATTEETATEN_VAT_LINK_ID = "SkatteetatenVAT";
+
+    private void Awake()
     {
         this.text = this.GetComponent<TMP_Text>();
         this.mainCamera = Camera.main;
@@ -49,7 +50,13 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
         TMP_LinkInfo linkInfo = this.text.textInfo.linkInfo[linkIndex];
         string linkId = linkInfo.GetLinkID();
 
-        // Broadcast the click to the MailSelectedController
+        // Check if this is a hover-only link (like a Sender Address). If so, do nothing on click!
+        if (linkId.StartsWith(HOVER_PREFIX))
+        {
+            return;
+        }
+
+        // Broadcast the click to the MailSelectedController for actionable links
         OnLinkClickedEvent?.Invoke(linkId);
 
         switch (linkId)
@@ -75,6 +82,11 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
             case BIFROST_BUDGET_LINK_ID:
                 Debug.Log("http://free-robux-malware-download.net/hack");
                 break;
+
+            // Day 3
+            case SKATTEETATEN_VAT_LINK_ID:
+                Debug.Log("https://altinn.skatteetaten-innlogging.no/auth");
+                break;
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {linkInfo.GetLinkText()}");
                 break;
@@ -86,6 +98,12 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
         if (linkIndex == -1) return string.Empty;
 
         string linkId = this.text.textInfo.linkInfo[linkIndex].GetLinkID();
+
+        // If it's a dynamic hover tag, return everything after "Hover_"
+        if (linkId.StartsWith(HOVER_PREFIX))
+        {
+            return $"<{linkId.Substring(HOVER_PREFIX.Length)}>";
+        }
 
         switch (linkId)
         {
@@ -103,6 +121,9 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
                 return "https://sporing.posten.no/receipt-882";
             case BIFROST_BUDGET_LINK_ID:
                 return "http://free-robux-malware-download.net/hack";
+            // Day 3
+            case SKATTEETATEN_VAT_LINK_ID:
+                return "https://altinn.skatteetaten-innlogging.no/auth";
             default:
                 Debug.LogWarning($"Unhandled link ID: {linkId}, link text: {this.text.textInfo.linkInfo[linkIndex].GetLinkText()}");
                 break;

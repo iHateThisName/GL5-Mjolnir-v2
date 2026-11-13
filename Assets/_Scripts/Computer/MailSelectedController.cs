@@ -193,9 +193,24 @@ public class MailSelectedController : MonoBehaviour
 
         if (selectedMailSender != null)
         {
-            selectedMailSender.richText = false;
-            selectedMailSender.text = CurrentMail == null ? string.Empty :
-                string.IsNullOrWhiteSpace(CurrentMail.DisplayName) ? CurrentMail.EmailAddress : $"{CurrentMail.DisplayName} <{CurrentMail.EmailAddress}>";
+            // This MUST be true now so it can read the <link> tag
+            selectedMailSender.richText = true;
+
+            if (CurrentMail == null)
+            {
+                selectedMailSender.text = string.Empty;
+            }
+            else if (string.IsNullOrWhiteSpace(CurrentMail.DisplayName))
+            {
+                // If there is no display name, just show the email normally
+                selectedMailSender.text = CurrentMail.EmailAddress;
+            }
+            else
+            {
+                // Wraps the display name in a link tag. 
+                // E.g., <link="Hover_hacker@evil.com">Boss</link>
+                selectedMailSender.text = $"<link=\"Hover_{CurrentMail.EmailAddress}\">{CurrentMail.DisplayName}</link>";
+            }
         }
 
         if (selectedMailSubject != null)
