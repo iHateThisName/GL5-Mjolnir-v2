@@ -285,6 +285,10 @@ PrefabInstance:
       propertyPath: SituationData
       value: 
       objectReference: {fileID: 11400000, guid: 24a399f63b8274948b33b2a551516311, type: 2}
+    - target: {fileID: 9143076724907504305, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
+      propertyPath: AutoExitDialogueState
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

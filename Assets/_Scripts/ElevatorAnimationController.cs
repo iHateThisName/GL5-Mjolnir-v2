@@ -27,6 +27,7 @@ public class ElevatorAnimationController : MonoBehaviour
     {
         DoorBlock.SetActive(true);
         Animator.SetTrigger("CloseDoor");
+        ConditionTracker.Instance.SetCondition(new ConditionState(ConditionEnum.HasExitedElevator, true));
     }
 
     private void OnEnable()

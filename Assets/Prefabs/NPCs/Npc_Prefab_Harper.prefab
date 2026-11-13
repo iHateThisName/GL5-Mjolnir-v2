@@ -366,10 +366,6 @@ PrefabInstance:
       propertyPath: npcCollider
       value: 
       objectReference: {fileID: 7094375609516148113}
-    - target: {fileID: 9143076724907504305, guid: 959945d497bdb3249b0d8fcb8a712ec6, type: 3}
-      propertyPath: SituationData
-      value: 
-      objectReference: {fileID: 11400000, guid: 6433612d3bdafb94faa093cf813dd23a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

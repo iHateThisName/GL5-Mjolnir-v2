@@ -124,6 +124,10 @@ public class ConditionTracker : Singleton<ConditionTracker> {
         HasFailedPhisingEmail = 2,
         IsDayComplete = 6,
         ShowSummary = 14,
+        HasExitedElevator = 15,
+
+        CameraShowComputer = 16,
+        IsTurorialWelcomeCompleted = 17,
 
         // Emails
         ShowSusanneKeyEmail = 8,

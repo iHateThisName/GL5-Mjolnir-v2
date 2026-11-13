@@ -696,13 +696,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSystemV0
   npcCollider: {fileID: 0}
-  SituationData: {fileID: 0}
+  SituationData: {fileID: 11400000, guid: 6433612d3bdafb94faa093cf813dd23a, type: 2}
   dialogueCanvas: {fileID: 3213499816844705674}
   dialogueText: {fileID: 2560277944667750281}
   nameText: {fileID: 6667590132760757595}
   dialoguePanel: {fileID: 4519363737218973285}
   characterPortrait: {fileID: 2575853645701154216}
   dialoguePanelButton: {fileID: 7948934498187226811}
+  AutoExitDialogueState: 1
   DisableInteraction: 0
 --- !u!1 &7398241747718151966
 GameObject:

@@ -22,6 +22,7 @@ public class DialogueSystem : MonoBehaviour {
     [SerializeField] private Image characterPortrait;
 
     [SerializeField] private Button dialoguePanelButton;
+    [SerializeField] private bool AutoExitDialogueState = true;
 
     public bool DisableInteraction = false;
 
@@ -82,6 +83,28 @@ public class DialogueSystem : MonoBehaviour {
         this.SituationData = situationData;
         this.dialogIndex = 0;
         this.Initlize(disableInteraction: disableInteraction);
+    }
+
+    public void StartDialogue() {
+        this.AdvanceDialogue(this.dialogue);
+    }
+
+    public void ChangeDialogoue (SituationData situationData) {
+        if (situationData == null) {
+            Debug.LogWarning($"The new situation data is null.");
+            return;
+        }
+        //Check if the new situation data is a IDialogue, if not, log an error and return
+        if (situationData is not IDialogue) {
+            Debug.LogError($"The new situation data {situationData.name} is not a IDialogue.");
+            return;
+        }
+
+        // Change the dialogue to a new situation data and reset the dialogue index
+        this.SituationData = situationData;
+        this.dialogue = this.SituationData as IDialogue;
+        this.dialogIndex = 0;
+        this.Initlize();
         this.AdvanceDialogue(this.SituationData as IDialogue);
     }
 
@@ -112,7 +135,6 @@ public class DialogueSystem : MonoBehaviour {
             this.dialogIndex = 0;
             this.dialogueCanvas.SetActive(false);
 
-            GameManager.Instance.SetPlayerStateToPreviouseState();
         } else {
             GameManager.Instance.SetPlayerState(EnumPlayerState.Dialogue);
 
@@ -141,6 +163,16 @@ public class DialogueSystem : MonoBehaviour {
         if (this.npcCollider != null) {
             this.npcCollider.enabled = true;
         }
+
+        // Set the state to completed
+        if (this.SituationData != null) {
+            SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.SituationData);
+        }
+
+        if (this.AutoExitDialogueState) {
+            GameManager.Instance.SetPlayerStateToPreviouseState();
+        }
+
         this.OnDialogueEnded?.Invoke();
     }
 }

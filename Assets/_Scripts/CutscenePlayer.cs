@@ -3,16 +3,20 @@ using UnityEngine;
 using UnityEngine.Playables;
 using static ConditionTracker;
 
+[RequireComponent(typeof(PlayableDirector))]
 public class CutscenePlayer : MonoBehaviour {
-    [SerializeField] private PlayableDirector director;
+    [field: SerializeField] public PlayableDirector Director { get; private set; }
     [SerializeField] private ConditionTracker.ConditionState[] requiredConditions = Array.Empty<ConditionTracker.ConditionState>();
     [SerializeField] private ConditionTracker.ConditionState[] raisedFinishConditions = Array.Empty<ConditionTracker.ConditionState>();
 
+    private void Awake() {
+        this.Director = GetComponent<PlayableDirector>();
+    }
     private void OnEnable() {
         if (ConditionTracker.Instance != null) {
             ConditionTracker.Instance.OnConditionStateChanged += OnConditionStateChanged;
         }
-        this.director.stopped += OnCutsceneStopped;
+        this.Director.stopped += OnCutsceneStopped;
     }
 
     private void OnDisable() {
@@ -20,7 +24,7 @@ public class CutscenePlayer : MonoBehaviour {
             ConditionTracker.Instance.OnConditionStateChanged -= OnConditionStateChanged;
         }
 
-        this.director.stopped -= OnCutsceneStopped;
+        this.Director.stopped -= OnCutsceneStopped;
     }
     private void OnConditionStateChanged(ConditionTracker.ConditionState state) {
         foreach (ConditionState conditionState in this.requiredConditions) {
@@ -41,9 +45,9 @@ public class CutscenePlayer : MonoBehaviour {
     }
 
     private void PlayCutscene() {
-        director.Stop();
-        director.time = 0;
-        director.Play();
+        Director.Stop();
+        Director.time = 0;
+        Director.Play();
     }
     private void OnCutsceneStopped(PlayableDirector director) {
 
