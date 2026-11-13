@@ -58,7 +58,7 @@ public class CalenderUIController : MonoBehaviour {
             case 1:
                 Debug.Log("Starting Monday's level...");
                 // Load Monday's level here
-                //GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelOneScene);
+                GameSceneManager.Instance.LoadScene(GameSceneManager.Instance.levelOneScene);
                 break;
 
             case 2:
