@@ -742,6 +742,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1289172043}
   characterPortrait: {fileID: 1926941391}
   dialoguePanelButton: {fileID: 0}
+  AutoExitDialogueState: 1
   DisableInteraction: 0
 --- !u!1 &65965082
 GameObject:
@@ -12584,7 +12585,7 @@ PrefabInstance:
       objectReference: {fileID: 1182414241}
     - target: {fileID: 1734031023264477392, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 167
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 3017687265557728898, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
@@ -12592,7 +12593,7 @@ PrefabInstance:
       objectReference: {fileID: 1833148741}
     - target: {fileID: 3017687265557728898, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 610
+      value: 613
       objectReference: {fileID: 0}
     - target: {fileID: 4309874675433059896, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
@@ -12644,7 +12645,7 @@ PrefabInstance:
       objectReference: {fileID: 878544531}
     - target: {fileID: 4408753801292550568, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_VersionIndex
-      value: 1301
+      value: 1304
       objectReference: {fileID: 0}
     - target: {fileID: 5107409610833004953, guid: 601bbb8936ad511459cb6f0424a1e4f9, type: 3}
       propertyPath: m_Mesh
@@ -17901,7 +17902,7 @@ PrefabInstance:
       objectReference: {fileID: 653260051}
     - target: {fileID: 4945725265624536692, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 1859
+      value: 1862
       objectReference: {fileID: 0}
     - target: {fileID: 5952898705049924335, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_AnchorMax.y
@@ -17977,7 +17978,7 @@ PrefabInstance:
       objectReference: {fileID: 908310069}
     - target: {fileID: 7013248068379297433, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: m_VersionIndex
-      value: 6060
+      value: 6063
       objectReference: {fileID: 0}
     - target: {fileID: 7112926913241793041, guid: 191525c0fad57c443aac84f439ce6787, type: 3}
       propertyPath: mailDataList.Array.size
@@ -20033,6 +20034,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1752731293}
   characterPortrait: {fileID: 1541462960}
   dialoguePanelButton: {fileID: 0}
+  AutoExitDialogueState: 1
   DisableInteraction: 0
 --- !u!212 &947991281
 SpriteRenderer:
@@ -37924,6 +37926,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1806654780
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.5402524
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6069035
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 27.79754
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
+      propertyPath: m_Name
+      value: DM_CourtnieCharcterSeperate
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f0d5be2969cf47d5800a83109c437b3, type: 3}
 --- !u!1 &1817262470
 GameObject:
   m_ObjectHideFlags: 0
@@ -58035,3 +58094,4 @@ SceneRoots:
   - {fileID: 906408005}
   - {fileID: 835137920}
   - {fileID: 2045620183}
+  - {fileID: 1806654780}
