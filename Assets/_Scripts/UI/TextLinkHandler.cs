@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
 {
-
     public event Action<string> OnLinkClickedEvent;
 
     private TMP_Text text;
@@ -19,12 +18,17 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
     private const string RICK_ROLL_LINK_ID = "RickRoll";
     private const string RICK_ROLL_UNDERSTAND_LINK_ID = "RickRollUnderstand";
 
-    //Day2
+    // Day 1
+    private const string LOTTERY_SCAM_LINK_ID = "GetScamed&LooseMoney.scam";
+
+    // Day 2
+
     private const string LAW_FIRM_ORDER_LINK_ID = "LawFirmOrder";
     private const string FAKE_BOSS_BONUS_LINK_ID = "FakeBossBonus";
     private const string CUSTOMS_FEE_SCAM_LINK_ID = "CustomsFeeScam";
     private const string BRUCE_RECEIPT_LINK_ID = "BruceReceipt";
     private const string BIFROST_BUDGET_LINK_ID = "BifrostBudget";
+    private const string COURTNIE_GIFT_BASKET_LINK_ID = "CourtnieGiftBasket"; // Added Courtnie's Legit PR Email
 
     // Day 3
     private const string SKATTEETATEN_VAT_LINK_ID = "SkatteetatenVAT";
@@ -67,6 +71,12 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
             case RICK_ROLL_UNDERSTAND_LINK_ID:
                 Debug.Log("I understand");
                 break;
+            //Day01
+            case LOTTERY_SCAM_LINK_ID:
+                Debug.Log("https://GetFreeMoney.scam");
+                break;
+
+                //Day02
             case LAW_FIRM_ORDER_LINK_ID:
                 Debug.Log("https://intranet.mjolnir-office.no/ord510");
                 break;
@@ -81,6 +91,9 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
                 break;
             case BIFROST_BUDGET_LINK_ID:
                 Debug.Log("http://free-robux-malware-download.net/hack");
+                break;
+            case COURTNIE_GIFT_BASKET_LINK_ID:
+                Debug.Log("https://intranet.mjolnir-office.no/pr-88");
                 break;
 
             // Day 3
@@ -111,6 +124,9 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
                 return "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             case RICK_ROLL_UNDERSTAND_LINK_ID:
                 return "I understand";
+            // Day 1
+            case LOTTERY_SCAM_LINK_ID:
+                return "GetScamed&LooseMoney.scam";
             case LAW_FIRM_ORDER_LINK_ID:
                 return "https://intranet.mjolnir-office.no/ord510";
             case FAKE_BOSS_BONUS_LINK_ID:
@@ -121,6 +137,8 @@ public class TextLinkHandler : MonoBehaviour, IPointerClickHandler
                 return "https://sporing.posten.no/receipt-882";
             case BIFROST_BUDGET_LINK_ID:
                 return "http://free-robux-malware-download.net/hack";
+            case COURTNIE_GIFT_BASKET_LINK_ID:
+                return "https://intranet.mjolnir-office.no/pr-88";
             // Day 3
             case SKATTEETATEN_VAT_LINK_ID:
                 return "https://altinn.skatteetaten-innlogging.no/auth";
