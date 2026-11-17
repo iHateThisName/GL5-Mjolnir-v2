@@ -148,6 +148,18 @@ public class ConditionTracker : Singleton<ConditionTracker> {
 
         // Cutscene
         IsPlayingCutscene = 10,
+
+        // Dialogue
+        ShowBruceUniqueDialogue01 = 18,
+        IsBruceUniqueDialogue02Done = 19,
+        IsCourtnieUniqueDialogue01Done = 20,
+        IsCourtnieUniqueDialogue02Done = 21,
+        IsHarperUniqueDialogue01Done = 22,
+        IsHarperUniqueDialogue02Done = 23,
+        IsLindaUniqueDialogue01Done = 24,
+        IsLindaUniqueDialogue02Done = 25,
+        IsRogerUniqueDialogue01Done = 26,
+        IsRogerUniqueDialogue02Done = 27,
     }
 
     /// <summary>

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
+  m_Name: D1_Scam1
+  m_EditorClassIdentifier: Assembly-CSharp::MailData
+  situationName: Day 1 Scam
+  parentSituation: {fileID: 0}
+  requiredSituations: []
+  requiredConditions: []
+  resultingSuccessConditions: []
+  resultingFailedConditions: []
+  initialState: 0
+  taskType: 1
+  displayName: 'L3git Buis5nis5 man '
+  emailAddress: ScammingScammer2@Scamail.scam
+  emailHeader: N0ws your Chanc3!!!
+  emailBody:
+  - 'YOUR OUR LOCKY CUSTOMER!!!
+
+
+    YOU get to partisipate in hour GIVE MUNAY TO PEOPLE program. Just Click the link below and you will resive
+
+    $ 1 000 0000 $'
+  difficulty: 1
+  mailType: 4
+  attachmentFiles: []
+  actionButtonLabel: Click link?
+  hoverPreviewUrl: GetScamed&LooseMoney.scam
+  isScam: 1
+  correctRedFlags: 0000000001000000i
+  feedbackReplyText: (Your smarter then that)
+  annotatedEmailBody:
+  - 
+  annotatedEmailAddress: 
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 0}
+  falseReportDialogue: {fileID: 0}
+  successDialogue: {fileID: 0}
+  rewardPrefab: {fileID: 0}

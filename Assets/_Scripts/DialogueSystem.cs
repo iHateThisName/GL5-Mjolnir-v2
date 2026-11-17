@@ -95,6 +95,11 @@ public class DialogueSystem : MonoBehaviour {
         this.Initlize(disableInteraction: disableInteraction);
     }
 
+    public void SetDialogue(SituationData situationData)
+    {
+        SetDialogue(situationData, disableInteraction:false);
+    }
+
     public void StartDialogue() {
         this.AdvanceDialogue(this.dialogue);
     }

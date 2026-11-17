@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512e690ce28917a41ac9e284534f322b, type: 3}
+  m_Name: D1_Mail1
+  m_EditorClassIdentifier: Assembly-CSharp::MailData
+  situationName: Day 1 email
+  parentSituation: {fileID: 0}
+  requiredSituations: []
+  requiredConditions: []
+  resultingSuccessConditions: []
+  resultingFailedConditions: []
+  initialState: 1
+  taskType: 1
+  displayName: Harper Intern
+  emailAddress: Harper.Intern@mjolnir-office.no
+  emailHeader: Last weeks recap
+  emailBody:
+  - 'Hei
+
+
+    Heres the recap of last week:
+
+
+    We have gotten in cantact with the following clients regarding sales and partnerships:
+
+
+    VALHALL, POSTEN, BIFROST
+
+
+    The directory will be updated once you have accepted this email. '
+  difficulty: 1
+  mailType: 1
+  attachmentFiles:
+  - Directory update
+  actionButtonLabel: Accept
+  hoverPreviewUrl: Update Directory
+  isScam: 0
+  correctRedFlags: 
+  feedbackReplyText: (Directory updated)
+  annotatedEmailBody: []
+  annotatedEmailAddress: 
+  ruinedCoworkerPrefab: {fileID: 0}
+  scoldingDialogue: {fileID: 0}
+  falseReportDialogue: {fileID: 0}
+  successDialogue: {fileID: 0}
+  rewardPrefab: {fileID: 0}
