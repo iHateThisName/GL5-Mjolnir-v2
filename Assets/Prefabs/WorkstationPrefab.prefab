@@ -613,34 +613,6 @@ PrefabInstance:
       propertyPath: hoverText
       value: Hang Up
       objectReference: {fileID: 0}
-    - target: {fileID: 1434052900285286483, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 1793421551740174507, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 2237827915474349923, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 2709182456598501911, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 2952319026131383236, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 3195132138044948809, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 3448888824907531674, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
     - target: {fileID: 3670039878972060511, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.184
@@ -685,46 +657,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OfficePhonePrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 4920568861378251756, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 5106936243982460710, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 5150703787907701815, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 5868928896454466361, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 7901565342529527403, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 8154755640175367188, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
     - target: {fileID: 8378868503117307197, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
       propertyPath: hoverText
       value: Pick Up
       objectReference: {fileID: 0}
-    - target: {fileID: 8847610035382962567, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2d05c789649ae074993a7e821bbf2766, type: 2}
-    - target: {fileID: 8983612512151989951, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
-    - target: {fileID: 8994538503289197164, guid: 45c858c03786a40ff9dfe5b44e43fcb9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 94bd596e86022a84d93cfc67713e6f46, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
