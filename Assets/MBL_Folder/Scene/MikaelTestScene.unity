@@ -1326,6 +1326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1049065789}
     m_Modifications:
+    - target: {fileID: 1087127836682305568, guid: 5408f8ff432d3d9499beb9bfa31f8d19, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 489286e7048b147dc827c17e19d02444, type: 3}
     - target: {fileID: 1460738173447911485, guid: 5408f8ff432d3d9499beb9bfa31f8d19, type: 3}
       propertyPath: npcCollider
       value: 
@@ -2390,7 +2394,7 @@ PrefabInstance:
       objectReference: {fileID: 1444093515}
     - target: {fileID: 1172210483195517689, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_VersionIndex
-      value: 267
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 1731682723142328809, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -2494,7 +2498,7 @@ PrefabInstance:
       objectReference: {fileID: 1685821784}
     - target: {fileID: 7885652527208763916, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_VersionIndex
-      value: 267
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 8262957961950589665, guid: 0fb1add1d955b2144bf5f3502fc1cbeb, type: 3}
       propertyPath: m_Mesh
