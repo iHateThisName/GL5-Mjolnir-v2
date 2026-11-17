@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MailUIController : MonoBehaviour
-{
+public class MailUIController : MonoBehaviour {
     private enum MailState { Home, InboxList, ReadingInbox }
 
     private MailState currentState;
@@ -20,7 +19,14 @@ public class MailUIController : MonoBehaviour
     [SerializeField] private GameObject emailPanel;
 
     [Header("Navigation")]
+    // Left Sidebar Buttons
     [SerializeField] private Button sidebarInboxButton;
+    [SerializeField] private Button sidebarSpoofedAddressButton;
+    [SerializeField] private Button sidebarSuspiciousLinkButton;
+    [SerializeField] private Button sidebarUrgencyButton;
+    [SerializeField] private Button sidebarBadFileExtensionButton;
+    [SerializeField] private Button sidebarAskingForCredentailsButton;
+    //Button used to navigate back.
     [SerializeField] private Button backButton;
     [SerializeField] private Button[] closeCurrentWindowButton;
 
@@ -49,6 +55,15 @@ public class MailUIController : MonoBehaviour
     [SerializeField] private Button credentialsButton;
     [SerializeField] private GameObject credentialsCheckMark;
 
+    [Header("Information Window")]
+    [SerializeField] private RectTransform InformationPanel;
+    [SerializeField] private RectTransform spoofedAddressContainer;
+    [SerializeField] private RectTransform suspiciousLinkContainer;
+    [SerializeField] private RectTransform urgencyContainer;
+    [SerializeField] private RectTransform badFileExtensionContainer;
+    [SerializeField] private RectTransform askingForCredentialsContainer;
+    private Button CurrentActiveInformationButton = null;
+
     private bool Busy =>
         mailSelectedController != null &&
         mailSelectedController.IsBusy;
@@ -57,19 +72,26 @@ public class MailUIController : MonoBehaviour
         reportOverlay != null &&
         reportOverlay.activeSelf;
 
-    private void Awake()
-    {
+    private void Awake() {
         ResetChecklist();
         SetReportVisible(false);
         Show(MailState.Home);
+
+        // Making sure the information panel is hidden at the start and that all the information containers are hidden as well.
+        this.InformationPanel.gameObject.SetActive(false);
+        this.spoofedAddressContainer.gameObject.SetActive(false);
+        this.suspiciousLinkContainer.gameObject.SetActive(false);
+        this.urgencyContainer.gameObject.SetActive(false);
+        this.badFileExtensionContainer.gameObject.SetActive(false);
+        this.askingForCredentialsContainer.gameObject.SetActive(false);
+        this.CurrentActiveInformationButton = null;
+
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         SetButtonListeners(true);
 
-        if (mailSelectedController != null)
-        {
+        if (mailSelectedController != null) {
             mailSelectedController.ReportRequested += OpenReport;
             mailSelectedController.selectedMailOpened.AddListener(
                 OpenEmailReadView);
@@ -78,12 +100,10 @@ public class MailUIController : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         SetButtonListeners(false);
 
-        if (mailSelectedController != null)
-        {
+        if (mailSelectedController != null) {
             mailSelectedController.ReportRequested -= OpenReport;
             mailSelectedController.selectedMailOpened.RemoveListener(
                 OpenEmailReadView);
@@ -94,9 +114,17 @@ public class MailUIController : MonoBehaviour
         CancelReport();
     }
 
-    private void SetButtonListeners(bool subscribe)
-    {
+    private void SetButtonListeners(bool subscribe) {
+        // Sidebar Buttons
         Bind(sidebarInboxButton, OpenInbox, subscribe);
+
+        Bind(sidebarSpoofedAddressButton, OnSidebarSpoofedButton, subscribe);
+        Bind(sidebarSuspiciousLinkButton, OnSidebarSuspiciousButton, subscribe);
+        Bind(sidebarUrgencyButton, OnSidebarUrgencyButton, subscribe);
+        Bind(sidebarBadFileExtensionButton, OnSidebarBadFileExtensionButton, subscribe);
+        Bind(sidebarAskingForCredentailsButton, OnSidebarAskingForCredentialsButton, subscribe);
+        //
+
         Bind(backButton, Back, subscribe);
 
         foreach (Button button in closeCurrentWindowButton) {
@@ -113,11 +141,67 @@ public class MailUIController : MonoBehaviour
         Bind(credentialsButton, ToggleCredentials, subscribe);
     }
 
+    private void OnSidebarSpoofedButton() => OnInformationButton(sidebarSpoofedAddressButton);
+    private void OnSidebarSuspiciousButton() => OnInformationButton(sidebarSuspiciousLinkButton);
+    private void OnSidebarUrgencyButton() => OnInformationButton(sidebarUrgencyButton);
+    private void OnSidebarBadFileExtensionButton() => OnInformationButton(sidebarBadFileExtensionButton);
+    private void OnSidebarAskingForCredentialsButton() => OnInformationButton(sidebarAskingForCredentailsButton);
+
+    private void OnInformationButton(Button button) {
+        if (this.CurrentActiveInformationButton == null) {
+            this.CurrentActiveInformationButton = button;
+            //this.CurrentActiveInformationButton.interactable = false;
+            InformationWindowState(this.CurrentActiveInformationButton, true);
+            this.InformationPanel.gameObject.SetActive(true);
+
+        //} 
+        //else if (this.CurrentActiveInformationButton == button) { // If the same button is clicked again, close the information window.
+        //    this.CurrentActiveInformationButton = null;
+        //    //button.interactable = true;
+        //    InformationWindowState(button, false);
+        } else { // If a different button is clicked, close the previous information window and open the new one.
+
+            // Close the previous information window
+            InformationWindowState(this.CurrentActiveInformationButton, false);
+
+            // Enable the previous button and make the new button non-interactable
+            //this.CurrentActiveInformationButton.interactable = true;
+            this.CurrentActiveInformationButton = button;
+            //button.interactable = false;
+
+            // Open the new information window
+            InformationWindowState(this.CurrentActiveInformationButton, true);
+            this.InformationPanel.gameObject.SetActive(true);
+
+        }
+        // debug log what button was pressed and what the current active button is.
+        Debug.Log($"Information button pressed: {button.name}. CurrentActiveInformationButton: {this.CurrentActiveInformationButton?.name ?? "null"}");
+    }
+
+    private void InformationWindowState(Button button, bool active) {
+
+        if (button == this.sidebarSuspiciousLinkButton) {
+            this.suspiciousLinkContainer.gameObject.SetActive(active);
+
+        } else if (button == this.sidebarSpoofedAddressButton) {
+            this.spoofedAddressContainer.gameObject.SetActive(active);
+
+        } else if (button == this.sidebarUrgencyButton) {
+            this.sidebarSuspiciousLinkButton.gameObject.SetActive(active);
+
+        } else if (button == this.sidebarBadFileExtensionButton) {
+            this.badFileExtensionContainer.gameObject.SetActive(active);
+
+        } else if (button == this.sidebarAskingForCredentailsButton) {
+            this.askingForCredentialsContainer.gameObject.SetActive(active);
+        }
+
+    }
+
     private static void Bind(
         Button button,
         UnityAction callback,
-        bool subscribe)
-    {
+        bool subscribe) {
         if (button == null)
             return;
 
@@ -143,8 +227,7 @@ public class MailUIController : MonoBehaviour
     private void ToggleCredentials() =>
         ToggleFlag(MailRedFlag.AskingForCredentials);
 
-    private void ToggleFlag(MailRedFlag flag)
-    {
+    private void ToggleFlag(MailRedFlag flag) {
         if (!ReportOpen || Busy)
             return;
 
@@ -154,8 +237,7 @@ public class MailUIController : MonoBehaviour
         RefreshCheckMarks();
     }
 
-    private void RefreshCheckMarks()
-    {
+    private void RefreshCheckMarks() {
         SetCheckMark(
             spoofedAddressCheckMark,
             MailRedFlag.SpoofedAddress);
@@ -177,20 +259,17 @@ public class MailUIController : MonoBehaviour
             MailRedFlag.AskingForCredentials);
     }
 
-    private void SetCheckMark(GameObject checkMark, MailRedFlag flag)
-    {
+    private void SetCheckMark(GameObject checkMark, MailRedFlag flag) {
         if (checkMark != null)
             checkMark.SetActive(selectedFlags.Contains(flag));
     }
 
-    private void ResetChecklist()
-    {
+    private void ResetChecklist() {
         selectedFlags.Clear();
         RefreshCheckMarks();
     }
 
-    private bool ReportReferencesAssigned()
-    {
+    private bool ReportReferencesAssigned() {
         return reportOverlay != null &&
                submitReportButton != null &&
                cancelReportButton != null &&
@@ -206,16 +285,13 @@ public class MailUIController : MonoBehaviour
                credentialsCheckMark != null;
     }
 
-    private void OpenReport()
-    {
+    private void OpenReport() {
         if (mailSelectedController == null ||
-            !mailSelectedController.CanDecide)
-        {
+            !mailSelectedController.CanDecide) {
             return;
         }
 
-        if (!ReportReferencesAssigned())
-        {
+        if (!ReportReferencesAssigned()) {
             Debug.LogError(
                 "Assign the report overlay, submit/cancel buttons, " +
                 "and all five checklist buttons and checkmarks.",
@@ -228,12 +304,10 @@ public class MailUIController : MonoBehaviour
         SetReportVisible(true);
     }
 
-    private void SubmitReport()
-    {
+    private void SubmitReport() {
         if (!ReportOpen ||
             mailSelectedController == null ||
-            !mailSelectedController.CanDecide)
-        {
+            !mailSelectedController.CanDecide) {
             return;
         }
 
@@ -247,8 +321,7 @@ public class MailUIController : MonoBehaviour
         mailSelectedController.SetReportMode(false);
         ResetChecklist();
 
-        if (!submitted)
-        {
+        if (!submitted) {
             Debug.LogWarning(
                 "Report was not submitted. The email may already be " +
                 "resolved, inactive, or blocked by another sequence.",
@@ -256,8 +329,7 @@ public class MailUIController : MonoBehaviour
         }
     }
 
-    private void CancelReport()
-    {
+    private void CancelReport() {
         if (mailSelectedController != null)
             mailSelectedController.SetReportMode(false);
 
@@ -265,14 +337,12 @@ public class MailUIController : MonoBehaviour
         SetReportVisible(false);
     }
 
-    private void SetReportVisible(bool visible)
-    {
+    private void SetReportVisible(bool visible) {
         if (reportOverlay != null)
             reportOverlay.SetActive(visible);
     }
 
-    public void OpenHome()
-    {
+    public void OpenHome() {
         if (Busy)
             return;
 
@@ -284,8 +354,7 @@ public class MailUIController : MonoBehaviour
         Show(MailState.Home);
     }
 
-    public void OpenInbox()
-    {
+    public void OpenInbox() {
         if (Busy)
             return;
 
@@ -297,24 +366,20 @@ public class MailUIController : MonoBehaviour
         Show(MailState.InboxList);
     }
 
-    public void OpenEmailReadView(MailData mail)
-    {
+    public void OpenEmailReadView(MailData mail) {
         CancelReport();
         Show(MailState.ReadingInbox);
     }
 
-    private void OnMailFinished(MailData finished)
-    {
+    private void OnMailFinished(MailData finished) {
         OpenInbox();
     }
 
-    private void Back()
-    {
+    private void Back() {
         if (Busy)
             return;
 
-        if (ReportOpen)
-        {
+        if (ReportOpen) {
             CancelReport();
             return;
         }
@@ -325,8 +390,7 @@ public class MailUIController : MonoBehaviour
             OpenHome();
     }
 
-    private void Show(MailState state)
-    {
+    private void Show(MailState state) {
         currentState = state;
 
         if (leftContainer != null)
@@ -342,12 +406,10 @@ public class MailUIController : MonoBehaviour
             backButton.gameObject.SetActive(state != MailState.Home);
     }
 
-    private void CloseMailWindow()
-    {
+    private void CloseMailWindow() {
         if (Busy ||
             mailSelectedController == null ||
-            mailSelectedController.ComputerController == null)
-        {
+            mailSelectedController.ComputerController == null) {
             return;
         }
 
