@@ -19,9 +19,10 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  Portrait: {fileID: 0}
+  Portrait: {fileID: 21300000, guid: 64486d6ac13c2c749adb3e734b11bf79, type: 3}
   Name: 
   Lines:
-  - The pc is already logged in. So you can just sit down and start reading your emails.
-  - Remember to watch out out for scams!
-  - And your moms a hoe
+  - The pc is already logged in. So you can just sit down and start working.
+  - 'Remember to watch out out for those scam emails '
+  - And when your done on the computer or just want a break...
+  - Remember to press the <b>power button</b> before you leave

@@ -19,9 +19,11 @@ MonoBehaviour:
   resultingSuccessConditions: []
   resultingFailedConditions: []
   initialState: 0
-  Portrait: {fileID: 0}
+  Portrait: {fileID: 21300000, guid: 64486d6ac13c2c749adb3e734b11bf79, type: 3}
   Name: 
   Lines:
-  - Welcome back i heard you hit head u son of a bitch.
-  - Your cubical is the one thats closes to the elevator with your name on it.
-  - Oh dear... you remember your name right.
+  - 'Welcome back deary '
+  - I heard you hit head last week
+  - Do you remember everything alright?
+  - Your cubical is the one <b>closes to the elevator</b> with your name on it.
+  - Oh dear, you remember your name right.
