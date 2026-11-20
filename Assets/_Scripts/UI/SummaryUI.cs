@@ -9,7 +9,7 @@ using UnityEngine.UI; // Added for the Button
 /// </summary>
 public class SummaryUI : MonoBehaviour {
     [Header("References")]
-    [SerializeField] private Canvas summaryCanvas;
+    [SerializeField] private RectTransform summaryContainer;
     [SerializeField] private TMP_Text summaryText;
     [SerializeField] private RectTransform contentContainer; // Reference to the container for content elements
     [SerializeField] private GameObject contentElementPrefab; // Reference to the prefab for content elements
@@ -121,7 +121,7 @@ public class SummaryUI : MonoBehaviour {
 
         summaryText.text = summary.ToString();
 
-        this.summaryCanvas.gameObject.SetActive(true);
+        this.summaryContainer.gameObject.SetActive(true);
     }
 
     public GradeEnum CalculateGrade(int totalEmails, int totalScamEmail, int completedEmails, int correctlyScamReportedOptions) {
