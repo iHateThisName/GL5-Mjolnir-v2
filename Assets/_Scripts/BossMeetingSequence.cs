@@ -78,8 +78,6 @@ public class BossMeetingSequence : MonoBehaviour
 
             await Awaitable.WaitForSecondsAsync(this.standUpDelay);
 
-            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
-
             // Watch the alarm/red lights blink
             await Awaitable.WaitForSecondsAsync(this.delayBeforeFade);
 
@@ -112,9 +110,10 @@ public class BossMeetingSequence : MonoBehaviour
 
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Dialogue;
 
-            if (activeDialogue != null)
+            if (activeDialogue != null && this.npcDialogue != null)
             {
-                if (this.npcDialogue != null) this.npcDialogue.OnDialogueEnded += this.OnDialogueEnded;
+                this.npcDialogue.gameObject.SetActive(true);
+                this.npcDialogue.OnDialogueEnded += this.OnDialogueEnded;
                 this.npcDialogue.SetDialogue(activeDialogue, false);
                 this.npcDialogue.StartDialogue();
             }
@@ -127,7 +126,12 @@ public class BossMeetingSequence : MonoBehaviour
             {
                 await Awaitable.NextFrameAsync();
             }
-            if (this.npcDialogue != null) this.npcDialogue.OnDialogueEnded -= this.OnDialogueEnded;
+
+            if (this.npcDialogue != null)
+            {
+                this.npcDialogue.OnDialogueEnded -= this.OnDialogueEnded;
+                this.npcDialogue.gameObject.SetActive(false);
+            }
 
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
             this.fadeCanvas.gameObject.SetActive(true);
