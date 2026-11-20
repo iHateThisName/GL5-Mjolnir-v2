@@ -87,5 +87,6 @@ public class ElevatorAnimationController : MonoBehaviour
     {
         DoorBlock.SetActive(false);
         Animator.SetTrigger("OpenDoor");
+        this.insideButton.SetHoverText("Go Home");
     }
 }

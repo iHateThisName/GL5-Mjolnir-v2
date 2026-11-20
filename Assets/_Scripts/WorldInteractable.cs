@@ -25,4 +25,6 @@ public class WorldInteractable : MonoBehaviour, IInteractable {
         yield return new WaitForSeconds(Helper.InteractionCooldown);
         isInteractable = true;
     }
+
+    public void SetHoverText(string newHoverText) => this.hoverText = newHoverText;
 }
