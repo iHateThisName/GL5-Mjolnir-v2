@@ -171,7 +171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 243378421704639856}
-  - component: {fileID: 1087127836682305568}
+  - component: {fileID: 3874303762996825393}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -196,7 +196,7 @@ Transform:
   - {fileID: 812685860656584738}
   m_Father: {fileID: 8749035620052007117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1087127836682305568
+--- !u!95 &3874303762996825393
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
