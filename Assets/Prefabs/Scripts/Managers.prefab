@@ -228,7 +228,6 @@ Transform:
   - {fileID: 1945252541876418653}
   - {fileID: 7569827033233606038}
   - {fileID: 3147097546578095308}
-  - {fileID: 7912279439863735546}
   - {fileID: 4314132584974822173}
   - {fileID: 7283667958588663479}
   - {fileID: 7939746608337354126}
@@ -370,6 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SummaryUI
   summaryContainer: {fileID: 0}
   summaryText: {fileID: 0}
+  mainMenuButton: {fileID: 0}
 --- !u!1 &6292833388505480733
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   AutoUnparentOnAwake: 1
-  startingPlayerState: 3
+  startingPlayerState: 1
   lookSensitivity: 10
 --- !u!1001 &2898764825203410122
 PrefabInstance:
@@ -478,168 +478,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4699249837897171292, guid: c2550e3896cb7e448a0a031d5e47ed78, type: 3}
   m_PrefabInstance: {fileID: 2898764825203410122}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &4453021789158378961
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5378693964919184788}
-    m_Modifications:
-    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_text
-      value: 'WELCOME TO MJOLNIR
-
-
-
-        Welcome to Mjolnir Paper & Office Supplies AS.
-
-
-
-        Your job is simple: handle company emails, help your coworkers,
-
-        and keep the office running.
-
-
-
-        Unfortunately, not every message in your inbox can be trusted.
-
-
-
-        Spot the scams, complete the real work, and try to keep
-
-        the Boss happy.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_fontSize
-      value: 48.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3475367355413045112, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_fontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4531706414739232020, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_text
-      value: 'GETTING STARTED
-
-
-
-        Move with WASD and look around with the mouse.
-
-
-
-        Use the Left Mouse Button to interact with objects
-
-        and sit at a workstation.
-
-
-
-        Check the sticky note in your cubicle for your current task.
-
-        It will tell you when a coworker needs help.
-
-
-
-        Start by checking your computer.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4531706414739232020, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_fontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5186594780654169119, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_text
-      value: 'LOOK BEFORE YOU CLICK
-
-
-
-        Check the sender''s actual email address.
-
-        Use the Directory to compare it with trusted contacts.
-
-
-
-        Hover over the email''s action button to inspect
-
-        where it really leads.
-
-
-
-        Trust the message? Use its action button.
-
-        Think it''s a scam? Choose REPORT SCAM and select the evidence.
-
-
-
-        Made the wrong call? Review the feedback, learn from it,
-
-        and get back to work.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 5186594780654169119, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_fontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.1659
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.3830404
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.3899
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.1738186
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8242351820273393526, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: m_Name
-      value: IntroController
-      objectReference: {fileID: 0}
-    - target: {fileID: 8707548556070852101, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-      propertyPath: gameplayScriptsToPause.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
---- !u!4 &7912279439863735546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5765275491907430699, guid: a874d5fda46bc5e468ca4b5e547c30db, type: 3}
-  m_PrefabInstance: {fileID: 4453021789158378961}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5945788020710773542
 PrefabInstance:
