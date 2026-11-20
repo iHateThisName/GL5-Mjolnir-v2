@@ -373,13 +373,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -678434775756602533, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 1202079286388554807}
     - targetCorrespondingSourceObject: {fileID: -678434775756602533, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 840374145533034774}
     - targetCorrespondingSourceObject: {fileID: -3962256652466978645, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 8378868503117307197}
     - targetCorrespondingSourceObject: {fileID: -3962256652466978645, guid: c6a6a716485704b249c0f4ba01dde2df, type: 3}
       insertIndex: -1
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065b6cd52beabb44e9e88a9469437f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldInteractable
-  hoverText: 
+  hoverText: Hang Up
 --- !u!64 &6285774784786197932
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065b6cd52beabb44e9e88a9469437f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldInteractable
-  hoverText: 
+  hoverText: Pick Up
 --- !u!64 &840374145533034774
 MeshCollider:
   m_ObjectHideFlags: 0

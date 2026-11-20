@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 /// <summary>
 /// Author: https://github.com/iHateThisName
@@ -56,7 +58,10 @@ public class MovementController : MonoBehaviour {
         HandleMove(this.moveInput);
     }
     private void OnInteract(InputAction.CallbackContext context) {
-        //Debug.Log("Interact action performed");
+        if (IsPointerOverUI()) {
+            // If the pointer is over a UI element, check if it's a button and get the hover text from it
+            return; // Return true if hovering over a button, otherwise false
+        }
 
         // (Removed the IsPointerOverGameObject check that was causing the warning and blocking the raycast)
 
@@ -85,5 +90,16 @@ public class MovementController : MonoBehaviour {
         this.characterController.Move(
             this.moveSpeed * Time.deltaTime * moveDirection
         );
+    }
+
+    private bool IsPointerOverUI() {
+        PointerEventData eventData = new PointerEventData(EventSystem.current) {
+            position = Mouse.current.position.ReadValue()
+        };
+
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        return results.Count > 0;
     }
 }

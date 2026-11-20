@@ -42,7 +42,7 @@ public class ComputerController : MonoBehaviour {
 
     public void OnPowerButton()
     {
-        if (this.phoneController != null)
+        if (this.phoneController != null && this.phoneController.IsPhoneInHand)
         {
             this.phoneController.EndPhoneCall();
         }

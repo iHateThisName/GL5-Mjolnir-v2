@@ -59,6 +59,8 @@ public class PhoneController : MonoBehaviour {
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchScale(punch: new Vector3(0.25f, 0.25f, 0.25f), duration: 2f, vibrato: 5, elasticity: 0).SetLoops(-1, LoopType.Restart));
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchPosition(punch: new Vector3(0.05f, 0, 0), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
         this.phoneRiningSequence.Insert(0f, this.phoneModel.transform.DOPunchRotation(punch: new Vector3(0, 0, 10), duration: 2f, vibrato: 5, elasticity: 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Restart));
+
+        SetHoverText();
     }
 
 
@@ -83,9 +85,20 @@ public class PhoneController : MonoBehaviour {
         }
     }
 
+    private void SetHoverText() {
+        if (this.IsPhoneInHand) {
+            this.PhoneBaseInteractable.SetHoverText("Put down the phone");
+            this.PhoneInteractable.SetHoverText("Put down the phone");
+        } else {
+            this.PhoneBaseInteractable.SetHoverText("Pick up the phone");
+            this.PhoneInteractable.SetHoverText("Pick up the phone");
+        }
+    }
+
     private void OnPhoneInteract() {
         if (!IsPhoneInHand && GameManager.Instance.CurrentPlayerState == EnumPlayerState.Sitting) {
             this.IsPhoneInHand = true;
+            SetHoverText();
             this.phoneModel.transform.SetParent(this.phoneUpPosition);
             this.phoneModel.transform.localPosition = Vector3.zero;
             this.phoneModel.transform.localRotation = Quaternion.identity;
@@ -99,31 +112,35 @@ public class PhoneController : MonoBehaviour {
     public void EndPhoneCall() {
         if (IsPhoneInHand) {
             PlacePhoneDown();
-        }
 
-        if (ActivePhone == this) {
-            ActivePhone = null;
 
-            // Stop the talking sound if they hang up early
-            this.callSoundController.StopSFX();
+            if (ActivePhone == this) {
+                ActivePhone = null;
 
-            // Flag the call task as completed
-            SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.CurrentActiveCall);
+                // Stop the talking sound if they hang up early
+                this.callSoundController.StopSFX();
 
-            // End the dialog
-            this.dialogueSystem.EndDialogue();
+                // Flag the call task as completed
+                SituationManager.Instance.SetSituationState(SituationManager.SituationStateEnum.Success, this.CurrentActiveCall);
 
-            if (this.CurrentActiveCall != null) {
-                this.CurrentActiveCall = null;
-                StartCoroutine(StartNextQueuedPhoneCall());
+                // End the dialog
+                this.dialogueSystem.EndDialogue();
+
+                if (this.CurrentActiveCall != null) {
+                    this.CurrentActiveCall = null;
+                    StartCoroutine(StartNextQueuedPhoneCall());
+                }
+
             }
-
+        } else {
+            OnPhoneInteract();
         }
 
     }
 
     private void PlacePhoneDown() {
         this.IsPhoneInHand = false;
+        SetHoverText();
         this.phoneModel.transform.SetParent(this.phoneDownPosition);
         this.phoneModel.transform.localPosition = Vector3.zero;
         this.phoneModel.transform.localRotation = Quaternion.identity;
