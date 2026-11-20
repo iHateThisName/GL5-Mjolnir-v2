@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MailUIController : MonoBehaviour {
@@ -29,6 +31,8 @@ public class MailUIController : MonoBehaviour {
     //Button used to navigate back.
     [SerializeField] private Button backButton;
     [SerializeField] private Button[] closeCurrentWindowButton;
+
+    [SerializeField] private Button[] closeInformationPanelButtons;
 
     [Header("Report Overlay")]
     [SerializeField] private GameObject reportOverlay;
@@ -112,6 +116,8 @@ public class MailUIController : MonoBehaviour {
         }
 
         CancelReport();
+
+        this.InformationPanel.DOKill();
     }
 
     private void SetButtonListeners(bool subscribe) {
@@ -123,6 +129,10 @@ public class MailUIController : MonoBehaviour {
         Bind(sidebarUrgencyButton, OnSidebarUrgencyButton, subscribe);
         Bind(sidebarBadFileExtensionButton, OnSidebarBadFileExtensionButton, subscribe);
         Bind(sidebarAskingForCredentailsButton, OnSidebarAskingForCredentialsButton, subscribe);
+
+        foreach (Button button in closeInformationPanelButtons) {
+            Bind(button, OnCloseInformationPanel, subscribe);
+        }
         //
 
         Bind(backButton, Back, subscribe);
@@ -141,24 +151,25 @@ public class MailUIController : MonoBehaviour {
         Bind(credentialsButton, ToggleCredentials, subscribe);
     }
 
-    private void OnSidebarSpoofedButton() => OnInformationButton(sidebarSpoofedAddressButton);
-    private void OnSidebarSuspiciousButton() => OnInformationButton(sidebarSuspiciousLinkButton);
-    private void OnSidebarUrgencyButton() => OnInformationButton(sidebarUrgencyButton);
-    private void OnSidebarBadFileExtensionButton() => OnInformationButton(sidebarBadFileExtensionButton);
-    private void OnSidebarAskingForCredentialsButton() => OnInformationButton(sidebarAskingForCredentailsButton);
+    [ContextMenu("On Sidebar Spoofed Address")] public void OnSidebarSpoofedButton() => OnInformationButton(sidebarSpoofedAddressButton);
+    [ContextMenu("On Sidebar Suspicious Link")] public void OnSidebarSuspiciousButton() => OnInformationButton(sidebarSuspiciousLinkButton);
+    [ContextMenu("On Sidebar Urgency")] public void OnSidebarUrgencyButton() => OnInformationButton(sidebarUrgencyButton);
+    [ContextMenu("On Sidebar Bad File Extension")] public void OnSidebarBadFileExtensionButton() => OnInformationButton(sidebarBadFileExtensionButton);
+    [ContextMenu("On Sidebar Asking for Credentials")] public void OnSidebarAskingForCredentialsButton() => OnInformationButton(sidebarAskingForCredentailsButton);
 
     private void OnInformationButton(Button button) {
         if (this.CurrentActiveInformationButton == null) {
             this.CurrentActiveInformationButton = button;
-            //this.CurrentActiveInformationButton.interactable = false;
-            InformationWindowState(this.CurrentActiveInformationButton, true);
             this.InformationPanel.gameObject.SetActive(true);
+            InformationWindowState(this.CurrentActiveInformationButton, true);
 
-        //} 
-        //else if (this.CurrentActiveInformationButton == button) { // If the same button is clicked again, close the information window.
-        //    this.CurrentActiveInformationButton = null;
-        //    //button.interactable = true;
-        //    InformationWindowState(button, false);
+            this.InformationPanel.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.5f, 10, 1);
+
+        } else if (this.CurrentActiveInformationButton == button) { // If the same button is clicked again, close the information window.
+                this.InformationPanel.gameObject.SetActive(false);
+                this.CurrentActiveInformationButton = null;
+                InformationWindowState(button, false);
+
         } else { // If a different button is clicked, close the previous information window and open the new one.
 
             // Close the previous information window
@@ -172,10 +183,35 @@ public class MailUIController : MonoBehaviour {
             // Open the new information window
             InformationWindowState(this.CurrentActiveInformationButton, true);
             this.InformationPanel.gameObject.SetActive(true);
+            this.InformationPanel.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.5f, 10, 1);
 
         }
-        // debug log what button was pressed and what the current active button is.
-        Debug.Log($"Information button pressed: {button.name}. CurrentActiveInformationButton: {this.CurrentActiveInformationButton?.name ?? "null"}");
+    }
+
+    private void OnCloseInformationPanel() {
+        if (this.CurrentActiveInformationButton == null) return;
+
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Camera mainCamera = Camera.main;
+
+        if (RectTransformUtility.RectangleContainsScreenPoint(sidebarSpoofedAddressButton.GetComponent<RectTransform>(), mousePosition, mainCamera)) {
+            this.sidebarSpoofedAddressButton.onClick.Invoke();
+
+        } else if (RectTransformUtility.RectangleContainsScreenPoint(sidebarSuspiciousLinkButton.GetComponent<RectTransform>(), mousePosition, mainCamera)) {
+            this.sidebarSuspiciousLinkButton.onClick.Invoke();
+
+        } else if (RectTransformUtility.RectangleContainsScreenPoint(sidebarUrgencyButton.GetComponent<RectTransform>(), mousePosition, mainCamera)) {
+            this.sidebarUrgencyButton.onClick.Invoke();
+
+        } else if (RectTransformUtility.RectangleContainsScreenPoint(sidebarBadFileExtensionButton.GetComponent<RectTransform>(), mousePosition, mainCamera)) {
+            this.sidebarBadFileExtensionButton.onClick.Invoke();
+
+        } else if (RectTransformUtility.RectangleContainsScreenPoint(sidebarAskingForCredentailsButton.GetComponent<RectTransform>(), mousePosition, mainCamera)) {
+            this.sidebarAskingForCredentailsButton.onClick.Invoke();
+
+        } else {
+            this.CurrentActiveInformationButton.onClick.Invoke();
+        }
     }
 
     private void InformationWindowState(Button button, bool active) {
@@ -187,7 +223,7 @@ public class MailUIController : MonoBehaviour {
             this.spoofedAddressContainer.gameObject.SetActive(active);
 
         } else if (button == this.sidebarUrgencyButton) {
-            this.sidebarSuspiciousLinkButton.gameObject.SetActive(active);
+            this.urgencyContainer.gameObject.SetActive(active);
 
         } else if (button == this.sidebarBadFileExtensionButton) {
             this.badFileExtensionContainer.gameObject.SetActive(active);

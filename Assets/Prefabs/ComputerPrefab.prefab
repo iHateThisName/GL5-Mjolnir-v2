@@ -3541,17 +3541,20 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1037034495055750952}
   - {fileID: 4373383868475626829}
   - {fileID: 3487211466306467552}
   - {fileID: 5587602653442341346}
   - {fileID: 2876540629152989508}
   - {fileID: 1870772316605844822}
+  - {fileID: 6568209717024850217}
+  - {fileID: 2097253000750240437}
   m_Father: {fileID: 4172179757533297058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.04, y: -0.059999995}
+  m_AnchoredPosition: {x: 0, y: 0.0024999976}
+  m_SizeDelta: {x: -0.04, y: -0.054999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1561653686852017099
 GameObject:
@@ -3899,7 +3902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5587602653442341346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10464,7 +10467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1870772316605844822
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11845,6 +11848,81 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5031905969317007643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037034495055750952}
+  - component: {fileID: 7305017611505414131}
+  - component: {fileID: 4618864159013167176}
+  m_Layer: 0
+  m_Name: Title Bar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1037034495055750952
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031905969317007643}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9079699950924414296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.025}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &7305017611505414131
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031905969317007643}
+  m_CullTransparentMesh: 1
+--- !u!114 &4618864159013167176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031905969317007643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5057704777114590873
 GameObject:
   m_ObjectHideFlags: 0
@@ -14946,7 +15024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2876540629152989508
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16747,8 +16825,11 @@ MonoBehaviour:
   sidebarAskingForCredentailsButton: {fileID: 7583170979758012183}
   backButton: {fileID: 3465825173091276770}
   closeCurrentWindowButton:
-  - {fileID: 6602405698220732498}
   - {fileID: 7116865357864672674}
+  - {fileID: 6407695992326219806}
+  closeInformationPanelButtons:
+  - {fileID: 621599713087011601}
+  - {fileID: 7309655515004074933}
   reportOverlay: {fileID: 7577103109620242586}
   submitReportButton: {fileID: 8383230463362229643}
   cancelReportButton: {fileID: 3043001405702946559}
@@ -16765,9 +16846,9 @@ MonoBehaviour:
   InformationPanel: {fileID: 7972103814734725354}
   spoofedAddressContainer: {fileID: 4373383868475626829}
   suspiciousLinkContainer: {fileID: 3487211466306467552}
-  urgencyContainer: {fileID: 3125659921792503590}
-  badFileExtensionContainer: {fileID: 5619690403451755443}
-  askingForCredentialsContainer: {fileID: 3321600753093906520}
+  urgencyContainer: {fileID: 5587602653442341346}
+  badFileExtensionContainer: {fileID: 2876540629152989508}
+  askingForCredentialsContainer: {fileID: 1870772316605844822}
 --- !u!1 &7247991073623755838
 GameObject:
   m_ObjectHideFlags: 0
@@ -19390,6 +19471,138 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.11}
   m_SizeDelta: {x: 0, y: -0.11}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &8269745513643692593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6568209717024850217}
+  - component: {fileID: 4851031538230496378}
+  - component: {fileID: 146348518923974163}
+  - component: {fileID: 776430688490070886}
+  m_Layer: 0
+  m_Name: CloseTab, Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6568209717024850217
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269745513643692593}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9079699950924414296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.007999986, y: 0.023}
+  m_SizeDelta: {x: 0.025, y: 0.025}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &4851031538230496378
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269745513643692593}
+  m_CullTransparentMesh: 1
+--- !u!114 &146348518923974163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269745513643692593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 59dbddcac9c80a244ab38fa599a05cc7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &776430688490070886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269745513643692593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 146348518923974163}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7247728424633929566}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8341944199421263504
 GameObject:
   m_ObjectHideFlags: 0
@@ -20777,6 +20990,126 @@ RectTransform:
   m_AnchoredPosition: {x: 0.125, y: 0}
   m_SizeDelta: {x: -0.25, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &8634867517934579836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2097253000750240437}
+  - component: {fileID: 5723602249340786474}
+  - component: {fileID: 8198267826300907281}
+  - component: {fileID: 7309655515004074933}
+  m_Layer: 0
+  m_Name: CloseTab, Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2097253000750240437
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8634867517934579836}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9079699950924414296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.025, y: 0.025}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &5723602249340786474
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8634867517934579836}
+  m_CullTransparentMesh: 1
+--- !u!114 &8198267826300907281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8634867517934579836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 59dbddcac9c80a244ab38fa599a05cc7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7309655515004074933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8634867517934579836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 8198267826300907281}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8674638150037552792
 GameObject:
   m_ObjectHideFlags: 0
@@ -21968,7 +22301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3487211466306467552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22109,31 +22442,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 0.65999997
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.32999998
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.275
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_text
-      value: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.
+      value: Some emails may ask you to make haste. Be calm. No important email is putting that kind of pressure on anyone. The scammers want you to stress and act before you think too much. Be sure to stay calm, read carefully and double check your information. You should always take your time.
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -22225,7 +22558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020813214721989055, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.27000004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22317,31 +22650,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 0.65999997
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.32999998
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.125
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_text
-      value: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.
+      value: No official companies will ask for your credentials through email. Never give up any personal information over email or similar applications.
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -22433,7 +22766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020813214721989055, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -0.029999971
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22532,31 +22865,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 0.65999997
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.32999998
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.175
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_text
-      value: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.
+      value: Some email may send you files. Be aware. Scammers may send files that contain viruses and malware. Hover over the file to see what you are downloading before you do.
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -22648,7 +22981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020813214721989055, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.07000002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22674,31 +23007,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 0.65999997
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.32999998
       objectReference: {fileID: 0}
     - target: {fileID: 2937495288982461895, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_text
-      value: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.
+      value: "You should not click any link from an unknown sender. But in case you need to for this game, make sure the link provided is leading to the right place. Is the address\u2019s spelling correct. Some links are disguised, so you may hover over a link to see its address."
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -22790,7 +23123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020813214721989055, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.22000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22840,7 +23173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_text
-      value: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.
+      value: "Scammers can\u2019t use official email addresses, often using their own. But they may disguise as one by changing their display name and using addresses that look official. Some may use a 0(zero) in the place of an O, and a lowercase l(L) in place of an I(i). Make sure to hover over the address to make sure who it is and pay close attention to the spelling."
       objectReference: {fileID: 0}
     - target: {fileID: 3292501551756242979, guid: 08fa09b413e76d048871773dc2810a4a, type: 3}
       propertyPath: m_HorizontalAlignment
