@@ -12,7 +12,7 @@ public enum MailRedFlag
 }
 
 public enum MailDecision { Accept, Report }
-public enum MailOutcome { AcceptedScam, ReportedScam, AcceptedLegitimate, ReportedLegitimate }
+public enum MailOutcome {None = -1, AcceptedScam, ReportedScam, AcceptedLegitimate, ReportedLegitimate }
 public enum MailSequenceStep
 {
     ScamCutscene,

@@ -27,6 +27,8 @@ public class GameManager : Singleton<GameManager>
         this.CurrentPlayerState = this.startingPlayerState;
         SetLookSensitivity(this.LookSensitivity);
         Cursor.visible = false;
+
+        SetPlayerState(this.CurrentPlayerState);
     }
 
     public void TeleportPlayer(Vector3 position, Quaternion rotation)
@@ -77,7 +79,10 @@ public class GameManager : Singleton<GameManager>
                 Cursor.lockState = CursorLockMode.None;
                 //Cursor.visible = true;
                 PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
+
+                if (PlayerRefrenceProvider.Instance.PlayerWalkCamera != null) {
                 Helper.DisableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
+                }
                 break;
 
             case EnumPlayerState.Cutscene:
@@ -125,6 +130,7 @@ public class GameManager : Singleton<GameManager>
     public void SetLookSensitivity(float newSensitivity)
     {
         CinemachineInputAxisController axisController = PlayerRefrenceProvider.instance.PlayerWalkCamera.GetComponent<CinemachineInputAxisController>();
+        if (axisController == null) return;
         string xLookName = "Look X (Pan)";
         string yLookName = "Look Y (Tilt)";
 
