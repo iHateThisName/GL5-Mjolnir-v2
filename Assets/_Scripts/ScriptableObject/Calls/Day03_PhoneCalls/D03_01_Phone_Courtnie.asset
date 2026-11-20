@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce89e8457afce24ba367c658513195e, type: 3}
   m_Name: D03_01_Phone_Courtnie
   m_EditorClassIdentifier: Assembly-CSharp::CallData
-  situationName: BruceCalling
-  parentSituation: {fileID: 0}
-  requiredSituations:
-  - {fileID: 11400000, guid: b202f04f7fd37f941a66d44458a2702b, type: 2}
+  situationName: CourtnieCalling
+  parentSituation: {fileID: 11400000, guid: 3a8f694e9723aba4bba2d413e3f49abe, type: 2}
+  requiredSituations: []
   requiredConditions: []
   resultingSuccessConditions: []
   resultingFailedConditions: []

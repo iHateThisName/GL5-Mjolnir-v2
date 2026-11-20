@@ -48,6 +48,11 @@ public class GameManager : Singleton<GameManager>
     {
         if (newState == this.currentPlayerState) return;
 
+        if (newState != EnumPlayerState.None)
+        {
+            PlayerRefrenceProvider.Instance.PlayerCrosshair.gameObject.SetActive(newState != EnumPlayerState.Cutscene);
+        }
+
         switch (newState)
         {
             case EnumPlayerState.None:
@@ -78,7 +83,6 @@ public class GameManager : Singleton<GameManager>
             case EnumPlayerState.Cutscene:
                 Cursor.lockState = CursorLockMode.Locked;
                 //Cursor.visible = false;
-                PlayerRefrenceProvider.Instance.PlayerCrosshair.enabled = false;
                 Helper.DisableCameraRotation(PlayerRefrenceProvider.Instance.PlayerWalkCamera);
                 break;
 
@@ -99,7 +103,6 @@ public class GameManager : Singleton<GameManager>
             default:
                 Debug.LogError($"Unknown player state: {newState}");
                 break;
-
         }
 
         this.currentPlayerState = newState;

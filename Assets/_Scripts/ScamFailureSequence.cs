@@ -77,6 +77,8 @@ public class ScamFailureSequence : MonoBehaviour
                 chairToReturnTo.StandUp();
             }
 
+            GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
+
             await Awaitable.WaitForSecondsAsync(this.standUpDelay);
 
             GameManager.Instance.CurrentPlayerState = EnumPlayerState.Cutscene;
